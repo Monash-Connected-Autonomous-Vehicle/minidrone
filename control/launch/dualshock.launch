@@ -1,9 +1,0 @@
-<launch>
-    <node pkg="joy" type="joy_node" name="joy_node" />
-    <node pkg="control" type="joystick_twist_node" name="joystick_twist_node" >
-        <param name="axis_linear" value="1" />
-        <param name="axis_angular" value="2" />
-        <param name="scale_linear" value="1" />
-        <param name="scale_angular" value="1" />
-    </node>
-</launch>
