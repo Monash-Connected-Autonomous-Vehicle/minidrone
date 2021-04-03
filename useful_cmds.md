@@ -1,27 +1,28 @@
+# MiniDrone Useful Commands
 
-
-
-# run roscore
+## run roscore
 roscore
 
-
-# run jetbot camera
+## run jetbot camera
 roslaunch jetbot_ros jetbot_camera_compressed.launch
 
-
-# run imu/gps republisher
+## run imu/gps republisher
 cd mcav/minidrone
+
 python run_box_republisher.py
 
-
-
-# rviz with config
+## rviz with config
 rviz -d /home/jetson/mcav/minidrone/cam_imu.rviz
 
-# record data
+## record data
 rosbag record /gps /imu /imu/calibration /imu/mag /jetbot_camera/compressed 
 
+## run motor control tests
+python3 src/control/src/test_motor_control.py
 
+## run ps4 control
+connect ps4 controller via bluetooth
+roslaunch control dualshock.launch
 
 
 
