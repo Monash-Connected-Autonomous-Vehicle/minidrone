@@ -1,4 +1,4 @@
-#!/bin/env/python3
+#!/usr/bin/python3
 
 import rospy
 import message_filters
@@ -12,33 +12,33 @@ def image_callback(data):
     """ Sanity check for images """
     rospy.loginfo(f"image timestamp: {data.header.stamp} ")
 
-# NB: jetbot_camera doesnt produce timestmaps :( so not possible to synch like this
-# TODO: add timestamps to jetbot_camera
-def callback( imu, fix):
+def callback(image, imu, fix):
 
-    """ only returns if all topic timestamps are synched"""
+    """ Check: Only returns if all topic timestamps are synched"""
 
     # check stamps
     rospy.loginfo("------ Topics Synchronised -------")
-    #rospy.loginfo(f"image timestamp {image.header.stamp}")
+    rospy.loginfo(f"img timestamp: {image.header.stamp}")
     rospy.loginfo(f"imu timestamp: {imu.header.stamp}")
     rospy.loginfo(f"fix timestamp: {fix.header.stamp}")
 
 
 def main():
 
+    # ROS setup
     rospy.init_node("test_time_synch_node")
     rospy.loginfo("Node initialised")
  
-    rospy.Subscriber('jetbot_camera/compressed', CompressedImage, image_callback)
+    # img sanity check
+    # rospy.Subscriber('jetbot_camera/0/compressed', CompressedImage, image_callback)
     
     # register subscribers
-    #image_sub = message_filters.Subscriber('jetbot_camera/compressed', CompressedImage)
+    image_sub = message_filters.Subscriber('jetbot_camera/0/compressed', CompressedImage)
     imu_sub = message_filters.Subscriber('imu', Imu)
     fix_sub = message_filters.Subscriber('gps', NavSatFix)
 
     # register time synchronizer
-    ts = message_filters.ApproximateTimeSynchronizer([imu_sub, fix_sub], 10, 0.1, allow_headerless=True)
+    ts = message_filters.ApproximateTimeSynchronizer([image_sub, imu_sub, fix_sub], 10, 0.1, allow_headerless=True)
     ts.registerCallback(callback)
     
     rospy.spin()
