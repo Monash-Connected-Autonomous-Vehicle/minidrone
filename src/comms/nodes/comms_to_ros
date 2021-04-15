@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+'''
+i2c/UART to ROS republisher node
+
+TODO:
+- GpsExtract class
+'''
+from comms.ImuExtract import ImuExtract
+import rospy
+from sensor_msgs.msg import Imu, MagneticField
+from std_msgs.msg import UInt8MultiArray
+
+if __name__ == "__main__":
+    # initialsing node as well as publishers
+    rospy.init_node("i2c_rosify")
+
+    imu_pub = rospy.Publisher("imu",Imu,queue_size=100)
+    mag_pub = rospy.Publisher("imu/mag",MagneticField,queue_size=100)
+    calib_pub = rospy.Publisher("imu/calibration",UInt8MultiArray,queue_size=100)
+
+    imu = ImuExtract()
+
+    while not rospy.is_shutdown():
+        imu_pub.publish(imu.get_imu_msg())
+        mag_pub.publish(imu.get_mag_msg())
+        calib_pub.publish(imu.get_calib_msg())
