@@ -27,7 +27,7 @@ def display_calibration_status(calibration_state):
     if calibration_state["temp"] > 30:
         rospy.loginfo("IMU Temperature is elevated. Please check...")
 
-    rospy.loginfo("-----------------------------------------------------")
+
 
 def calibration_callback(data):
     
@@ -48,6 +48,10 @@ def calibration_callback(data):
     # display calibration status
     display_calibration_status(calibration_state)
 
+    # sleep for a bit
+    rospy.loginfo("-----------------------------------------------------\n")
+    rospy.sleep(1)
+
 
 if __name__ == "__main__":
 
@@ -55,7 +59,7 @@ if __name__ == "__main__":
     rospy.init_node("mcav_box_ui")
 
     # setup subscriber
-    rospy.Subscriber("/imu/calibration", UInt8MultiArray, calibration_callback)
+    rospy.Subscriber("/imu/calibration", UInt8MultiArray, calibration_callback, queue_size=1)
 
     rospy.spin()
 

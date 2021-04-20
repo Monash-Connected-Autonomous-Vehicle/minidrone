@@ -1,2 +1,10 @@
 pyserial
 pytest
+rospkg
+catkin_pkg
+catkin_tools
+rosdep
+rosinstall_generator
+rosinstall
+wstool
+vcstools
