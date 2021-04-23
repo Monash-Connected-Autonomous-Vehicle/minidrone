@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import TwistStamped, Twist
 
 from adafruit_servokit import ServoKit
 import board
@@ -31,17 +31,17 @@ def scale(val, src, dst):
     return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
 
 def twist_callback(message):
-    throttle = message.twist.linear.x
+    throttle = message.linear.x
     if throttle >= 0:
         speed = scale(throttle, [0.0, 1.0], [MIN_SPEED, MAX_SPEED])
         kit.servo[0].angle = speed
 
-    steering = scale(message.twist.angular.z, [-1.0, 1.0], [MIN_STEERING_PWM, MAX_STEERING_PWM])
+    steering = scale(message.angular.z, [-1.0, 1.0], [MIN_STEERING_PWM, MAX_STEERING_PWM])
     kit.servo[1].angle = steering
 
 def drive():
     rospy.init_node("drive")
-    rospy.Subscriber("/cmd_vel", TwistStamped, twist_callback)
+    rospy.Subscriber("/twist_mux/cmd_vel", Twist, twist_callback)
     # set speed to 0 to arm ESC
     kit.servo[0].angle = 0
     

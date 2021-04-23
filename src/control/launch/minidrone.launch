@@ -1,0 +1,9 @@
+<launch>
+
+    <node pkg="control" type="control.py" name="minidrone_control" />
+    <include file="$(find control)/launch/dualshock.launch" />
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" />
+    <include file="$(find mcav_turtlebot)/launch/emergency_brake.launch" />
+    <include file="$(find twist_mux)/launch/twist_mux.launch" />
+
+</launch>
