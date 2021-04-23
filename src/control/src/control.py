@@ -31,12 +31,12 @@ def scale(val, src, dst):
     return ((val - src[0]) / (src[1]-src[0])) * (dst[1]-dst[0]) + dst[0]
 
 def twist_callback(message):
-    throttle = message.linear.x
+    throttle = message.twist.linear.x
     if throttle >= 0:
         speed = scale(throttle, [0.0, 1.0], [MIN_SPEED, MAX_SPEED])
         kit.servo[0].angle = speed
 
-    steering = scale(message.angular.z, [-1.0, 1.0], [MIN_STEERING_PWM, MAX_STEERING_PWM])
+    steering = scale(message.twist.angular.z, [-1.0, 1.0], [MIN_STEERING_PWM, MAX_STEERING_PWM])
     kit.servo[1].angle = steering
 
 def drive():

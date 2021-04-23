@@ -34,7 +34,7 @@ def run_static_test(pub):
     idx = 0
 
     # testing setup
-    test_values = [(1.0, 0), (0.0, 0.5), (0.0, -0.5), (0.5, 0.5), (0.5, -0.5), (0.0, 0.0)]
+    test_values = [(0.2, 0), (0.0, 0.5), (0.0, -0.5), (0.2, 0.5), (0.2, -0.5), (0.0, 0.0)]
     test_desc = ["Forward", "Left", "Right", "Forward Left", "Forward Right", "Stationary"]
 
     rospy.loginfo("-------------- Beginning Static Test --------------")
@@ -101,7 +101,7 @@ def run_chicane_test(pub):
     r_max, l_max = 0.5, -0.5
     z_vals = np.concatenate((np.linspace(l_max, r_max, 100), 
                             np.linspace(r_max, l_max, 100)), axis=0)
-    x_vals = np.ones_like(z_vals) * 0.5
+    x_vals = np.ones_like(z_vals) * 0.2
 
     # descriptions
     time_start = time.time()
