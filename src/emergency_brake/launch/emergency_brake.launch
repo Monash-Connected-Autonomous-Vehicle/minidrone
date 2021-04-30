@@ -1,0 +1,6 @@
+<launch>
+    <param name="stop_distance" type="double" value="1.0"/>
+    <param name="stop_time" type="double" value="1.0"/>
+    <param name="field_of_view" type="int" value="60"/>
+    <node name="emergency_brake" type="emergency_brake" pkg="emergency_brake" output="screen" />
+</launch>

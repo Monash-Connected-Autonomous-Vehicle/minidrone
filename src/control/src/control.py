@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import TwistStamped, Twist
 
 from adafruit_servokit import ServoKit
 import board
@@ -41,7 +41,7 @@ def twist_callback(message):
 
 def drive():
     rospy.init_node("drive")
-    rospy.Subscriber("/cmd_vel", TwistStamped, twist_callback)
+    rospy.Subscriber("/twist_mux/cmd_vel", Twist, twist_callback)
     # set speed to 0 to arm ESC
     kit.servo[0].angle = 0
     
