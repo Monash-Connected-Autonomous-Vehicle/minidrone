@@ -1,0 +1,6 @@
+<launch>
+    <param name="stop_time" type="double" value="1.0"/>
+    <param name="stop_distance" type="double" value="1.0"/>
+
+    <node name="adv_emergency_brake" type="adv_emergency_brake" pkg="emergency_brake" output="screen" />
+</launch>
