@@ -60,8 +60,8 @@ Automated sensor data tests (needs roscore):
 
 Sensor data synchronisation:
 
-` python3 src/control/src/tests/test_time_synch.py `
+` python3 control/src/tests/test_time_synch.py `
 
 Motor control tests:
 
-` python3 src/control/src/tests/test_motor_control.py `
+` python3 control/src/tests/test_motor_control.py `
