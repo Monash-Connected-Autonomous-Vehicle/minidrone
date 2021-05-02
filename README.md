@@ -12,11 +12,11 @@ Install python requirements.
 ```pip3 install -r requirements.txt```
 
 Upload code to arduino
-- See box_sensor_raw/box_sensor_raw.ino for details and pin layout
+- See box_republisher/box_sensor_raw/box_sensor_raw.ino for details and pin layout
 
 ## Getting started
 
-### mcav_box_sensor_publisher
+### mcav_box_sensor_republisher
 This package reads sensor data over Serial and republishes it as the corresponding ROS message.
 
 Currently supports:
@@ -65,8 +65,8 @@ Automated sensor data tests (needs roscore):
 
 Sensor data synchronisation:
 
-` python3 src/control/src/tests/test_time_synch.py `
+` python3 control/src/tests/test_time_synch.py `
 
 Motor control tests:
 
-` python3 src/control/src/tests/test_motor_control.py `
+` python3 control/src/tests/test_motor_control.py `
