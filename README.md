@@ -12,11 +12,11 @@ Install python requirements.
 ```pip3 install -r requirements```
 
 Upload code to arduino
-- See box_sensor_raw/box_sensor_raw.ino for details and pin layout
+- See box_republisher/box_sensor_raw/box_sensor_raw.ino for details and pin layout
 
 ## Getting started
 
-### mcav_box_sensor_publisher
+### mcav_box_sensor_republisher
 This package reads sensor data over Serial and republishes it as the corresponding ROS message.
 
 Currently supports:

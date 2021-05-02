@@ -20,7 +20,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # initalise ROS node
-    rospy.init_node("mcav_box_sensor_publisher")
+    rospy.init_node("mcav_box_sensor_republisher")
 
     box_rosify = BoxRosify(args.port, args.baud)
     box_rosify.republish() # start republishing process 
