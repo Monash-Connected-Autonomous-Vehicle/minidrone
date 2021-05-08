@@ -8,3 +8,4 @@ rosinstall_generator
 rosinstall
 wstool
 vcstools
+adafruit-circuitpython-servokit
