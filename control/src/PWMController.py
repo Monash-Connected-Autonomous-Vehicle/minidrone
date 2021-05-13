@@ -16,10 +16,6 @@ class PWMController:
     """
 
     def __init__(self):
-
-        # initialise ros node and sub
-        rospy.Subscriber("/twist_mux/cmd_vel", Twist, self.twist_callback)
-
         # initialise i2c and servokit
         rospy.loginfo("Initializing i2c")
         self.i2c_bus0 = busio.I2C(board.SCL, board.SDA)
@@ -30,13 +26,14 @@ class PWMController:
         # kit[1] is the steering servo
         rospy.loginfo("Done initializing")
 
-        # set controller parameters
-        rospy.set_param("mini_max_speed_pwm", 50)
+        # initialise ros node and sub
+        rospy.Subscriber("/twist_mux/cmd_vel", Twist, self.twist_callback)
 
+        # set controller parameters
         self.MIN_STEERING_PWM = 40  # left steering is a bit broken
         self.MAX_STEERING_PWM = 90
 
-        self.MAX_SPEED = rospy.get_param("mini_max_speed_pwm")
+        self.MAX_SPEED = rospy.get_param("mini_max_speed_pwm", 50)
         self.MIN_SPEED = 10
 
         # initialise control values
@@ -61,15 +58,15 @@ class PWMController:
         """Transform the twist velocities to motor pwm signals"""
 
         # speed (no brakes)
-        if msg.twist.linear.x >= 0:
+        if msg.linear.x >= 0:
             self.speed = self.scale(
-                msg.twist.linear.x, [0.0, 1.0], [self.MIN_SPEED, self.MAX_SPEED]
+                msg.linear.x, [0.0, 1.0], [self.MIN_SPEED, self.MAX_SPEED]
             )
             self.kit.servo[0].angle = self.speed
 
         # steering
         self.steering = self.scale(
-            msg.twist.angular.z,
+            msg.angular.z,
             [-1.0, 1.0],
             [self.MIN_STEERING_PWM, self.MAX_STEERING_PWM],
         )
@@ -87,6 +84,6 @@ class PWMController:
             rospy.spin()
 
         finally:
-            # set speed / steering to 0 if program is exited prematurely
+            # Set speed to 0 and steering to straight ahead")
             self.kit.servo[0].angle = 0
-            self.kit.servo[1].angle = 0
+            self.kit.servo[1].angle = self.scale(0, [-1.0, 1.0], [self.MIN_STEERING_PWM, self.MAX_STEERING_PWM])
