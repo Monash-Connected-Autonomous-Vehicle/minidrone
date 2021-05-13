@@ -2,7 +2,7 @@
 """
 MCAV - MiniDrone
 
-Transforms recieved twist messages into motor pwm signals
+Transforms received twist messages into motor pwm signals
 """
 
 import rospy
