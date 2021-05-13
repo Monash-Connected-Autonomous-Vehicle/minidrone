@@ -3,3 +3,4 @@ devel/*
 *.pyc
 .catkin_workspace
 .cache/*
+.vscode/*

@@ -7,10 +7,9 @@ This repository contains the software for the MCAV MiniDrone project.
 Setup Jetson to run ROS and Arduino IDE
 - See [MiniDrone Software Setup](https://docs.google.com/document/u/1/d/16hTuHI0GkWB7Fz8jkYoRb6zCtv_vSotQT3AZyo3yxcA/edit?usp=drive_web&ouid=101896295474612094790)
 
-Install python requirements.
+Install MiniDrone requirements
 
-```pip3 install -r requirements.txt```
-
+``` ./install.sh ```
 Upload code to arduino
 - See box_republisher/box_sensor_raw/box_sensor_raw.ino for details and pin layout
 
