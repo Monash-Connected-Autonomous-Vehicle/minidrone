@@ -28,12 +28,13 @@ class PWMController:
 
         # initialise ros node and sub
         rospy.Subscriber("/twist_mux/cmd_vel", Twist, self.twist_callback)
+        rospy.set_param("mini_max_speed_pwm", 40)
 
         # set controller parameters
         self.MIN_STEERING_PWM = 40  # left steering is a bit broken
         self.MAX_STEERING_PWM = 90
 
-        self.MAX_SPEED = rospy.get_param("mini_max_speed_pwm", 50)
+        self.MAX_SPEED = rospy.get_param("mini_max_speed_pwm")
         self.MIN_SPEED = 10
 
         # initialise control values
@@ -56,6 +57,9 @@ class PWMController:
 
     def twist_callback(self, msg):
         """Transform the twist velocities to motor pwm signals"""
+
+        # get max speed from param
+        self.MAX_SPEED = rospy.get_param("mini_max_speed_pwm")
 
         # speed (no brakes)
         if msg.linear.x >= 0:
