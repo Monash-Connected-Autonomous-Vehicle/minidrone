@@ -27,15 +27,13 @@ void JoystickTwist::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
   twist.linear.x = linear_scale_*joy->axes[linear_axis_];
   twist_pub_.publish(twist);
 
-  // if square pressed, raise max speed
-  // not sure which axes is buttons
-  if (joy->buttons[1] == 1) {
-    nh_.setParam("/mini_max_speed_pwm", 40);
-  }
-
-  // reset speed if circle pressed
-  if (joy->buttons[2] == 1) {
+  // if square pressed (hold), boost max speed
+  // square=0, x=1, cirlce=2, triangle=3
+  if (joy->buttons[0] == 1) {
     nh_.setParam("/mini_max_speed_pwm", 90);
+  }
+  else {
+    nh_.setParam("/mini_max_speed_pwm", 40);
   }
 
 
