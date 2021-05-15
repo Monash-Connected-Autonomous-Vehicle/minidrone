@@ -41,13 +41,18 @@ Publishes:
 
 ### control
 This package controls the vehicle's motors based on the desired ROS Twist message.
+This package listens for ROS Twist messages and sets the motor speed and servo position accordingly. It also provides a mapping from a connected joy stick controller to Twist messages.
 
 Supports
 - PS4 controller
 
-To run the node:
+To run the node the control node by itself:
 
-` python3 src/control/src/control.py `
+`rosrun control control.py`
+
+To run the control node as well as the joy stick controller twist publisher:
+
+`roslaunch control dualshock.launch`
 
 For more commands, see [Useful Commands](/useful_cmds.md)
 
