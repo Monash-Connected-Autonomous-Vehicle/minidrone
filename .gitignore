@@ -4,3 +4,7 @@ devel/*
 .catkin_workspace
 .cache/*
 .vscode/*
+
+
+*.csv
+*.png
