@@ -6,7 +6,7 @@ from vision_msgs.msg import Detection2DArray
 from geometry_msgs.msg import Twist
 
 
-# TODO: test with motors
+# TODO: tune values for following
 # TODO: remove video output from roslaunch 
 # TODO: create better launch file
 # TODO: clean up console output
@@ -31,7 +31,7 @@ class FollowTheLeader():
 
         # print(data.detections)
         IMG_SHAPE = (1280, 720)
-        X_MIN, X_MAX = IMG_SHAPE[0] * 0.25, IMG_SHAPE[0] * 0.75
+        X_MIN, X_MAX = IMG_SHAPE[0] * 0.4, IMG_SHAPE[0] * 0.6
         SIZE_MIN, SIZE_MAX = 500, 700
 
         for det in data.detections:
@@ -44,13 +44,13 @@ class FollowTheLeader():
                 # if person to left, turn left
                 if det.bbox.center.x < X_MIN:
                     print("Following Leader. Turning Left.")
-                    self.angular_z -= STEER_INCREMENT
+                    self.angular_z += STEER_INCREMENT
 
 
                 # if person to right, turn right
                 if det.bbox.center.x > X_MAX:
                     rospy.loginfo("Following Leader. Turning Right.")
-                    self.angular_z += STEER_INCREMENT
+                    self.angular_z -= STEER_INCREMENT
 
 
                 # if person is small, speed up

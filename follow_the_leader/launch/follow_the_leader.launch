@@ -1,8 +1,8 @@
 <launch>
 
     <node pkg="follow_the_leader" type="follow_the_leader.py" name="follow_the_leader" output="screen" />
-    <!-- <include file="$(find control)/launch/dualshock.launch" /> -->
-    <!-- ros_deep_learning detectnet.ros1.launch input:=csi://0 -->
+    <node pkg="control" type="control.py" name="minidrone_control" output="screen" />
+    <include file="$(find control)/launch/dualshock.launch" />
     <include file="$(find ros_deep_learning)/launch/detectnet.ros1.launch" />
     <include file="$(find twist_mux)/launch/twist_mux.launch" />
 
