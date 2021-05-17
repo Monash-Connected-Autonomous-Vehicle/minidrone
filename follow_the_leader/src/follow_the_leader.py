@@ -1,10 +1,15 @@
-#! /usr/bin/env/python3
+#!/usr/bin/env python3
 
 
 import rospy
 from vision_msgs.msg import Detection2DArray
 from geometry_msgs.msg import Twist
 
+
+# TODO: test with motors
+# TODO: remove video output from roslaunch 
+# TODO: create better launch file
+# TODO: clean up console output
 
 class FollowTheLeader():
     """ Simple Follow the Leader demo """ 
@@ -27,39 +32,40 @@ class FollowTheLeader():
         # print(data.detections)
         IMG_SHAPE = (1280, 720)
         X_MIN, X_MAX = IMG_SHAPE[0] * 0.25, IMG_SHAPE[0] * 0.75
+        SIZE_MIN, SIZE_MAX = 500, 700
 
         for det in data.detections:
 
 
             if det.results[0].id == 1:
                 #id = 1: person
-                print("\nPerson Detected!")
+                rospy.loginfo("---------------- Person Detected! ----------------")
 
                 # if person to left, turn left
                 if det.bbox.center.x < X_MIN:
-                    print("TURNING LEFT")
+                    print("Following Leader. Turning Left.")
                     self.angular_z -= STEER_INCREMENT
 
 
                 # if person to right, turn right
                 if det.bbox.center.x > X_MAX:
-                    print("TURNING RIGHT")
+                    rospy.loginfo("Following Leader. Turning Right.")
                     self.angular_z += STEER_INCREMENT
 
 
                 # if person is small, speed up
-                if det.bbox.size_x < 400:
-                    print("MOVE FASTER")
+                if det.bbox.size_x < SIZE_MIN:
+                    print("Leder too far. Speeding Up.")
                     self.linear_x += SPEED_INCREMENT
 
 
                 # if person is big, slow down?
-                if det.bbox.size_x > 600:
-                    print("SLOW DOWN")
+                if det.bbox.size_x > SIZE_MAX:
+                    rospy.loginfo("Leader too close. Slowing Down.")
                     self.linear_x -= SPEED_INCREMENT
                 
 
-
+                # TODO:
                 # should use lidar to measure distance to lead?
                 # rely on e brake to stop?
 
