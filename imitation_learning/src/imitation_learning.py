@@ -7,7 +7,12 @@ import PIL
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import CompressedImage, Image, Joy
+import torch
+import torch.nn as nn
+import torchvision
+from torchvision import transforms
 
+import os
 
 class ImitationLearning:
     def __init__(self):
@@ -21,13 +26,25 @@ class ImitationLearning:
 
         # unused yet
         self.SAVE_DIR = "data/"
-        self.record = True  # recording toggle
-        self.autopilot = False  # autopilot toggle
+        self.record = False  # recording toggle
+        self.autopilot = True  # autopilot toggle
 
         self.df = pd.DataFrame(columns=["ts", "fname", "speed", "steer"])
 
+        # pytorch setup
+        print("Model Setup Start")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model = torchvision.models.resnet18(pretrained=True)
+        num_fts = self.model.fc.in_features
+        self.model.fc = nn.Linear(num_fts, 1)
+        self.model = self.model.to(self.device)
+        self.model.eval()
+        print("Model Setup End")
+        print(f"Record: {self.record}, Autopilot: {self.autopilot}")
+
+        
         rospy.Subscriber(
-            "jetbot_camera/0/compressed", CompressedImage, self.image_callback
+            "jetbot_camera/0/compressed_throttle", CompressedImage, self.image_callback
         )
         rospy.Subscriber("twist_mux/cmd_vel", Twist, self.twist_callback)
         rospy.Subscriber("/joy", Joy, self.joy_callback)
@@ -57,9 +74,25 @@ class ImitationLearning:
         # synch images and twist
         self.img = img
         self.ts = data.header.stamp
-
+        print(f"Img Received: {self.ts}")
         if self.record:
             self.save_data()
+
+        if self.autopilot:
+            self.model_inference()
+
+    def model_inference(self):
+        #print("model inference")
+        transformation = transforms.Compose([transforms.ToPILImage(), transforms.Resize((224, 224)), transforms.ToTensor()])
+        img_t = transformation(self.img).unsqueeze(0)
+        img_t = img_t.to(self.device)
+
+        print(f"Img Shape: {img_t.shape}")
+
+        steering = self.model(img_t)
+
+        print(f"Steering Output: {steering.item()}")
+        # set steering value
 
     def twist_callback(self, data):
 
@@ -69,8 +102,8 @@ class ImitationLearning:
 
     def save_data(self):
 
-        fname = f"../data/{self.img_idx:09d}.png"
-
+        fname = f"/home/jetson02/mcav/catkin_ws/src/minidrone/imitation_learning/data/{self.img_idx:09d}.png"
+        print(fname)
         # TODO: This can be improved
         db = {"ts": self.ts, "fname": fname, "speed": self.speed, "steer": self.steer}
 
@@ -78,13 +111,13 @@ class ImitationLearning:
             [self.df, pd.DataFrame.from_dict(db, orient="index").T], ignore_index=True
         )
 
-        print(self.df.tail())
+        # print(self.df.tail())
 
         # save image
         cv2.imwrite(fname, self.img)
 
         # save entire df (dumb, only need increment)
-        self.df.to_csv("../data/data.csv")
+        self.df.to_csv("/home/jetson02/mcav/catkin_ws/src/minidrone/imitation_learning/data/data.csv")
 
         self.img_idx += 1
 
@@ -105,3 +138,9 @@ if __name__ == "__main__":
 # TODO: functionality to start / stop recording (button press?)
 
 # TODO: TOO SLOW
+
+
+# RUn
+# roslaunch control manual_control.launch 
+#roslaunch jetbot_ros jetbot_cam_compressed_one.launch 
+# rosrun imitation_learning imitation_learning.py
