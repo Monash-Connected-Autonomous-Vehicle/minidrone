@@ -3,10 +3,10 @@
     <!-- launch camera  -->
     <include file="$(find jetbot_ros)/launch/jetbot_cam_compressed_one.launch" />
     <!-- launch manual control  -->
-    <include file="$(find control)/launch/manual_control.launch" />
+    <!-- <include file="$(find control)/launch/manual_control.launch" /> -->
 
     <!-- imitation learning -->
-    <node pkg="topic_tools" type="throttle" name="throttle" args="messages /jetbot_camera/0/compressed 1" /> 
+    <node pkg="topic_tools" type="throttle" name="throttle" args="messages /jetbot_camera/0/compressed 2" /> 
     <node pkg="imitation_learning" type="imitation_learning.py" name="imitation_learning" output="screen" />
 
 </launch>
