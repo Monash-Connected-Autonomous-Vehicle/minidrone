@@ -31,7 +31,7 @@ class ImitationDataset(Dataset):
         self.df = pd.read_csv(self.DATA_PATH + "data.csv")
         self.transform =  transforms.Compose([
             # transforms.ToPILImage(),
-            transforms.RandomResizedCrop((224, 224)),
+            transforms.Resize((224, 224)),
             transforms.ToTensor()
             ]) 
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     # TODO: load config from cmd line args or config.yaml
 
     # training hyperparameters
-    epochs = 2
+    epochs = 5
     batch_size = 1
 
     # imitation dataset
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     # optimiser
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-    for epoch in range(2):  # loop over the dataset multiple times
+    for epoch in range(epochs):  # loop over the dataset multiple times
 
         running_loss = 0.0
         for i, sample in enumerate(train_dataloader, 0):
@@ -132,7 +132,7 @@ if __name__ == "__main__":
 
     print('Finished Training')
 
-    model_fname = "../models/model2.pt"
+    model_fname = "../models/model.pt"
     print(f"Saving model to: {model_fname}")
     torch.save(model.state_dict(), model_fname)
 

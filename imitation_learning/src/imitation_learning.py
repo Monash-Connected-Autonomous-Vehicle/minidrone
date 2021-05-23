@@ -29,8 +29,11 @@ class ImitationLearner:
         self.SAVE_DIR = (
             "/home/jetson03/mcav/catkin_ws/src/minidrone/imitation_learning/data/"
         )
-        self.record = True  # recording toggle
-        self.autopilot = False  # autopilot toggle
+        self.MODEL_PATH = (
+            "/home/jetson03/mcav/catkin_ws/src/minidrone/imitation_learning/models/models.pt"
+        )
+        self.record = False  # recording toggle
+        self.autopilot = True  # autopilot toggle
 
         # try to load the database, otherwise create new
         try:
@@ -45,6 +48,13 @@ class ImitationLearner:
         num_fts = self.model.fc.in_features
         self.model.fc = nn.Linear(num_fts, 1)
         self.model = self.model.to(self.device)
+
+        # load trained model        
+        try:
+            self.model.load_state_dict(torch.load(self.MODEL_PATH))
+        except:
+            pass
+
         self.model.eval()
         print("Model Setup End")
         print(f"Record: {self.record}, Autopilot: {self.autopilot}")

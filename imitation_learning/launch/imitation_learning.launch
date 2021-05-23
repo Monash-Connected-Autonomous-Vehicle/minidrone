@@ -2,6 +2,7 @@
     
     <!-- launch camera  -->
     <include file="$(find jetbot_ros)/launch/jetbot_cam_compressed_one.launch" />
+    
     <!-- launch manual control  -->
     <!-- <include file="$(find control)/launch/manual_control.launch" /> -->
 
