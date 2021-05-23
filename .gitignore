@@ -8,3 +8,5 @@ devel/*
 
 *.csv
 *.png
+imitation_learning/data/*
+imitation_learning/models/*.pt
