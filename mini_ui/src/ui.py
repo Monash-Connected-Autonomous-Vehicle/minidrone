@@ -26,12 +26,24 @@ class Example(QWidget):
     def initUI(self):
         
 
+        # background colour
+        p = self.palette()
+        p.setColor(self.backgroundRole(), Qt.black)
+        self.setPalette(p)
+
         self.auto_mode_button = QPushButton("Autonomous Mode", self)
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
         cam_0_button = QPushButton("Camera 0", self)
         cam_1_button = QPushButton("Camera 1", self)
         
+
+        self.start_button.setStyleSheet("background-color: green")
+        self.record_button.setStyleSheet("background-color: red")
+        self.auto_mode_button.setStyleSheet("background-color: orange")
+
+
+
         self.cam_0_url = "http://localhost:8080/stream?topic=/jetbot_camera/0&type=ros_compressed&width=360&height=480"
         self.cam_1_url = "http://localhost:8080/stream?topic=/jetbot_camera/1&type=ros_compressed&width=360&height=480"
 
@@ -109,6 +121,9 @@ class Example(QWidget):
 
 
 # TODO: create a main window properly
+# TODO: jetson stats
+# TODO: manager info
+# TODO: 
 
 def main():
     app = QApplication(sys.argv)
