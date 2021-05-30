@@ -11,6 +11,38 @@ from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
 
 
+import glob
+import re
+
+
+def setup_camera_urls():
+    """ return the url for viewing compressed image stream over http
+    assumes compressed image stream, and jetbot_camera
+    
+    """
+
+    published_topics = rospy.get_published_topics()
+    published_topic_names = [x[0] for x in published_topics]
+    published_topic_types = [x[1] for x in published_topics]
+    #\/jetbot_camera\/.*
+    r = re.compile(".*\/compressed$")
+    compressed_camera_topics = list(filter(r.match, published_topic_names))
+
+    # TODO: make more dynamic
+    # TODO: probably need to sort the list
+
+    cam_urls = []
+    for cam_topic in compressed_camera_topics:
+
+        cam_topic = "/".join(cam_topic.split("/")[:-1])
+        cam_url = f"http://localhost:8080/stream?topic={cam_topic}&type=ros_compressed&width=360&height=480"
+
+        cam_urls.append(cam_url)
+
+    return cam_urls
+
+
+
 class ImageView(QMainWindow):
     def __init__(self, parent=None):
         super(ImageView, self).__init__(parent)
@@ -31,12 +63,10 @@ class Example(QWidget):
         p.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(p)
 
-        self.auto_mode_button = QPushButton("Autonomous Mode", self)
+        self.auto_mode_button = QPushButton("Manual Mode", self)
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
-        cam_0_button = QPushButton("Camera 0", self)
-        cam_1_button = QPushButton("Camera 1", self)
-        
+
 
         self.start_button.setStyleSheet("background-color: green")
         self.record_button.setStyleSheet("background-color: red")
@@ -44,33 +74,39 @@ class Example(QWidget):
 
 
 
-        self.cam_0_url = "http://localhost:8080/stream?topic=/jetbot_camera/0&type=ros_compressed&width=360&height=480"
-        self.cam_1_url = "http://localhost:8080/stream?topic=/jetbot_camera/1&type=ros_compressed&width=360&height=480"
+        # setup camera buttons dynamically
+        # based on the number of compressed streams detected
+        self.cam_urls = setup_camera_urls()
+        print(self.cam_urls)
 
-
-        hbox = QHBoxLayout()
-        hbox.addStretch(1)
-        hbox.addWidget(self.start_button)
-        hbox.addWidget(self.record_button)
-        hbox.addWidget(self.auto_mode_button)
+        camera_button_layout = QHBoxLayout()
+        camera_button_layout.addStretch(1)
         
-        hbox2 = QHBoxLayout()
-        hbox2.addStretch(1)
-        hbox2.addWidget(cam_0_button)
-        hbox2.addWidget(cam_1_button)
+        for i, cam_url in enumerate(self.cam_urls):
+
+            cam_button = QPushButton(f"Camera {i}", self)
+            cam_button.clicked.connect(self.camera_button_clicked)
+            camera_button_layout.addWidget(cam_button)
+
+
+        action_button_layout = QHBoxLayout()
+        action_button_layout.addStretch(1)
+        action_button_layout.addWidget(self.start_button)
+        action_button_layout.addWidget(self.record_button)
+        action_button_layout.addWidget(self.auto_mode_button)
+        
+
 
         self.image_view = ImageView(self)
 
         vbox = QVBoxLayout()
         vbox.addStretch(1)
-        # vbox.addWidget(self.image_view)
-        vbox.addLayout(hbox2)
-        vbox.addLayout(hbox)
+        vbox.addLayout(camera_button_layout)
+        vbox.addLayout(action_button_layout)
 
         self.setLayout(vbox)
 
-        cam_0_button.clicked.connect(self.buttonClicked)
-        cam_1_button.clicked.connect(self.buttonClicked)
+
 
         self.start_button.clicked.connect(self.start_button_clicked)
         self.record_button.clicked.connect(self.record_button_clicked)
@@ -78,12 +114,12 @@ class Example(QWidget):
 
         # self.statusBar()
 
-        self.setGeometry(300, 500, 450, 350)
+        # self.setGeometry(300, 500, 450, 350)
         self.setWindowTitle('Mini UI')
-        self.setWindowIcon(QIcon('white_logo.png'))
+        self.setWindowIcon(QIcon('logo.png'))
         self.show()
 
-    def buttonClicked(self):
+    def camera_button_clicked(self):
         sender = self.sender()
         # self.statusBar().showMessage(sender.text() + ' was pressed')
 
@@ -91,17 +127,20 @@ class Example(QWidget):
 
         if sender.text() == "Camera 0":
             self.image_view.browser = QWebEngineView()
-            self.image_view.browser.setUrl(QUrl(self.cam_0_url))
-            self.image_view.setCentralWidget(self.image_view.browser)
-            self.image_view.setWindowTitle(sender.text())
-            self.image_view.show()
+            self.image_view.browser.setUrl(QUrl(self.cam_urls[0]))
+
         
         if sender.text() == "Camera 1":
             self.image_view.browser = QWebEngineView()
-            self.image_view.browser.setUrl(QUrl(self.cam_1_url))
-            self.image_view.setCentralWidget(self.image_view.browser)
-            self.image_view.setWindowTitle(sender.text())
-            self.image_view.show()
+            self.image_view.browser.setUrl(QUrl(self.cam_urls[1]))
+        
+        if sender.text() == "Camera 2":
+            self.image_view.browser = QWebEngineView()
+            self.image_view.browser.setUrl(QUrl(self.cam_urls[2]))
+        
+        self.image_view.setCentralWidget(self.image_view.browser)
+        self.image_view.setWindowTitle(sender.text())
+        self.image_view.show()
 
 
     def start_button_clicked(self):
@@ -116,14 +155,18 @@ class Example(QWidget):
     
     def auto_mode_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
-        self.auto_mode_button.setText("Manual Mode")
+        self.auto_mode_button.setText("Autonomous Mode")
 
 
 
 # TODO: create a main window properly
 # TODO: jetson stats
 # TODO: manager info
-# TODO: 
+# TODO: rosrun web_video_server web_video_server
+# TODO: make buttons bigger
+# TODO: make buttons do stuff.
+# TODO: close on main ui button close
+
 
 def main():
     app = QApplication(sys.argv)

@@ -1,0 +1,8 @@
+<launch>
+    <!-- launch camera  -->
+    <include file="$(find jetbot_ros)/launch/jetbot_cam_compressed_two.launch" />
+    
+    <!-- mini ui and web_video_server -->
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server"/> 
+    <node pkg="mini_ui" type="ui.py" name="mini_ui" output="screen" />
+</launch>
