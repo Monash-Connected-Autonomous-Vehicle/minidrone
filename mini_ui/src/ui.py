@@ -48,7 +48,6 @@ class ImageView(QMainWindow):
     def __init__(self, parent=None):
         super(ImageView, self).__init__(parent)
 
-
 class MainInterface(QMainWindow):
 
     def __init__(self):
@@ -84,11 +83,21 @@ class MainInterface(QMainWindow):
         self.action_button_layout.addWidget(self.record_button)
         self.action_button_layout.addWidget(self.auto_mode_button)
         
+        # load map? not ready
+        # from gps import GPSReader
+        # self.gps_reader = GPSReader()
+        # self.fig = self.gps_reader.fig2
 
+        self.map_view = QWebEngineView()
 
+        # # self.map_view.setUrl(QUrl("https://www.google.com"))
+        # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
+        self.map_view_layout = QVBoxLayout()
+        self.map_view_layout.addWidget(self.map_view)
 
         vbox = QVBoxLayout()
         vbox.addStretch(1)
+        vbox.addLayout(self.map_view_layout)
         vbox.addLayout(self.camera_button_layout)
         vbox.addLayout(self.action_button_layout)
 
@@ -102,12 +111,13 @@ class MainInterface(QMainWindow):
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
 
         self.image_view = ImageView(self)
+
         # self.statusBar()
         
         # setup recorder class
         self.recorder = RosbagRecorder()
 
-        self.setGeometry(300, 300, 700, 350)
+        self.setGeometry(300, 300, 1000, 700)
         self.setWindowTitle('Mini UI')
         self.setWindowIcon(QIcon('/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/logo.png'))
         self.show()

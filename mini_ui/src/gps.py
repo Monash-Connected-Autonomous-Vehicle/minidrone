@@ -2,15 +2,12 @@
 
 
 
-import rospy
-from sensor_msgs.msg import NavSatFix
-
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
-
-
 import pandas as pd
 import plotly.express as px
-
+import rospy
+from sensor_msgs.msg import NavSatFix
 
 # url: http://127.0.0.1:34011/
 
@@ -23,13 +20,44 @@ class GPSReader():
         df_gps = pd.read_csv("gps_data.csv")
 
         fig = px.scatter_mapbox(df_gps, lat="field.latitude", lon="field.longitude", 
-                                color_discrete_sequence=["blue"], zoom=10)
+                                color_discrete_sequence=["blue"])
         fig.update_layout(mapbox_style="open-street-map")
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-        fig.show()
+        fig.update_layout(
+            hovermode='closest',
+            mapbox=dict(
+                bearing=0,
+                center=go.layout.mapbox.Center(
+                    lat=df_gps.iloc[0]["field.latitude"],
+                    lon=df_gps.iloc[0]["field.longitude"]
+                ),
+                pitch=0,
+                zoom=12
+            )
+        )
 
 
 
+        # TODO: figure out how to get the map tiles with cross origin error
+        #TODO: try out folium?
+
+        # fig.show()
+
+
+        self.fig2 = go.FigureWidget(fig)
+
+        # fig2.show()
+        # for data in fig2.data:
+        #     print(data)
+
+
+        # fig2.data[0].lat = [-37.8]
+        # fig2.data[0].lon = [145.1]  
+        # fig2.data[0].marker["color"]="red"
+        # fig2.data[0].marker["size"] = 10
+
+
+        # fig2.show()
         # TODO: implement as FigureWidget for dynamic updates?
         # https://plotly.com/python/figurewidget/
         # https://community.plotly.com/t/updating-data-on-mapbox-without-updating-the-whole-map/24778/15
