@@ -8,6 +8,7 @@ devel/*
 
 *.csv
 *.png
+*.bag
 imitation_learning/data/*
 imitation_learning/models/*.pt
 

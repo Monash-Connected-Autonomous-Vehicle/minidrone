@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 
+import glob
+import re
 import subprocess
 import sys
 
 import rospy
+import roslaunch
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
 
-
-import glob
-import re
-
-
 from record import RosbagRecorder
+
 
 def setup_camera_urls():
     """ return the url for viewing compressed image stream over http
@@ -50,7 +49,7 @@ class ImageView(QMainWindow):
         super(ImageView, self).__init__(parent)
 
 
-class Example(QMainWindow):
+class MainInterface(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -75,45 +74,34 @@ class Example(QMainWindow):
         self.auto_mode_button.setStyleSheet("background-color: orange")
 
 
-
-        # setup camera buttons dynamically
-        # based on the number of compressed streams detected
-        self.cam_urls = setup_camera_urls()
-        print(self.cam_urls)
-
-        camera_button_layout = QHBoxLayout()
-        camera_button_layout.addStretch(1)
-        
-        for i, cam_url in enumerate(self.cam_urls):
-
-            cam_button = QPushButton(f"Camera {i}", self)
-            cam_button.clicked.connect(self.camera_button_clicked)
-            camera_button_layout.addWidget(cam_button)
+        # def setup_ui():
+        self.setup_camera_buttons()
 
 
-        action_button_layout = QHBoxLayout()
-        action_button_layout.addStretch(1)
-        action_button_layout.addWidget(self.start_button)
-        action_button_layout.addWidget(self.record_button)
-        action_button_layout.addWidget(self.auto_mode_button)
+        self.action_button_layout = QHBoxLayout()
+        self.action_button_layout.addStretch(1)
+        self.action_button_layout.addWidget(self.start_button)
+        self.action_button_layout.addWidget(self.record_button)
+        self.action_button_layout.addWidget(self.auto_mode_button)
         
 
 
-        self.image_view = ImageView(self)
 
         vbox = QVBoxLayout()
         vbox.addStretch(1)
-        vbox.addLayout(camera_button_layout)
-        vbox.addLayout(action_button_layout)
+        vbox.addLayout(self.camera_button_layout)
+        vbox.addLayout(self.action_button_layout)
 
         self.main_widget = QWidget()
         self.main_widget.setLayout(vbox)
         self.setCentralWidget(self.main_widget)
 
+        
         self.start_button.clicked.connect(self.start_button_clicked)
         self.record_button.clicked.connect(self.record_button_clicked)
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
 
+        self.image_view = ImageView(self)
         # self.statusBar()
         
         # setup recorder class
@@ -123,6 +111,22 @@ class Example(QMainWindow):
         self.setWindowTitle('Mini UI')
         self.setWindowIcon(QIcon('/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/logo.png'))
         self.show()
+
+
+    def setup_camera_buttons(self):
+        # setup camera buttons dynamically
+        # based on the number of compressed streams detected
+        self.cam_urls = setup_camera_urls()
+        print(self.cam_urls)
+
+        self.camera_button_layout = QHBoxLayout()
+        self.camera_button_layout.addStretch(1)
+        
+        for i, cam_url in enumerate(self.cam_urls):
+
+            cam_button = QPushButton(f"Camera {i}", self)
+            cam_button.clicked.connect(self.camera_button_clicked)
+            self.camera_button_layout.addWidget(cam_button)
 
     def camera_button_clicked(self):
         sender = self.sender()
@@ -141,10 +145,27 @@ class Example(QMainWindow):
 
     def start_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
-        self.start_button.setText("Stop System")
+
         if self.sender().text() == "Start System":
-            # out = subprocess.Popen(["roslaunch",  "jetbot_ros",  "jetbot_cam_compressed_one.launch"], stdout=subprocess.PIPE)
-            pass
+
+            self.start_button.setText("Stop System")
+            
+            # roslaunch
+            uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
+            roslaunch.configure_logging(uuid)
+            launch_file = "/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/launch/mini_ui_cams.launch"
+            self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
+            self.launch.start()
+            rospy.loginfo("roslaunch successful. ")
+
+            # TODO: refresh camera buttons here
+            # http://wiki.ros.org/roslaunch/API%20Usage
+        else:
+            self.launch.shutdown()
+            self.start_button.setText("Start System")
+
+
+
 
     def record_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
@@ -162,6 +183,7 @@ class Example(QMainWindow):
     def auto_mode_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
         self.auto_mode_button.setText("Autonomous Mode")
+        print(rospy.get_published_topics())
 
 
 
@@ -175,7 +197,7 @@ class Example(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    ex = Example()
+    main_ui = MainInterface()
     sys.exit(app.exec_())
 
 
@@ -184,14 +206,8 @@ if __name__ == '__main__':
     rospy.init_node("ui_node")
     main()
 
-# button press
 
-# # self.setWindowIcon(QIcon('white_logo.png'))
-#         okButton = QPushButton("OK")
-#         cancelButton = QPushButton("Cancel")
 
-#         okButton.clicked.connect(self.ok_button_pushed)
-# # 
 #ref
 # https://zetcode.com/gui/pyqt5/eventssignals/
 
