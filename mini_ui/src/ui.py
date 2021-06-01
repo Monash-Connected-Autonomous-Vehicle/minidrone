@@ -15,6 +15,8 @@ import glob
 import re
 
 
+from record import RosbagRecorder
+
 def setup_camera_urls():
     """ return the url for viewing compressed image stream over http
     assumes compressed image stream, and jetbot_camera
@@ -48,7 +50,7 @@ class ImageView(QMainWindow):
         super(ImageView, self).__init__(parent)
 
 
-class Example(QWidget):
+class Example(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -104,19 +106,22 @@ class Example(QWidget):
         vbox.addLayout(camera_button_layout)
         vbox.addLayout(action_button_layout)
 
-        self.setLayout(vbox)
-
-
+        self.main_widget = QWidget()
+        self.main_widget.setLayout(vbox)
+        self.setCentralWidget(self.main_widget)
 
         self.start_button.clicked.connect(self.start_button_clicked)
         self.record_button.clicked.connect(self.record_button_clicked)
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
 
         # self.statusBar()
+        
+        # setup recorder class
+        self.recorder = RosbagRecorder()
 
-        # self.setGeometry(300, 500, 450, 350)
+        self.setGeometry(300, 300, 700, 350)
         self.setWindowTitle('Mini UI')
-        self.setWindowIcon(QIcon('logo.png'))
+        self.setWindowIcon(QIcon('/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/logo.png'))
         self.show()
 
     def camera_button_clicked(self):
@@ -125,19 +130,10 @@ class Example(QWidget):
 
         rospy.loginfo(sender.text() + " button was pressed")
 
-        if sender.text() == "Camera 0":
-            self.image_view.browser = QWebEngineView()
-            self.image_view.browser.setUrl(QUrl(self.cam_urls[0]))
 
-        
-        if sender.text() == "Camera 1":
-            self.image_view.browser = QWebEngineView()
-            self.image_view.browser.setUrl(QUrl(self.cam_urls[1]))
-        
-        if sender.text() == "Camera 2":
-            self.image_view.browser = QWebEngineView()
-            self.image_view.browser.setUrl(QUrl(self.cam_urls[2]))
-        
+        idx = int(sender.text()[-1])
+        self.image_view.browser = QWebEngineView()
+        self.image_view.browser.setUrl(QUrl(self.cam_urls[idx]))
         self.image_view.setCentralWidget(self.image_view.browser)
         self.image_view.setWindowTitle(sender.text())
         self.image_view.show()
@@ -145,14 +141,24 @@ class Example(QWidget):
 
     def start_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
-        # out = subprocess.Popen(["roslaunch",  "jetbot_ros",  "jetbot_cam_compressed_one.launch"], stdout=subprocess.PIPE)
         self.start_button.setText("Stop System")
+        if self.sender().text() == "Start System":
+            # out = subprocess.Popen(["roslaunch",  "jetbot_ros",  "jetbot_cam_compressed_one.launch"], stdout=subprocess.PIPE)
+            pass
 
-    
     def record_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
-        self.record_button.setText("Stop Recording")
-    
+
+        # toggle between recording states
+        if self.sender().text() == "Record Data":
+            self.record_button.setText("Stop Recording")
+            self.recorder.recording = True
+        else:
+            self.record_button.setText("Record Data")
+            self.recorder.stop_recording()
+        
+        print("Recording Status: ", self.recorder.recording)
+
     def auto_mode_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
         self.auto_mode_button.setText("Autonomous Mode")
@@ -162,7 +168,6 @@ class Example(QWidget):
 # TODO: create a main window properly
 # TODO: jetson stats
 # TODO: manager info
-# TODO: rosrun web_video_server web_video_server
 # TODO: make buttons bigger
 # TODO: make buttons do stuff.
 # TODO: close on main ui button close
