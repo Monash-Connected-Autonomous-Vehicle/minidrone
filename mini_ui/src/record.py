@@ -177,12 +177,15 @@ class RosbagRecorder:
 
 if __name__ == "__main__":
 
-    rospy.init_node("recorder_test")
+    rospy.init_node("rosbag_recorder")
+    rospy.loginfo("Rosbag Recorder Started")
 
     recorder = RosbagRecorder()
-    print("recording test")
 
     rospy.spin()
+
+
+# TODO: change imitation learner to use this recorder class
 
 
 # http://wiki.ros.org/rosbag/Code%20API#Python_API

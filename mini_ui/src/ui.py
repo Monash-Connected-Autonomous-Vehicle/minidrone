@@ -14,9 +14,6 @@ from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
 from std_msgs.msg import Bool
 
-from record import RosbagRecorder
-
-
 def setup_camera_urls():
     """ return the url for viewing compressed image stream over http
     assumes compressed image stream, and jetbot_camera
@@ -115,10 +112,6 @@ class MainInterface(QMainWindow):
 
         self.image_view = ImageView(self)
 
-        # self.statusBar()
-        
-        # setup recorder class
-        self.recorder = RosbagRecorder()
 
         self.setGeometry(300, 300, 1000, 700)
         self.setWindowTitle('Mini UI')
@@ -183,23 +176,22 @@ class MainInterface(QMainWindow):
     def record_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")
 
+        record_msg = Bool()
         # toggle between recording states
         if self.sender().text() == "Record Data":
+            
+            # set the recording msg
             self.record_button.setText("Stop Recording")
-            # self.recorder.recording = True
-
-            record_msg = Bool()
             record_msg.data = True
-            self.record_pub.publish(record_msg)
+            
         else:
+            # set the stop recording msg
             self.record_button.setText("Record Data")
-            # self.recorder.stop_recording()
-
-            record_msg = Bool()
             record_msg.data = False
-            self.record_pub.publish(record_msg)
-        
-        print("Recording Status: ", self.recorder.recording)
+
+        # publish the recording message        
+        self.record_pub.publish(record_msg)
+        print("Recording Status: ", record_msg.data)
 
     def auto_mode_button_clicked(self):
         rospy.loginfo(self.sender().text() + " button was pressed")

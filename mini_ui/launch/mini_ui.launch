@@ -5,4 +5,6 @@
     <!-- mini ui and web_video_server -->
     <node pkg="web_video_server" type="web_video_server" name="web_video_server"/> 
     <node pkg="mini_ui" type="ui.py" name="mini_ui" output="screen" />
+    <node pkg="mini_ui" type="record.py" name="recorder" output="screen" />
+    
 </launch>
