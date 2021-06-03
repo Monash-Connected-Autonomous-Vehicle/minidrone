@@ -5,13 +5,14 @@ import re
 import subprocess
 import sys
 
-import rospy
 import roslaunch
+import rospy
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
+from std_msgs.msg import Bool
 
 from record import RosbagRecorder
 
@@ -55,6 +56,8 @@ class MainInterface(QMainWindow):
 
         self.initUI()
 
+        self.record_pub = rospy.Publisher("/recorder/recording", Bool, queue_size=1)
+
     def initUI(self):
         
 
@@ -90,8 +93,8 @@ class MainInterface(QMainWindow):
 
         self.map_view = QWebEngineView()
 
-        # # self.map_view.setUrl(QUrl("https://www.google.com"))
-        # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
+        # # # self.map_view.setUrl(QUrl("https://www.google.com"))
+        # # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
         self.map_view_layout = QVBoxLayout()
         self.map_view_layout.addWidget(self.map_view)
 
@@ -183,10 +186,18 @@ class MainInterface(QMainWindow):
         # toggle between recording states
         if self.sender().text() == "Record Data":
             self.record_button.setText("Stop Recording")
-            self.recorder.recording = True
+            # self.recorder.recording = True
+
+            record_msg = Bool()
+            record_msg.data = True
+            self.record_pub.publish(record_msg)
         else:
             self.record_button.setText("Record Data")
-            self.recorder.stop_recording()
+            # self.recorder.stop_recording()
+
+            record_msg = Bool()
+            record_msg.data = False
+            self.record_pub.publish(record_msg)
         
         print("Recording Status: ", self.recorder.recording)
 
@@ -220,42 +231,6 @@ if __name__ == '__main__':
 
 #ref
 # https://zetcode.com/gui/pyqt5/eventssignals/
-
-
-
-# respond to key press
-    # def keyPressEvent(self, e):
-    #     if e.key() == Qt.Key_Escape:
-    #         self.close()
-
-    #     if e.key() == 82:   # if r is pressed?
-    #         # print("RECORDING DATA")
-
-    #         self.record = not self.record
-    #         print("Recording Data: ", self.record)
-
-
-# sender of button
-
-    # def initUI(self):
-    #     btn1 = QPushButton("Button 1", self)
-    #     btn1.move(30, 50)
-
-    #     btn2 = QPushButton("Button 2", self)
-    #     btn2.move(150, 50)
-
-    #     btn1.clicked.connect(self.buttonClicked)
-    #     btn2.clicked.connect(self.buttonClicked)
-
-    #     self.statusBar()
-
-    #     self.setGeometry(300, 300, 450, 350)
-    #     self.setWindowTitle('Event sender')
-    #     self.show()
-
-    # def buttonClicked(self):
-    #     sender = self.sender()
-    #     self.statusBar().showMessage(sender.text() + ' was pressed')
 
 
 # emit signals
