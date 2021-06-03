@@ -2,7 +2,7 @@
 
 import glob
 import re
-import subprocess
+import yaml
 import sys
 
 import roslaunch
@@ -13,6 +13,8 @@ from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
 from std_msgs.msg import Bool
+
+# from gps import GPSReader
 
 def setup_camera_urls():
     """ return the url for viewing compressed image stream over http
@@ -26,9 +28,6 @@ def setup_camera_urls():
     #\/jetbot_camera\/.*
     r = re.compile(".*\/compressed$")
     compressed_camera_topics = list(filter(r.match, published_topic_names))
-
-    # TODO: make more dynamic
-    # TODO: probably need to sort the list
 
     cam_urls = []
     for cam_topic in compressed_camera_topics:
@@ -51,11 +50,13 @@ class MainInterface(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.initUI()
+        self.config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/config.yaml"))
+
+        self.init_ui()
 
         self.record_pub = rospy.Publisher("/recorder/recording", Bool, queue_size=1)
 
-    def initUI(self):
+    def init_ui(self):
         
 
         # background colour
@@ -63,41 +64,32 @@ class MainInterface(QMainWindow):
         p.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(p)
 
-        self.auto_mode_button = QPushButton("Manual Mode", self)
-        self.start_button = QPushButton("Start System", self)
-        self.record_button = QPushButton("Record Data", self)
+        # setup action buttons
+        self.setup_action_buttons()
 
+        # refreshable parts of the ui
+        self.setup_ui_layout()
 
-        self.start_button.setStyleSheet("background-color: green")
-        self.record_button.setStyleSheet("background-color: red")
-        self.auto_mode_button.setStyleSheet("background-color: orange")
+        self.image_view = ImageView(self)
 
+        self.setGeometry(300, 300, 1000, 700)
+        self.setWindowTitle('Mini UI')
+        self.setWindowIcon(QIcon(self.config["data"]["logo"]))
+        self.show()
 
-        # def setup_ui():
+    def setup_ui_layout(self):
+
         self.setup_camera_buttons()
 
-
         self.action_button_layout = QHBoxLayout()
-        self.action_button_layout.addStretch(1)
+        self.action_button_layout.addStretch(0)
         self.action_button_layout.addWidget(self.start_button)
         self.action_button_layout.addWidget(self.record_button)
         self.action_button_layout.addWidget(self.auto_mode_button)
-        
-        # load map? not ready
-        # from gps import GPSReader
-        # self.gps_reader = GPSReader()
-        # self.fig = self.gps_reader.fig2
-
-        self.map_view = QWebEngineView()
-
-        # # # self.map_view.setUrl(QUrl("https://www.google.com"))
-        # # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
-        self.map_view_layout = QVBoxLayout()
-        self.map_view_layout.addWidget(self.map_view)
 
         vbox = QVBoxLayout()
-        vbox.addStretch(1)
-        vbox.addLayout(self.map_view_layout)
+        vbox.addStretch(0)
+        # vbox.addLayout(self.map_view_layout)
         vbox.addLayout(self.camera_button_layout)
         vbox.addLayout(self.action_button_layout)
 
@@ -105,32 +97,52 @@ class MainInterface(QMainWindow):
         self.main_widget.setLayout(vbox)
         self.setCentralWidget(self.main_widget)
 
-        
+    def setup_action_buttons(self):
+
+        self.auto_mode_button = QPushButton("Manual Mode", self)
+        self.start_button = QPushButton("Start System", self)
+        self.record_button = QPushButton("Record Data", self)
+
+        self.start_button.setStyleSheet("background-color: green")
+        self.record_button.setStyleSheet("background-color: red")
+        self.auto_mode_button.setStyleSheet("background-color: orange")
+
+        self.start_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.record_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.auto_mode_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+
         self.start_button.clicked.connect(self.start_button_clicked)
         self.record_button.clicked.connect(self.record_button_clicked)
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
 
-        self.image_view = ImageView(self)
 
-        self.setGeometry(300, 300, 1000, 700)
-        self.setWindowTitle('Mini UI')
-        self.setWindowIcon(QIcon('/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/logo.png'))
-        self.show()
+        
 
+    def setup_map_view(self):
+        # map view (not working)
+        # self.gps_reader = GPSReader()
+        # self.fig = self.gps_reader.fig2
+        # self.map_view = QWebEngineView()
+        # # # self.map_view.setUrl(QUrl("https://www.google.com"))
+        # # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
+        # self.map_view_layout = QVBoxLayout()
+        # self.map_view_layout.addWidget(self.map_view)
+        pass
 
     def setup_camera_buttons(self):
         # setup camera buttons dynamically
         # based on the number of compressed streams detected
         self.cam_urls = setup_camera_urls()
-        print(self.cam_urls)
+        # print(self.cam_urls)
 
         self.camera_button_layout = QHBoxLayout()
-        self.camera_button_layout.addStretch(1)
+        self.camera_button_layout.addStretch(0)
         
         for i, cam_url in enumerate(self.cam_urls):
 
             cam_button = QPushButton(f"Camera {i}", self)
             cam_button.clicked.connect(self.camera_button_clicked)
+            cam_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
             self.camera_button_layout.addWidget(cam_button)
 
     def camera_button_clicked(self):
@@ -156,19 +168,32 @@ class MainInterface(QMainWindow):
         if self.sender().text() == "Start System":
 
             self.start_button.setText("Stop System")
+            self.launched_nodes = []
             
-            # roslaunch
-            uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-            roslaunch.configure_logging(uuid)
-            launch_file = "/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/launch/mini_ui_cams.launch"
-            self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
-            self.launch.start()
+            for node in self.config["nodes"]:
+                
+                rospy.loginfo("Launching %s", node)
+                launch_file = self.config["nodes"][node]["launch"]
+
+                # roslaunch
+                uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
+                roslaunch.configure_logging(uuid)
+                self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
+                self.launch.start()
+
+                self.launched_nodes.append(self.launch)
+
             rospy.loginfo("roslaunch successful. ")
 
             # TODO: refresh camera buttons here
+            import time 
+            time.sleep(5) # do this better. need to wait for nodes to actuaally launch before refreshing
+            self.setup_ui_layout()
+
             # http://wiki.ros.org/roslaunch/API%20Usage
         else:
-            self.launch.shutdown()
+            for launch_file in self.launched_nodes:
+                launch_file.shutdown()
             self.start_button.setText("Start System")
 
 

@@ -12,7 +12,7 @@ from std_msgs.msg import Bool
 
 # When button is pressed, start recording
 # initialise class when ui gets initialised?
-
+import yaml
 
 class RosbagRecorder:
 
@@ -20,7 +20,11 @@ class RosbagRecorder:
 
     def __init__(self):
 
-        self.DATA_PATH = "/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/"  # todo: need to set this absolutely for roslaunch...
+
+        config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/config.yaml"))
+        print(config)
+
+        self.DATA_PATH = config["data"]["path"]  # todo: need to set this absolutely for roslaunch...
         self.ts = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         self.bag = None # dont setup unless required
 
@@ -170,6 +174,7 @@ class RosbagRecorder:
         # gps: 5hz, imu: 8hz, cam: 30hz
         # makes the camera recording only 5 hz (max)
         # in practice much lower (1hz), because only some of them are synchronised
+        # TODO: cant use Twist message here either
 
         if self.recording:
 
