@@ -112,7 +112,6 @@ class MainInterface(QMainWindow):
 
         self.image_view = ImageView(self)
 
-
         self.setGeometry(300, 300, 1000, 700)
         self.setWindowTitle('Mini UI')
         self.setWindowIcon(QIcon('/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/logo.png'))
@@ -136,7 +135,7 @@ class MainInterface(QMainWindow):
 
     def camera_button_clicked(self):
         sender = self.sender()
-        # self.statusBar().showMessage(sender.text() + ' was pressed')
+        self.statusBar().showMessage(sender.text() + ' was pressed')
 
         rospy.loginfo(sender.text() + " button was pressed")
 
@@ -150,6 +149,8 @@ class MainInterface(QMainWindow):
 
 
     def start_button_clicked(self):
+
+        self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
 
         if self.sender().text() == "Start System":
@@ -174,6 +175,8 @@ class MainInterface(QMainWindow):
 
 
     def record_button_clicked(self):
+
+        self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
 
         record_msg = Bool()
@@ -194,6 +197,7 @@ class MainInterface(QMainWindow):
         print("Recording Status: ", record_msg.data)
 
     def auto_mode_button_clicked(self):
+        self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
         self.auto_mode_button.setText("Autonomous Mode")
         print(rospy.get_published_topics())
@@ -206,6 +210,7 @@ class MainInterface(QMainWindow):
 # TODO: make buttons bigger
 # TODO: make buttons do stuff.
 # TODO: close on main ui button close
+# TODO: change so statusbar text is visible
 
 
 def main():

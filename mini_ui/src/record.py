@@ -22,12 +22,11 @@ class RosbagRecorder:
 
         self.DATA_PATH = "/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/"  # todo: need to set this absolutely for roslaunch...
         self.ts = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        self.bag = rosbag.Bag(self.DATA_PATH + self.ts + ".bag", "w")
-        self.bag_name = self.bag.filename
+        self.bag = None # dont setup unless required
 
         self.idx = 0
         self.recording = False
-        self.bag_closed = False
+        self.bag_closed = True
 
         self.recording_state_sub = rospy.Subscriber(
             "/recorder/recording", Bool, self.recording_state_callback, queue_size=1
@@ -78,9 +77,18 @@ class RosbagRecorder:
                 queue_size=1,
             )
 
-        print("Bag Filename: ", self.bag.filename)
+    def create_initial_bag(self):
+        self.bag = rosbag.Bag(self.DATA_PATH + self.ts + ".bag", "w")
+        self.bag_name = self.bag.filename
+        self.bag_closed = False
+
+        rospy.loginfo("Bag Filename: %s", self.bag.filename)
 
     def setup_bag_for_recording(self):
+
+        if self.bag is None:
+            self.create_initial_bag()
+
         # open bag in append mode if closed
         if self.bag_closed == True:
             self.bag = rosbag.Bag(self.bag_name, "a")
