@@ -7,6 +7,7 @@ import sys
 
 import roslaunch
 import rospy
+import rosnode
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
@@ -14,7 +15,7 @@ from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
 from std_msgs.msg import Bool
 
-# from gps import GPSReader
+from gps import GPSReader
 
 def setup_camera_urls():
     """ return the url for viewing compressed image stream over http
@@ -64,6 +65,7 @@ class MainInterface(QMainWindow):
         p.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(p)
 
+
         # setup action buttons
         self.setup_action_buttons()
 
@@ -80,6 +82,8 @@ class MainInterface(QMainWindow):
     def setup_ui_layout(self):
 
         self.setup_camera_buttons()
+        self.setup_node_buttons()
+        self.setup_map_view()
 
         self.action_button_layout = QHBoxLayout()
         self.action_button_layout.addStretch(0)
@@ -89,14 +93,50 @@ class MainInterface(QMainWindow):
 
         vbox = QVBoxLayout()
         vbox.addStretch(0)
-        # vbox.addLayout(self.map_view_layout)
+        vbox.addLayout(self.map_view_layout)
+        # vbox.addLayout(self.node_button_layout)
         vbox.addLayout(self.camera_button_layout)
         vbox.addLayout(self.action_button_layout)
 
-        self.main_widget = QWidget()
-        self.main_widget.setLayout(vbox)
-        self.setCentralWidget(self.main_widget)
+        main_hbox = QHBoxLayout()
+        main_hbox.addLayout(self.node_button_layout)
+        main_hbox.addLayout(vbox)
 
+
+        self.main_widget = QWidget()
+        self.main_widget.setLayout(main_hbox)
+        self.setCentralWidget(self.main_widget)
+    
+    def setup_node_buttons(self):
+
+        # TODO: self, config this
+        requred_nodes = ["jetbot_camera_0", "jetbot_camera_1", "web_video_server", "mini_ui", "recorder", "joystick_twist_node", "joy_node"]
+        self.node_button_layout = QVBoxLayout()
+        self.node_button_layout.addStretch(0)
+        
+
+
+        for i, node_name in enumerate(requred_nodes):
+            
+            node_button = QPushButton(f"{node_name}", self)
+            node_button.clicked.connect(self.node_button_clicked)
+            node_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+            self.node_button_layout.addWidget(node_button)
+            if "/" + node_name in rosnode.get_node_names():
+                node_button.setStyleSheet("background-color: green")
+            else: 
+                node_button.setStyleSheet("background-color: red")
+            # name = node_name.split("/")[-1]
+            
+
+
+        # TODO: change so it is looking for a select group of nodes in get_node_names
+        # TODO: make this a grid?
+        # TODO: this view is too big
+
+
+ 
+    
     def setup_action_buttons(self):
 
         self.auto_mode_button = QPushButton("Manual Mode", self)
@@ -114,20 +154,17 @@ class MainInterface(QMainWindow):
         self.start_button.clicked.connect(self.start_button_clicked)
         self.record_button.clicked.connect(self.record_button_clicked)
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
-
-
-        
-
+    
     def setup_map_view(self):
         # map view (not working)
         # self.gps_reader = GPSReader()
         # self.fig = self.gps_reader.fig2
-        # self.map_view = QWebEngineView()
-        # # # self.map_view.setUrl(QUrl("https://www.google.com"))
-        # # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
-        # self.map_view_layout = QVBoxLayout()
-        # self.map_view_layout.addWidget(self.map_view)
-        pass
+        self.map_view = QWebEngineView()
+        # self.map_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
+        # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
+        self.map_view_layout = QVBoxLayout()
+        self.map_view_layout.addWidget(self.map_view)
+        # pass
 
     def setup_camera_buttons(self):
         # setup camera buttons dynamically
@@ -150,7 +187,6 @@ class MainInterface(QMainWindow):
         self.statusBar().showMessage(sender.text() + ' was pressed')
 
         rospy.loginfo(sender.text() + " button was pressed")
-
 
         idx = int(sender.text()[-1])
         self.image_view.browser = QWebEngineView()
@@ -196,8 +232,9 @@ class MainInterface(QMainWindow):
                 launch_file.shutdown()
             self.start_button.setText("Start System")
 
-
-
+    def node_button_clicked(self):
+        self.statusBar().showMessage(self.sender().text() + ' was pressed')
+        rospy.loginfo(self.sender().text() + " button was pressed")
 
     def record_button_clicked(self):
 
@@ -224,8 +261,14 @@ class MainInterface(QMainWindow):
     def auto_mode_button_clicked(self):
         self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
-        self.auto_mode_button.setText("Autonomous Mode")
-        print(rospy.get_published_topics())
+        print(rosnode.get_node_names())
+        if self.sender().text() == "Manual Mode":
+            self.auto_mode_button.setText("Autonomous Mode")
+        else:
+            self.auto_mode_button.setText("Manual Mode")
+        
+        # refresh the ui
+        self.setup_ui_layout()
 
 
 
