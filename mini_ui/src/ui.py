@@ -114,8 +114,6 @@ class MainInterface(QMainWindow):
         self.node_button_layout = QVBoxLayout()
         self.node_button_layout.addStretch(0)
         
-
-
         for i, node_name in enumerate(requred_nodes):
             
             node_button = QPushButton(f"{node_name}", self)
@@ -128,11 +126,10 @@ class MainInterface(QMainWindow):
                 node_button.setStyleSheet("background-color: red")
             # name = node_name.split("/")[-1]
             
-
-
+            
         # TODO: change so it is looking for a select group of nodes in get_node_names
         # TODO: make this a grid?
-        # TODO: this view is too big
+
 
 
  
@@ -160,7 +157,7 @@ class MainInterface(QMainWindow):
         # self.gps_reader = GPSReader()
         # self.fig = self.gps_reader.fig2
         self.map_view = QWebEngineView()
-        # self.map_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
+        self.map_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
         # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
         self.map_view_layout = QVBoxLayout()
         self.map_view_layout.addWidget(self.map_view)
@@ -194,7 +191,10 @@ class MainInterface(QMainWindow):
         self.image_view.setCentralWidget(self.image_view.browser)
         self.image_view.setWindowTitle(sender.text())
         self.image_view.show()
-
+        # self.browser = QWebEngineView()
+        # self.browser.setUrl(QUrl(self.cam_urls[idx]))
+        # self.setCentralWidget(self.browser)
+        # TODO: change this so it loads the camera view where the map is
 
     def start_button_clicked(self):
 
@@ -230,6 +230,8 @@ class MainInterface(QMainWindow):
         else:
             for launch_file in self.launched_nodes:
                 launch_file.shutdown()
+
+            self.setup_ui_layout()
             self.start_button.setText("Start System")
 
     def node_button_clicked(self):
