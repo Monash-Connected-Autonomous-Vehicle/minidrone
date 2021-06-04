@@ -21,10 +21,9 @@ class RosbagRecorder:
     def __init__(self):
 
 
-        config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/config.yaml"))
-        print(config)
+        self.config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/config.yaml"))
 
-        self.DATA_PATH = config["data"]["path"]  # todo: need to set this absolutely for roslaunch...
+        self.DATA_PATH = self.config["data"]["path"]  # todo: need to set this absolutely for roslaunch...
         self.ts = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         self.bag = None # dont setup unless required
 

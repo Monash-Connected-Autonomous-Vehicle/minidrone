@@ -4,6 +4,7 @@ import glob
 import re
 import yaml
 import sys
+import time 
 
 import roslaunch
 import rospy
@@ -17,7 +18,7 @@ from std_msgs.msg import Bool
 
 from gps import GPSReader
 
-def setup_camera_urls():
+def get_camera_urls():
     """ return the url for viewing compressed image stream over http
     assumes compressed image stream, and jetbot_camera
     
@@ -40,7 +41,14 @@ def setup_camera_urls():
 
     return cam_urls
 
+def launch_node(launch_file):
+    # roslaunch
+    uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
+    roslaunch.configure_logging(uuid)
+    launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
+    launch.start()
 
+    return launch
 
 class ImageView(QMainWindow):
     def __init__(self, parent=None):
@@ -52,6 +60,7 @@ class MainInterface(QMainWindow):
         super().__init__()
 
         self.config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/config.yaml"))
+        self.camera_button_pressed = False
 
         self.init_ui()
 
@@ -81,9 +90,14 @@ class MainInterface(QMainWindow):
 
     def setup_ui_layout(self):
 
-        self.setup_camera_buttons()
+        self.setup_main_view_buttons()
         self.setup_node_buttons()
-        self.setup_map_view()
+        if self.camera_button_pressed:
+            pass
+        else:
+            self.setup_map_view()
+
+        self.setup_main_view()
 
         self.action_button_layout = QHBoxLayout()
         self.action_button_layout.addStretch(0)
@@ -93,24 +107,22 @@ class MainInterface(QMainWindow):
 
         vbox = QVBoxLayout()
         vbox.addStretch(0)
-        vbox.addLayout(self.map_view_layout)
-        # vbox.addLayout(self.node_button_layout)
-        vbox.addLayout(self.camera_button_layout)
+        vbox.addLayout(self.main_view_layout)
+        vbox.addLayout(self.main_view_button_layout)
         vbox.addLayout(self.action_button_layout)
 
         main_hbox = QHBoxLayout()
         main_hbox.addLayout(self.node_button_layout)
         main_hbox.addLayout(vbox)
 
-
+        self.statusBar().setStyleSheet("color: white")
         self.main_widget = QWidget()
         self.main_widget.setLayout(main_hbox)
         self.setCentralWidget(self.main_widget)
     
     def setup_node_buttons(self):
-
-        # TODO: self, config this
-        requred_nodes = ["jetbot_camera_0", "jetbot_camera_1", "web_video_server", "mini_ui", "recorder", "joystick_twist_node", "joy_node"]
+        """ Setup the buttons displaying the status of required nodes"""
+        requred_nodes = self.config["required_nodes"]
         self.node_button_layout = QVBoxLayout()
         self.node_button_layout.addStretch(0)
         
@@ -124,18 +136,10 @@ class MainInterface(QMainWindow):
                 node_button.setStyleSheet("background-color: green")
             else: 
                 node_button.setStyleSheet("background-color: red")
-            # name = node_name.split("/")[-1]
-            
-            
-        # TODO: change so it is looking for a select group of nodes in get_node_names
-        # TODO: make this a grid?
 
-
-
- 
     
     def setup_action_buttons(self):
-
+        """ Setup the buttons for performing actions"""
         self.auto_mode_button = QPushButton("Manual Mode", self)
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
@@ -152,52 +156,62 @@ class MainInterface(QMainWindow):
         self.record_button.clicked.connect(self.record_button_clicked)
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
     
+    def setup_main_view(self):
+        """ Setup the layout for the main view """
+        self.main_view_layout = QVBoxLayout()
+        self.main_view_layout.addWidget(self.main_view)
+
     def setup_map_view(self):
+        """Setup map data and browser based map view"""
         # map view (not working)
         # self.gps_reader = GPSReader()
         # self.fig = self.gps_reader.fig2
-        self.map_view = QWebEngineView()
-        self.map_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
-        # self.map_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
-        self.map_view_layout = QVBoxLayout()
-        self.map_view_layout.addWidget(self.map_view)
-        # pass
+        self.main_view = QWebEngineView()
+        self.main_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
+        # self.main_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
 
-    def setup_camera_buttons(self):
-        # setup camera buttons dynamically
-        # based on the number of compressed streams detected
-        self.cam_urls = setup_camera_urls()
-        # print(self.cam_urls)
 
-        self.camera_button_layout = QHBoxLayout()
-        self.camera_button_layout.addStretch(0)
+    def setup_main_view_buttons(self):
+        """ Setup buttons for controlling the main view (map / cameras)"""
+        self.main_view_button_layout = QHBoxLayout()
+        self.main_view_button_layout.addStretch(0)
+
+
+        # setup map view button
+        map_button = QPushButton("Map View", self)
+        map_button.clicked.connect(self.main_view_button_clicked)
+        map_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.main_view_button_layout.addWidget(map_button)
         
+        # setup camera buttons dynamically based on detected streams
+        self.cam_urls = get_camera_urls()
+
         for i, cam_url in enumerate(self.cam_urls):
 
             cam_button = QPushButton(f"Camera {i}", self)
-            cam_button.clicked.connect(self.camera_button_clicked)
+            cam_button.clicked.connect(self.main_view_button_clicked)
             cam_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-            self.camera_button_layout.addWidget(cam_button)
+            self.main_view_button_layout.addWidget(cam_button)
 
-    def camera_button_clicked(self):
+    def main_view_button_clicked(self):
+        """ Functionality for when a main view button is clicked"""
         sender = self.sender()
         self.statusBar().showMessage(sender.text() + ' was pressed')
-
         rospy.loginfo(sender.text() + " button was pressed")
 
-        idx = int(sender.text()[-1])
-        self.image_view.browser = QWebEngineView()
-        self.image_view.browser.setUrl(QUrl(self.cam_urls[idx]))
-        self.image_view.setCentralWidget(self.image_view.browser)
-        self.image_view.setWindowTitle(sender.text())
-        self.image_view.show()
-        # self.browser = QWebEngineView()
-        # self.browser.setUrl(QUrl(self.cam_urls[idx]))
-        # self.setCentralWidget(self.browser)
-        # TODO: change this so it loads the camera view where the map is
+        if sender.text() == "Map View":
+            self.camera_button_pressed = False
+        else:
+            idx = int(sender.text()[-1])
+            self.main_view = QWebEngineView()
+            self.main_view.setUrl(QUrl(self.cam_urls[idx]))
+            self.camera_button_pressed = True
+
+        self.setup_ui_layout()
+
 
     def start_button_clicked(self):
-
+        """ Functionality for when the start/stop system button is pressed""" 
         self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
 
@@ -211,35 +225,30 @@ class MainInterface(QMainWindow):
                 rospy.loginfo("Launching %s", node)
                 launch_file = self.config["nodes"][node]["launch"]
 
-                # roslaunch
-                uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-                roslaunch.configure_logging(uuid)
-                self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
-                self.launch.start()
+                launch = launch_node(launch_file)
 
-                self.launched_nodes.append(self.launch)
+                self.launched_nodes.append(launch)
 
             rospy.loginfo("roslaunch successful. ")
 
-            # TODO: refresh camera buttons here
-            import time 
-            time.sleep(5) # do this better. need to wait for nodes to actuaally launch before refreshing
+            time.sleep(3) # TODO: do this better. need to wait for nodes to actuaally launch before refreshing
             self.setup_ui_layout()
 
-            # http://wiki.ros.org/roslaunch/API%20Usage
         else:
             for launch_file in self.launched_nodes:
                 launch_file.shutdown()
 
+            self.camera_button_pressed = False # reset to map view
             self.setup_ui_layout()
             self.start_button.setText("Start System")
 
     def node_button_clicked(self):
+        """Functionality for when the node button is pressed"""
         self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
 
     def record_button_clicked(self):
-
+        """ Functionality for when the record button is pressed"""
         self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
 
@@ -261,6 +270,7 @@ class MainInterface(QMainWindow):
         print("Recording Status: ", record_msg.data)
 
     def auto_mode_button_clicked(self):
+        """Functionality for when the auto mode button is clicked"""
         self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
         print(rosnode.get_node_names())
@@ -272,16 +282,7 @@ class MainInterface(QMainWindow):
         # refresh the ui
         self.setup_ui_layout()
 
-
-
-# TODO: create a main window properly
 # TODO: jetson stats
-# TODO: manager info
-# TODO: make buttons bigger
-# TODO: make buttons do stuff.
-# TODO: close on main ui button close
-# TODO: change so statusbar text is visible
-
 
 def main():
     app = QApplication(sys.argv)

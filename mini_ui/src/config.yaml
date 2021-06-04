@@ -9,3 +9,7 @@ nodes:
   jetson_cameras:
     name: Jetson Cameras
     launch: /home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/launch/mini_ui_cams.launch
+
+required_nodes: ["jetbot_camera_0", "jetbot_camera_1", "web_video_server", 
+                  "mini_ui", "recorder", "joystick_twist_node", "joy_node", 
+                  "twist_mux", "emergency_brake", "rplidar_node"]
