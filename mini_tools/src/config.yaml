@@ -1,6 +1,6 @@
 data:
-  path: /home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/data/
-  logo: /home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/src/logo.png
+  path: /home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/data/
+  logo: /home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/src/logo.png
 
 nodes:
   # manual_control: 
@@ -8,7 +8,7 @@ nodes:
   #   launch: /home/jetson03/mcav/catkin_ws/src/minidrone/control/launch/manual_control.launch
   jetson_cameras:
     name: Jetson Cameras
-    launch: /home/jetson03/mcav/catkin_ws/src/minidrone/mini_ui/launch/mini_ui_cams.launch
+    launch: /home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/launch/mini_ui_cams.launch
 
 required_nodes: ["jetbot_camera_0", "jetbot_camera_1", "web_video_server", 
                   "mini_ui", "recorder", "joystick_twist_node", "joy_node", 
