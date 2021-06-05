@@ -70,8 +70,12 @@ def merge_data_into_single_dataframe(base_dir):
     return df_concat_sorted
 
 
-def extract_data_from_rosbag(bag):
+def extract_data_from_rosbag(bag, config):
     """ Extract all topics from a ROSBAG into images and csv files"""
+
+    # topics to extract from the config file
+    extraction_topics = config["extract"]["topics"]
+
     # load the bag info
     bag_info = yaml.safe_load(bag._get_yaml_info())
     print("ROSBAG Info:")
@@ -138,9 +142,19 @@ if __name__ == "__main__":
         type=str,
         help="Directory to save data in",
     )
+    parser.add_argument(
+        "-c",
+        "--config",
+        dest="config",
+        action="store",
+        default="config.yaml",
+        type=str,
+        help="Configuration File",
+    )    
     args = parser.parse_args()
 
     filename = args.bagfile
+    config = yaml.safe_load(open(args.config))
 
     # create folder for bag data
     basename = filename.split("/")[-1].split(".")[0]  # basename
@@ -151,7 +165,7 @@ if __name__ == "__main__":
     bag = rosbag.Bag(filename, mode="r")
 
     # extract topic data from rosbag into filesystem
-    extract_data_from_rosbag(bag)
+    extract_data_from_rosbag(bag, config)
 
     # Consolidate data into a single dataset for each ROSBAG
     df_concat_sorted = merge_data_into_single_dataframe(base_dir=base_dir)

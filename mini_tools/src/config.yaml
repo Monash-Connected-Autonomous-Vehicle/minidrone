@@ -13,3 +13,11 @@ nodes:
 required_nodes: ["jetbot_camera_0", "jetbot_camera_1", "web_video_server", 
                   "mini_ui", "recorder", "joystick_twist_node", "joy_node", 
                   "twist_mux", "emergency_brake", "rplidar_node"]
+
+record:
+  topics: {camera: /jetbot_camera/0/compressed, 
+            imu: /imu, 
+            gps: /gps,
+            twist: /twist_mux/cmd_vel}
+extract:
+  topics: ["/jetbot_camera/0/compressed", "/imu", "/gps"]

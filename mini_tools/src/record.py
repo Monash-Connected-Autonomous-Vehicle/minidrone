@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 
-
 from datetime import datetime
 
 import message_filters
 import rosbag
 import rospy
+import yaml
 from geometry_msgs.msg import Twist, TwistStamped
 from sensor_msgs.msg import CompressedImage, Imu, NavSatFix
 from std_msgs.msg import Bool
 
 # When button is pressed, start recording
 # initialise class when ui gets initialised?
-import yaml
 
 class RosbagRecorder:
 
@@ -20,12 +19,17 @@ class RosbagRecorder:
 
     def __init__(self):
 
+        self.config = yaml.safe_load(
+            open(
+                "/home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"
+            )
+        )
 
-        self.config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"))
-
-        self.DATA_PATH = self.config["data"]["path"]  # todo: need to set this absolutely for roslaunch...
+        self.DATA_PATH = self.config["data"][
+            "path"
+        ]  # todo: need to set this absolutely for roslaunch...
         self.ts = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        self.bag = None # dont setup unless required
+        self.bag = None  # dont setup unless required
 
         self.idx = 0
         self.recording = False
@@ -36,45 +40,50 @@ class RosbagRecorder:
         )
 
         # setup different recording subscribers is using synched mode
+        self.cam_topic = self.config["record"]["topics"]["camera"]
+        self.imu_topic = self.config["record"]["topics"]["imu"]
+        self.gps_topic = self.config["record"]["topics"]["gps"]
+        self.twist_topic = self.config["record"]["topics"]["twist"]
 
         self.SYNCHED_RECORD_MODE = False
         if self.SYNCHED_RECORD_MODE:
 
             # register subscribers
-            image_sub = message_filters.Subscriber(
-                "jetbot_camera/0/compressed", CompressedImage
-            )
-            imu_sub = message_filters.Subscriber("imu", Imu)
-            fix_sub = message_filters.Subscriber("gps", NavSatFix)
+            image_sub = message_filters.Subscriber(self.cam_topic, CompressedImage)
+            imu_sub = message_filters.Subscriber(self.imu_topic, Imu)
+            fix_sub = message_filters.Subscriber(self.gps_topic, NavSatFix)
 
             # register time synchronizer
             ts = message_filters.ApproximateTimeSynchronizer(
-                [image_sub, imu_sub, fix_sub], 1, 0.1, allow_headerless=True
+                [image_sub, imu_sub, fix_sub],
+                10,
+                0.1,
+                allow_headerless=True,  # TODO: maybe headerless means we can sync Twist?
             )
             ts.registerCallback(self.synched_callback)
 
         else:
 
             self.record_cam_sub = rospy.Subscriber(
-                "/jetbot_camera/0/compressed",
+                self.cam_topic,
                 CompressedImage,
                 self.record_cam_callback,
                 queue_size=1,
             )
             self.record_imu_sub = rospy.Subscriber(
-                "/imu",
+                self.imu_topic,
                 Imu,
                 self.record_imu_callback,
                 queue_size=1,
             )
             self.record_gps_sub = rospy.Subscriber(
-                "/gps",
+                self.gps_topic,
                 NavSatFix,
                 self.record_gps_callback,
                 queue_size=1,
             )
             self.record_twist_sub = rospy.Subscriber(
-                "/twist_mux/cmd_vel",
+                self.twist_topic,
                 Twist,
                 self.record_twist_callback,
                 queue_size=1,
