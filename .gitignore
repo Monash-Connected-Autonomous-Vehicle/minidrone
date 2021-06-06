@@ -14,3 +14,4 @@ imitation_learning/models/*.pt
 
 # include the logo file
 !logo.png
+*settings.json

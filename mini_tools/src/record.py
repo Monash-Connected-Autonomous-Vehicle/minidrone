@@ -21,7 +21,7 @@ class RosbagRecorder:
 
         self.config = yaml.safe_load(
             open(
-                "/home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"
+                "/home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"
             )
         )
 
@@ -45,7 +45,7 @@ class RosbagRecorder:
         self.gps_topic = self.config["record"]["topics"]["gps"]
         self.twist_topic = self.config["record"]["topics"]["twist"]
 
-        self.SYNCHED_RECORD_MODE = False
+        self.SYNCHED_RECORD_MODE = self.config["record"]["use_sync"]
         if self.SYNCHED_RECORD_MODE:
 
             # register subscribers
@@ -122,7 +122,7 @@ class RosbagRecorder:
             self.setup_bag_for_recording()
 
             # write data
-            self.bag.write("/jetbot_camera/0/compressed", msg)
+            self.bag.write(self.cam_topic, msg)
             # Python too slow?
 
     def record_imu_callback(self, msg):
@@ -134,7 +134,7 @@ class RosbagRecorder:
             self.setup_bag_for_recording()
 
             # write data
-            self.bag.write("/imu", msg)
+            self.bag.write(self.imu_topic, msg)
 
     def record_gps_callback(self, msg):
         """Write the contents of the gps msg to the bag"""
@@ -145,7 +145,7 @@ class RosbagRecorder:
             self.setup_bag_for_recording()
 
             # write data
-            self.bag.write("/gps", msg)
+            self.bag.write(self.gps_topic, msg)
 
     def record_twist_callback(self, msg):
         """Write the contents of the twist msg to the bag"""
@@ -156,7 +156,7 @@ class RosbagRecorder:
             self.setup_bag_for_recording()
 
             # write data
-            self.bag.write("/twist_mux/cmdl_vel", msg)
+            self.bag.write(self.twist_topic, msg)
 
     def recording_state_callback(self, msg):
 
@@ -190,9 +190,9 @@ class RosbagRecorder:
             self.setup_bag_for_recording()
 
             # img
-            self.bag.write("/jetbot_camera/0/compressed", img)
-            self.bag.write("/imu", imu)
-            self.bag.write("/gps", fix)
+            self.bag.write(self.cam_topic, img)
+            self.bag.write(self.imu_topic, imu)
+            self.bag.write(self.gps_topic, fix)
             # Python too slow?
 
 

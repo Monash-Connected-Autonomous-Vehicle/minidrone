@@ -18,7 +18,7 @@ def interpolate_data(df, method="pad"):
     """Helper for interpolating data for pandas dataframe"""
 
     # interpolate missing data (forward fill pad)
-    interpolated_columns = [col for col in df.columns if col not in ["%time", "time"]]
+    interpolated_columns = [col for col in df.columns if col not in ["field.header.stamp", "time"]]
 
     # TODO: there has got to be a better way to do this at the dataframe level
     for col in interpolated_columns:
@@ -41,16 +41,18 @@ def merge_data_into_single_dataframe(base_dir):
 
     # prepare pandas dataframe for each data type
     df_img = pd.DataFrame(
-        list(zip(img_timestamp, img_filenames)), columns=["%time", "img"]
+        list(zip(img_timestamp, img_filenames)), columns=["field.header.stamp", "img"]
     )
-    df_imu = pd.read_csv(base_dir + "imu.csv")
-    df_gps = pd.read_csv(base_dir + "gps.csv")
+
+    # TODO: get topic name for file from base_topic_name
+    df_imu = pd.read_csv(base_dir + "carlaheroimudefault.csv")  # imu.csv
+    df_gps = pd.read_csv(base_dir + "carlaherognssdefaultfix.csv") # gps.csv
 
     # concatenate each data source together
     df_concat = pd.concat([df_img, df_imu, df_gps])
 
     df_concat["time"] = pd.to_datetime(
-        df_concat["%time"]
+        df_concat["field.header.stamp"]
     )  # reindex frame according to timestamp
     df_concat_sorted = df_concat.sort_values(by=["time"])  # sort according to timestamp
     df_concat_sorted.index = df_concat_sorted["time"]

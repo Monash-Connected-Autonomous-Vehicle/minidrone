@@ -12,7 +12,6 @@ import rosnode
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
-from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
 from std_msgs.msg import Bool
 
@@ -59,7 +58,7 @@ class MainInterface(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"))
+        self.config = yaml.safe_load(open("/home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"))
         self.camera_button_pressed = False
 
         self.init_ui()

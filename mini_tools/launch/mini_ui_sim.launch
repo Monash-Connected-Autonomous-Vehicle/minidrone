@@ -1,0 +1,7 @@
+<launch>
+    <!-- launch carla_ros_bridge  -->
+    <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch" />
+    
+    <!-- launch compressed image transport -->
+    <node name="compressed_transport_0" pkg="image_transport" type="republish" args="raw in:=/carla/hero/camera/rgb/front/image_color compressed out:=/carla/hero/camera/rgb/front/image_color" />
+</launch>
