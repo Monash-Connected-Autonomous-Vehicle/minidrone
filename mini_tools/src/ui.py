@@ -64,6 +64,8 @@ class MainInterface(QMainWindow):
         self.init_ui()
 
         self.record_pub = rospy.Publisher("/recorder/recording", Bool, queue_size=1)
+        self.auto_pub = rospy.Publisher("/carla/patrick/enable_autopilot", Bool, queue_size=1)
+
 
     def keyPressEvent(self, event):
 
@@ -122,8 +124,8 @@ class MainInterface(QMainWindow):
         vbox.addLayout(self.action_button_layout)
 
         main_hbox = QHBoxLayout()
-        main_hbox.addLayout(self.node_button_layout)
-        main_hbox.addLayout(vbox)
+        main_hbox.addLayout(self.node_button_layout, 1)
+        main_hbox.addLayout(vbox, 4)
 
         self.statusBar().setStyleSheet("color: white")
         self.main_widget = QWidget()
@@ -150,7 +152,7 @@ class MainInterface(QMainWindow):
     
     def setup_action_buttons(self):
         """ Setup the buttons for performing actions"""
-        self.auto_mode_button = QPushButton("Manual Mode", self)
+        self.auto_mode_button = QPushButton("Autonomous Mode", self)
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
 
@@ -283,12 +285,19 @@ class MainInterface(QMainWindow):
         """Functionality for when the auto mode button is clicked"""
         self.statusBar().showMessage(self.sender().text() + ' was pressed')
         rospy.loginfo(self.sender().text() + " button was pressed")
-        print(rosnode.get_node_names())
+
+        auto_msg = Bool()
         if self.sender().text() == "Manual Mode":
+            auto_msg.data = False
             self.auto_mode_button.setText("Autonomous Mode")
+            self.auto_mode_button.setStyleSheet("background-color: orange")
         else:
+            auto_msg.data = True
             self.auto_mode_button.setText("Manual Mode")
+            self.auto_mode_button.setStyleSheet("background-color: green")
         
+        # publish the recording message        
+        self.auto_pub.publish(auto_msg)
         # refresh the ui
         self.setup_ui_layout()
 
