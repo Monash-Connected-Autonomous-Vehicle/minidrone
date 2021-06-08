@@ -8,7 +8,10 @@ import rospy
 import yaml
 from geometry_msgs.msg import Twist, TwistStamped
 from sensor_msgs.msg import CompressedImage, Imu, NavSatFix
+from nav_msgs.msg import Odometry
 from std_msgs.msg import Bool
+from carla_msgs.msg import CarlaEgoVehicleStatus, CarlaEgoVehicleControl
+
 
 # When button is pressed, start recording
 # initialise class when ui gets initialised?
@@ -43,7 +46,9 @@ class RosbagRecorder:
         self.cam_topic = self.config["record"]["topics"]["camera"]
         self.imu_topic = self.config["record"]["topics"]["imu"]
         self.gps_topic = self.config["record"]["topics"]["gps"]
+        self.odom_topic = self.config["record"]["topics"]["odom"]
         self.twist_topic = self.config["record"]["topics"]["twist"]
+        self.status_topic = self.config["record"]["topics"]["status"]
 
         self.SYNCHED_RECORD_MODE = self.config["record"]["use_sync"]
         if self.SYNCHED_RECORD_MODE:
@@ -52,10 +57,12 @@ class RosbagRecorder:
             image_sub = message_filters.Subscriber(self.cam_topic, CompressedImage)
             imu_sub = message_filters.Subscriber(self.imu_topic, Imu)
             fix_sub = message_filters.Subscriber(self.gps_topic, NavSatFix)
+            odom_sub = message_filters.Subscriber(self.odom_topic, Odometry)
+            status_sub = message_filters.Subscriber(self.status_topic, CarlaEgoVehicleStatus)
 
             # register time synchronizer
             ts = message_filters.ApproximateTimeSynchronizer(
-                [image_sub, imu_sub, fix_sub],
+                [image_sub, imu_sub, fix_sub, odom_sub, status_sub],
                 10,
                 0.1,
                 allow_headerless=True,  # TODO: maybe headerless means we can sync Twist?
@@ -175,7 +182,7 @@ class RosbagRecorder:
             print(topic, msg)
         self.bag.close()
 
-    def synched_callback(self, img, imu, fix):
+    def synched_callback(self, img, imu, fix, odom, status):
 
         # record synchronised topics
         # TODO: problem with synched topics: imu and gps too slow
@@ -183,16 +190,19 @@ class RosbagRecorder:
         # makes the camera recording only 5 hz (max)
         # in practice much lower (1hz), because only some of them are synchronised
         # TODO: cant use Twist message here either
+        # Works well with high frequency, synched topics e.g. sim
 
         if self.recording:
 
             # check bag is setup for recording
             self.setup_bag_for_recording()
 
-            # img
+            # topics
             self.bag.write(self.cam_topic, img)
             self.bag.write(self.imu_topic, imu)
             self.bag.write(self.gps_topic, fix)
+            self.bag.write(self.odom_topic, odom)
+            self.bag.write(self.status_topic, status)
             # Python too slow?
 
 

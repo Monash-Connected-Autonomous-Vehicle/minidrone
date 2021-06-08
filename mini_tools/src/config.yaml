@@ -1,5 +1,5 @@
 
-# sim
+# sim config
 data:
   path: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/data/
   logo: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/logo.png
@@ -13,12 +13,19 @@ required_nodes: ["carla_ros_bridge", "web_video_server",
                   "mini_ui", "recorder", "image_republisher"]
 
 record:
+  sim: True
+  use_sync: True
   topics: {camera: /carla/hero/camera/rgb/front/image_color/compressed, 
             imu: /carla/hero/imu/default, 
             gps: /carla/hero/gnss/default/fix,
-            twist: /twist_mux/cmd_vel} # TODO: add CarlaEgoVehicleControl / VehicleStatus
-  use_sync: True
+            twist: /carla/hero/twist_cmd,
+            odom: /carla/hero/odometry, 
+            status: /carla/hero/vehicle_status} 
 extract:
-  topics: ["/carla/hero/camera/rgb/front/image_color/compressed", "/carla/hero/imu/default", "/carla/hero/gnss/default/fix"]
+  topics: ["/carla/hero/camera/rgb/front/image_color/compressed", 
+          "/carla/hero/imu/default", 
+          "/carla/hero/gnss/default/fix", 
+          "/carla/hero/vehicle_status", 
+          "/carla/hero/odometry"]
 
   

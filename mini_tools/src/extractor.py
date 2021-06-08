@@ -47,9 +47,11 @@ def merge_data_into_single_dataframe(base_dir):
     # TODO: get topic name for file from base_topic_name
     df_imu = pd.read_csv(base_dir + "carlaheroimudefault.csv")  # imu.csv
     df_gps = pd.read_csv(base_dir + "carlaherognssdefaultfix.csv") # gps.csv
+    df_odom = pd.read_csv(base_dir + "carlaheroodometry.csv") # odom.csv
+    df_status = pd.read_csv(base_dir + "carlaherovehicle_status.csv") # status.csv
 
     # concatenate each data source together
-    df_concat = pd.concat([df_img, df_imu, df_gps])
+    df_concat = pd.concat([df_img, df_imu, df_gps, df_odom, df_status])
 
     df_concat["time"] = pd.to_datetime(
         df_concat["field.header.stamp"]
