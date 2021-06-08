@@ -65,6 +65,17 @@ class MainInterface(QMainWindow):
 
         self.record_pub = rospy.Publisher("/recorder/recording", Bool, queue_size=1)
 
+    def keyPressEvent(self, event):
+
+        if event.key() == Qt.Key_Escape: 
+            # Exit application on Esc press
+            self.close()
+        
+        if event.key() == Qt.Key_R: 
+            # Start / Stop Recording  on R button press
+            self.record_button.click()
+        
+
     def init_ui(self):
         
 
