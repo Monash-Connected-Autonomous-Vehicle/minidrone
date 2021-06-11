@@ -5,12 +5,12 @@ data:
   logo: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/logo.png
 
 nodes:
-  jetson_cameras:
+  carla_simulator:
     name: CARLA Simulator
     launch: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/launch/mini_ui_sim.launch
 
-required_nodes: ["carla_ros_bridge", "web_video_server", 
-                  "mini_ui", "recorder", "image_republisher"]
+required_nodes: ["carla_ros_bridge", "carla_manual_control_hero", "carla_autopilot", "web_video_server", 
+                  "mini_ui", "recorder", "compressed_transport_0", "compressed_transport_1"]
 
 record:
   sim: True

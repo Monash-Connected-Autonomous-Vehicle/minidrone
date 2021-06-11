@@ -1,7 +1,10 @@
 <launch>
     <!-- launch carla_ros_bridge  -->
-    <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch" />
+    <include file="$(find mini_tools)/launch/carla_ros_bridge_with_example_ego_vehicle.launch" />
+
     
     <!-- launch compressed image transport -->
     <node name="compressed_transport_0" pkg="image_transport" type="republish" args="raw in:=/carla/hero/camera/rgb/front/image_color compressed out:=/carla/hero/camera/rgb/front/image_color" />
+    <node name="compressed_transport_1" pkg="image_transport" type="republish" args="raw in:=/carla/hero/camera/rgb/view/image_color compressed out:=/carla/hero/camera/rgb/view/image_color" />
+
 </launch>
