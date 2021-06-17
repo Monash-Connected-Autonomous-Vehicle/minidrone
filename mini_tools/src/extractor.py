@@ -44,14 +44,18 @@ def merge_data_into_single_dataframe(base_dir):
         list(zip(img_timestamp, img_filenames)), columns=["field.header.stamp", "img"]
     )
 
-    # TODO: get topic name for file from base_topic_name
-    df_imu = pd.read_csv(base_dir + "carlaheroimudefault.csv")  # imu.csv
-    df_gps = pd.read_csv(base_dir + "carlaherognssdefaultfix.csv") # gps.csv
-    df_odom = pd.read_csv(base_dir + "carlaheroodometry.csv") # odom.csv
-    df_status = pd.read_csv(base_dir + "carlaherovehicle_status.csv") # status.csv
+
+    df_to_concat = [df_img]
+
+    # loop through each .csv file in directory to aggregate
+    for fname in glob.glob(base_dir + "*.csv"):
+        if "data.csv" not in fname: # dont include the aggregate if already saved    
+            print(f"Appending from: {fname}")
+            df = pd.read_csv(fname)
+            df_to_concat.append(df)
 
     # concatenate each data source together
-    df_concat = pd.concat([df_img, df_imu, df_gps, df_odom, df_status])
+    df_concat = pd.concat(df_to_concat)
 
     df_concat["time"] = pd.to_datetime(
         df_concat["field.header.stamp"]
@@ -66,6 +70,7 @@ def merge_data_into_single_dataframe(base_dir):
     # NOTE: Should NANs be filled with zero?
     # Choosing not to, and letting down stream handle it.
     # they might want to consider nan = zero, or nan = no data. Leaving the choice to them
+    # TODO: manual_override column should be dealt with here.
 
     # save full dataset back to csv
     df_concat_sorted.to_csv(base_dir + "data.csv")

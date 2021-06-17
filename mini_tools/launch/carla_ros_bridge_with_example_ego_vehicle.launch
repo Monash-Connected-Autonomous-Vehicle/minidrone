@@ -8,7 +8,7 @@
   <!-- Ego vehicle -->
   <arg name='role_name' default='hero'/>
   <arg name="vehicle_filter" default='vehicle.tesla.model3'/>
-  <arg name="spawn_point" default="24.0,-78.6,10,0,0,65"/><!-- use comma separated format "x,y,z,roll,pitch,yaw" -->
+  <arg name="spawn_point" default="24.0,-78.6,10,0,0,55"/><!-- use comma separated format "x,y,z,roll,pitch,yaw" -->
 
   <!-- Map to load on startup (either a predefined CARLA town (e.g. 'Town01'), or a OpenDRIVE map file) -->
   <arg name="town" default='Town04'/>

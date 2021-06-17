@@ -64,7 +64,8 @@ class MainInterface(QMainWindow):
         self.init_ui()
 
         self.record_pub = rospy.Publisher("/recorder/recording", Bool, queue_size=1)
-        self.auto_pub = rospy.Publisher("/carla/patrick/enable_autopilot", Bool, queue_size=1)
+        self.auto_pub = rospy.Publisher("/carla/hero/vehicle_control_manual_override", Bool, queue_size=1) #/carla/patrick/enable_autopilot
+
 
 
     def keyPressEvent(self, event):
@@ -80,7 +81,7 @@ class MainInterface(QMainWindow):
 
     def init_ui(self):
         
-
+        
         # background colour
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.black)
@@ -152,13 +153,13 @@ class MainInterface(QMainWindow):
     
     def setup_action_buttons(self):
         """ Setup the buttons for performing actions"""
-        self.auto_mode_button = QPushButton("Autonomous Mode", self)
+        self.auto_mode_button = QPushButton("Manual Mode", self)
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
 
         self.start_button.setStyleSheet("background-color: green")
         self.record_button.setStyleSheet("background-color: red")
-        self.auto_mode_button.setStyleSheet("background-color: orange")
+        self.auto_mode_button.setStyleSheet("background-color: gray")
 
         self.start_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         self.record_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
@@ -180,6 +181,7 @@ class MainInterface(QMainWindow):
         # self.fig = self.gps_reader.fig2
         self.main_view = QWebEngineView()
         self.main_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
+
         # self.main_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
 
 
@@ -244,6 +246,12 @@ class MainInterface(QMainWindow):
             rospy.loginfo("roslaunch successful. ")
 
             time.sleep(3) # TODO: do this better. need to wait for nodes to actuaally launch before refreshing
+            
+            # # TODO: DO this better
+            # auto_msg = Bool()
+            # auto_msg.data = True
+            # self.auto_pub.publish(True) # initially set to manual
+               
             self.setup_ui_layout()
 
         else:
@@ -290,11 +298,11 @@ class MainInterface(QMainWindow):
         if self.sender().text() == "Manual Mode":
             auto_msg.data = False
             self.auto_mode_button.setText("Autonomous Mode")
-            self.auto_mode_button.setStyleSheet("background-color: orange")
+            self.auto_mode_button.setStyleSheet("background-color: green")
         else:
             auto_msg.data = True
             self.auto_mode_button.setText("Manual Mode")
-            self.auto_mode_button.setStyleSheet("background-color: green")
+            self.auto_mode_button.setStyleSheet("background-color: gray")
         
         # publish the recording message        
         self.auto_pub.publish(auto_msg)

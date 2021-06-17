@@ -16,16 +16,17 @@ record:
   sim: True
   use_sync: True
   topics: {camera: /carla/hero/camera/rgb/front/image_color/compressed, 
-            imu: /carla/hero/imu/default, 
-            gps: /carla/hero/gnss/default/fix,
+            imu: /carla/hero/imu/imu1, 
+            gps: /carla/hero/gnss/gnss1/fix,
             twist: /carla/hero/twist_cmd,
             odom: /carla/hero/odometry, 
-            status: /carla/hero/vehicle_status} 
+            status: /carla/hero/vehicle_status, 
+            manual: /carla/hero/vehicle_control_manual_override} 
 extract:
   topics: ["/carla/hero/camera/rgb/front/image_color/compressed", 
           "/carla/hero/imu/default", 
           "/carla/hero/gnss/default/fix", 
-          "/carla/hero/vehicle_status", 
-          "/carla/hero/odometry"]
+          "/carla/hero/odometry",
+          "/carla/hero/vehicle_status"] 
 
   

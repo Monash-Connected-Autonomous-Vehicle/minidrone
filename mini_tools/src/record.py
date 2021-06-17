@@ -12,6 +12,7 @@ from nav_msgs.msg import Odometry
 from std_msgs.msg import Bool
 from carla_msgs.msg import CarlaEgoVehicleStatus, CarlaEgoVehicleControl
 
+from mini_tools.msg import BoolStamped
 
 # When button is pressed, start recording
 # initialise class when ui gets initialised?
@@ -49,6 +50,7 @@ class RosbagRecorder:
         self.odom_topic = self.config["record"]["topics"]["odom"]
         self.twist_topic = self.config["record"]["topics"]["twist"]
         self.status_topic = self.config["record"]["topics"]["status"]
+        self.manual_topic = self.config["record"]["topics"]["manual"]
 
         self.SYNCHED_RECORD_MODE = self.config["record"]["use_sync"]
         if self.SYNCHED_RECORD_MODE:
@@ -59,6 +61,8 @@ class RosbagRecorder:
             fix_sub = message_filters.Subscriber(self.gps_topic, NavSatFix)
             odom_sub = message_filters.Subscriber(self.odom_topic, Odometry)
             status_sub = message_filters.Subscriber(self.status_topic, CarlaEgoVehicleStatus)
+            # manual_sub = message_filters.Subscriber(self.manual_topic, Bool)
+
 
             # register time synchronizer
             ts = message_filters.ApproximateTimeSynchronizer(
@@ -95,6 +99,21 @@ class RosbagRecorder:
                 self.record_twist_callback,
                 queue_size=1,
             )
+
+        #handle the manual flag separately
+        self.manual_pub = rospy.Subscriber(
+                self.manual_topic,
+                Bool,
+                self.manual_callback,
+                queue_size=1,
+            )
+
+        self.manual_stamped = BoolStamped()
+        self.manual_stamped.header.stamp = rospy.Time.now()
+        self.manual_stamped.data = False
+        self.write_manual_status_enabled = True
+
+
 
     def create_initial_bag(self):
         self.bag = rosbag.Bag(self.DATA_PATH + self.ts + ".bag", "w")
@@ -203,7 +222,20 @@ class RosbagRecorder:
             self.bag.write(self.gps_topic, fix)
             self.bag.write(self.odom_topic, odom)
             self.bag.write(self.status_topic, status)
+
+            # sync manual override with other topics
+            if self.write_manual_status_enabled:
+
+                self.manual_stamped.header.stamp = status.header.stamp 
+                self.bag.write(self.manual_topic + "/stamped", self.manual_stamped) 
+                self.write_manual_status_enabled = False 
             # Python too slow?
+
+    def manual_callback(self, msg):
+        
+        # set manual override data, and write status
+        self.manual_stamped.data = msg.data
+        self.write_manual_status_enabled = True
 
 
 if __name__ == "__main__":
