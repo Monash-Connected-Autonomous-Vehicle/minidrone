@@ -66,8 +66,6 @@ class MainInterface(QMainWindow):
         self.record_pub = rospy.Publisher("/recorder/recording", Bool, queue_size=1)
         self.auto_pub = rospy.Publisher("/carla/hero/vehicle_control_manual_override", Bool, queue_size=1) #/carla/patrick/enable_autopilot
 
-
-
     def keyPressEvent(self, event):
 
         if event.key() == Qt.Key_Escape: 
@@ -86,6 +84,9 @@ class MainInterface(QMainWindow):
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(p)
+
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.setup_ui_layout)
 
 
         # setup action buttons
@@ -132,6 +133,8 @@ class MainInterface(QMainWindow):
         self.main_widget = QWidget()
         self.main_widget.setLayout(main_hbox)
         self.setCentralWidget(self.main_widget)
+
+        self.timer.stop()
     
     def setup_node_buttons(self):
         """ Setup the buttons displaying the status of required nodes"""
@@ -246,13 +249,11 @@ class MainInterface(QMainWindow):
             rospy.loginfo("roslaunch successful. ")
 
             time.sleep(3) # TODO: do this better. need to wait for nodes to actuaally launch before refreshing
-            
-            # # TODO: DO this better
-            # auto_msg = Bool()
-            # auto_msg.data = True
-            # self.auto_pub.publish(True) # initially set to manual
-               
-            self.setup_ui_layout()
+                           
+
+
+            self.timer.start(3000)
+            # self.setup_ui_layout()
 
         else:
             for launch_file in self.launched_nodes:
