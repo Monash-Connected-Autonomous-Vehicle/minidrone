@@ -11,8 +11,9 @@ nodes:
 
 autopilot: /home/patrick/self_drive/catkin_ws/src/self_drive/launch/autopilot.launch
 
-required_nodes: ["carla_ros_bridge", "carla_manual_control_hero", "carla_autopilot", "web_video_server", 
-                  "mini_ui", "recorder", "compressed_transport_0", "compressed_transport_1"]
+required_nodes: [mini_ui, recorder, web_video_server, 
+                carla_ros_bridge, carla_manual_control_hero, carla_autopilot, 
+                   compressed_transport_0, compressed_transport_1]
 
 record:
   sim: True

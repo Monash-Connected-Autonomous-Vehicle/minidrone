@@ -18,38 +18,6 @@ from std_msgs.msg import Bool
 from gps import GPSReader
 from utils import get_camera_urls, launch_node
 
-def get_camera_urls():
-    """ return the url for viewing compressed image stream over http
-    assumes compressed image stream
-    
-    """
-
-    published_topics = rospy.get_published_topics()
-    published_topic_names = [x[0] for x in published_topics]
-    published_topic_types = [x[1] for x in published_topics]
-    #\/jetbot_camera\/.*
-    r = re.compile(".*\/compressed$")
-    compressed_camera_topics = list(filter(r.match, published_topic_names))
-
-    cam_urls = []
-    for cam_topic in compressed_camera_topics:
-
-        cam_topic = "/".join(cam_topic.split("/")[:-1])
-        cam_url = f"http://localhost:8080/stream?topic={cam_topic}&type=ros_compressed&width=360&height=480"
-
-        cam_urls.append(cam_url)
-
-    return cam_urls
-
-def launch_node(launch_file):
-    # roslaunch
-    uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-    roslaunch.configure_logging(uuid)
-    launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
-    launch.start()
-
-    return launch
-
 class MainInterface(QMainWindow):
 
     def __init__(self):
@@ -65,24 +33,36 @@ class MainInterface(QMainWindow):
         self.auto_pub = rospy.Publisher("/carla/hero/vehicle_control_manual_override", Bool, queue_size=1) #/carla/patrick/enable_autopilot
 
     def keyPressEvent(self, event):
-
+        """ Shortcut keys """
         if event.key() == Qt.Key_Escape: 
             # Exit application on Esc press
             self.close()
-        
+
+        if event.key() == Qt.Key_S: 
+            # Start / Stop System  on S button press
+            self.start_button.click()
+
         if event.key() == Qt.Key_R: 
             # Start / Stop Recording  on R button press
             self.record_button.click()
+
+        if event.key() == Qt.Key_B: 
+            # Enable autonomous mode on B button press
+            self.auto_mode_button.click()
+
+        if event.key() == Qt.Key_Space: 
+            # Start the AutoPilot system
+            self.autopilot_button.click()
         
 
     def init_ui(self):
-        
-        
+                
         # background colour
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(p)
 
+        # refresh ui timer
         self.timer=QTimer()
         self.timer.timeout.connect(self.setup_ui_layout)
 
@@ -94,7 +74,7 @@ class MainInterface(QMainWindow):
         self.setup_ui_layout()
 
         # setup main window
-        self.setGeometry(300, 300, 1000, 700)
+        self.setGeometry(300, 300, 1200, 700)
         self.setWindowTitle('Mini UI')
         self.setWindowIcon(QIcon(self.config["data"]["logo"]))
         self.show()
@@ -154,9 +134,9 @@ class MainInterface(QMainWindow):
     
     def setup_action_buttons(self):
         """ Setup the buttons for performing actions"""
-        self.auto_mode_button = QPushButton("Manual Mode", self)
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
+        self.auto_mode_button = QPushButton("Manual Mode", self)
         self.autopilot_button = QPushButton("Enable AutoPilot", self)
 
         self.start_button.setStyleSheet("background-color: gray")
@@ -251,17 +231,17 @@ class MainInterface(QMainWindow):
 
             rospy.loginfo("roslaunch successful. ")
 
-            self.timer.start(3000)
-
         else:
             for launch_file in self.launched_nodes:
                 launch_file.shutdown()
 
             self.camera_button_pressed = False # reset to map view
-            self.setup_ui_layout()
+            
             self.start_button.setText("Start System")
             self.start_button.setStyleSheet("background-color: gray")
-
+        
+        # refresh the ui
+        self.timer.start(3000)
 
     def node_button_clicked(self):
         """Functionality for when the node button is pressed"""
@@ -301,16 +281,16 @@ class MainInterface(QMainWindow):
         if self.sender().text() == "Manual Mode":
             auto_msg.data = False
             self.auto_mode_button.setText("Autonomous Mode")
-            self.auto_mode_button.setStyleSheet("background-color: green")
+            self.auto_mode_button.setStyleSheet("background-color: orange")
         else:
             auto_msg.data = True
             self.auto_mode_button.setText("Manual Mode")
             self.auto_mode_button.setStyleSheet("background-color: gray")
         
-        # publish the recording message        
+        # publish the autonomous message        
         self.auto_pub.publish(auto_msg)
         # refresh the ui
-        self.setup_ui_layout()
+        self.timer.start(3000)
 
     def autopilot_button_clicked(self):
         """Functionality for enabling autopilot"""
