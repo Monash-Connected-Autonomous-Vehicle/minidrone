@@ -7,13 +7,16 @@ import message_filters
 import rosbag
 import rospy
 import yaml
-from carla_msgs.msg import CarlaEgoVehicleControl, CarlaEgoVehicleStatus
 from geometry_msgs.msg import Twist, TwistStamped
 from mini_tools.msg import BoolStamped
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import CompressedImage, Imu, NavSatFix
 from std_msgs.msg import Bool
 
+try:
+    from carla_msgs.msg import CarlaEgoVehicleControl, CarlaEgoVehicleStatus
+except:
+    pass 
 # When button is pressed, start recording
 # initialise class when ui gets initialised?
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3 
 
 
-import folium
+# import folium
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import pandas as pd
