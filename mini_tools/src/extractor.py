@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
 import glob
+import os
 from pprint import pprint
 
 import cv_bridge
 import pandas as pd
-from PIL import Image as PILImage
 import rosbag
 import yaml
+from PIL import Image as PILImage
 from sensor_msgs.msg import CompressedImage, Imu, NavSatFix
 from tqdm import tqdm
 
@@ -18,7 +18,9 @@ def interpolate_data(df, method="pad"):
     """Helper for interpolating data for pandas dataframe"""
 
     # interpolate missing data (forward fill pad)
-    interpolated_columns = [col for col in df.columns if col not in ["%time", "time"]]
+    interpolated_columns = [
+        col for col in df.columns if col not in ["field.header.stamp", "time"]
+    ]
 
     # TODO: there has got to be a better way to do this at the dataframe level
     for col in interpolated_columns:
@@ -41,16 +43,23 @@ def merge_data_into_single_dataframe(base_dir):
 
     # prepare pandas dataframe for each data type
     df_img = pd.DataFrame(
-        list(zip(img_timestamp, img_filenames)), columns=["%time", "img"]
+        list(zip(img_timestamp, img_filenames)), columns=["field.header.stamp", "img"]
     )
-    df_imu = pd.read_csv(base_dir + "imu.csv")
-    df_gps = pd.read_csv(base_dir + "gps.csv")
+
+    df_to_concat = [df_img]
+
+    # loop through each .csv file in directory to aggregate
+    for fname in glob.glob(base_dir + "*.csv"):
+        if "data.csv" not in fname:  # dont include the aggregate if already saved
+            print(f"Appending from: {fname}")
+            df = pd.read_csv(fname)
+            df_to_concat.append(df)
 
     # concatenate each data source together
-    df_concat = pd.concat([df_img, df_imu, df_gps])
+    df_concat = pd.concat(df_to_concat)
 
     df_concat["time"] = pd.to_datetime(
-        df_concat["%time"]
+        df_concat["field.header.stamp"]
     )  # reindex frame according to timestamp
     df_concat_sorted = df_concat.sort_values(by=["time"])  # sort according to timestamp
     df_concat_sorted.index = df_concat_sorted["time"]
@@ -62,6 +71,7 @@ def merge_data_into_single_dataframe(base_dir):
     # NOTE: Should NANs be filled with zero?
     # Choosing not to, and letting down stream handle it.
     # they might want to consider nan = zero, or nan = no data. Leaving the choice to them
+    # TODO: manual_override column should be dealt with here.
 
     # save full dataset back to csv
     df_concat_sorted.to_csv(base_dir + "data.csv")
@@ -71,7 +81,7 @@ def merge_data_into_single_dataframe(base_dir):
 
 
 def extract_data_from_rosbag(bag, config):
-    """ Extract all topics from a ROSBAG into images and csv files"""
+    """Extract all topics from a ROSBAG into images and csv files"""
 
     # topics to extract from the config file
     extraction_topics = config["extract"]["topics"]
@@ -150,7 +160,7 @@ if __name__ == "__main__":
         default="config.yaml",
         type=str,
         help="Configuration File",
-    )    
+    )
     args = parser.parse_args()
 
     filename = args.bagfile

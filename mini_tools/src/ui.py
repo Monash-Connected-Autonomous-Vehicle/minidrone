@@ -2,78 +2,70 @@
 
 import glob
 import re
-import yaml
 import sys
-import time 
+import time
 
 import roslaunch
-import rospy
 import rosnode
+import rospy
+import yaml
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
-from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWidgets import *
 from std_msgs.msg import Bool
 
 from gps import GPSReader
+from utils import get_camera_urls, launch_node
 
-def get_camera_urls():
-    """ return the url for viewing compressed image stream over http
-    assumes compressed image stream, and jetbot_camera
-    
-    """
-
-    published_topics = rospy.get_published_topics()
-    published_topic_names = [x[0] for x in published_topics]
-    published_topic_types = [x[1] for x in published_topics]
-    #\/jetbot_camera\/.*
-    r = re.compile(".*\/compressed$")
-    compressed_camera_topics = list(filter(r.match, published_topic_names))
-
-    cam_urls = []
-    for cam_topic in compressed_camera_topics:
-
-        cam_topic = "/".join(cam_topic.split("/")[:-1])
-        cam_url = f"http://localhost:8080/stream?topic={cam_topic}&type=ros_compressed&width=360&height=480"
-
-        cam_urls.append(cam_url)
-
-    return cam_urls
-
-def launch_node(launch_file):
-    # roslaunch
-    uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-    roslaunch.configure_logging(uuid)
-    launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
-    launch.start()
-
-    return launch
-
-class ImageView(QMainWindow):
-    def __init__(self, parent=None):
-        super(ImageView, self).__init__(parent)
 
 class MainInterface(QMainWindow):
-
     def __init__(self):
         super().__init__()
 
-        self.config = yaml.safe_load(open("/home/jetson03/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"))
+        config_file = sys.argv[1]
+        self.config = yaml.safe_load(open(config_file))
         self.camera_button_pressed = False
 
         self.init_ui()
 
         self.record_pub = rospy.Publisher("/recorder/recording", Bool, queue_size=1)
+        self.auto_pub = rospy.Publisher(
+            "/carla/hero/vehicle_control_manual_override", Bool, queue_size=1
+        )  # /carla/patrick/enable_autopilot
+
+    def keyPressEvent(self, event):
+        """Shortcut keys"""
+        if event.key() == Qt.Key_Escape:
+            # Exit application on Esc press
+            self.close()
+
+        if event.key() == Qt.Key_S:
+            # Start / Stop System  on S button press
+            self.start_button.click()
+
+        if event.key() == Qt.Key_R:
+            # Start / Stop Recording  on R button press
+            self.record_button.click()
+
+        if event.key() == Qt.Key_B:
+            # Enable autonomous mode on B button press
+            self.auto_mode_button.click()
+
+        if event.key() == Qt.Key_Space:
+            # Start the AutoPilot system
+            self.autopilot_button.click()
 
     def init_ui(self):
-        
 
         # background colour
         p = self.palette()
         p.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(p)
 
+        # refresh ui timer
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.setup_ui_layout)
 
         # setup action buttons
         self.setup_action_buttons()
@@ -81,10 +73,9 @@ class MainInterface(QMainWindow):
         # refreshable parts of the ui
         self.setup_ui_layout()
 
-        self.image_view = ImageView(self)
-
-        self.setGeometry(300, 300, 1000, 700)
-        self.setWindowTitle('Mini UI')
+        # setup main window
+        self.setGeometry(300, 300, 1200, 700)
+        self.setWindowTitle("Mini UI")
         self.setWindowIcon(QIcon(self.config["data"]["logo"]))
         self.show()
 
@@ -104,60 +95,76 @@ class MainInterface(QMainWindow):
         self.action_button_layout.addWidget(self.start_button)
         self.action_button_layout.addWidget(self.record_button)
         self.action_button_layout.addWidget(self.auto_mode_button)
+        self.action_button_layout.addWidget(self.autopilot_button)
 
         vbox = QVBoxLayout()
         vbox.addStretch(0)
-        vbox.addLayout(self.main_view_layout)
-        vbox.addLayout(self.main_view_button_layout)
-        vbox.addLayout(self.action_button_layout)
+        vbox.addLayout(self.main_view_layout, 3)
+        vbox.addLayout(self.main_view_button_layout, 1)
+        vbox.addLayout(self.action_button_layout, 1)
 
         main_hbox = QHBoxLayout()
-        main_hbox.addLayout(self.node_button_layout)
-        main_hbox.addLayout(vbox)
+        main_hbox.addLayout(self.node_button_layout, 1)
+        main_hbox.addLayout(vbox, 4)
 
         self.statusBar().setStyleSheet("color: white")
         self.main_widget = QWidget()
         self.main_widget.setLayout(main_hbox)
         self.setCentralWidget(self.main_widget)
-    
+
+        self.timer.stop()
+
     def setup_node_buttons(self):
-        """ Setup the buttons displaying the status of required nodes"""
+        """Setup the buttons displaying the status of required nodes"""
         requred_nodes = self.config["required_nodes"]
         self.node_button_layout = QVBoxLayout()
         self.node_button_layout.addStretch(0)
-        
+
         for i, node_name in enumerate(requred_nodes):
-            
+
             node_button = QPushButton(f"{node_name}", self)
             node_button.clicked.connect(self.node_button_clicked)
-            node_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+            node_button.setSizePolicy(
+                QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
+            )
             self.node_button_layout.addWidget(node_button)
             if "/" + node_name in rosnode.get_node_names():
                 node_button.setStyleSheet("background-color: green")
-            else: 
+            else:
                 node_button.setStyleSheet("background-color: red")
 
-    
     def setup_action_buttons(self):
-        """ Setup the buttons for performing actions"""
-        self.auto_mode_button = QPushButton("Manual Mode", self)
+        """Setup the buttons for performing actions"""
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
+        self.auto_mode_button = QPushButton("Manual Mode", self)
+        self.autopilot_button = QPushButton("Enable AutoPilot", self)
 
-        self.start_button.setStyleSheet("background-color: green")
-        self.record_button.setStyleSheet("background-color: red")
-        self.auto_mode_button.setStyleSheet("background-color: orange")
+        self.start_button.setStyleSheet("background-color: gray")
+        self.record_button.setStyleSheet("background-color: gray")
+        self.auto_mode_button.setStyleSheet("background-color: gray")
+        self.autopilot_button.setStyleSheet("background-color: gray")
 
-        self.start_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        self.record_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        self.auto_mode_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.start_button.setSizePolicy(
+            QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
+        )
+        self.record_button.setSizePolicy(
+            QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
+        )
+        self.auto_mode_button.setSizePolicy(
+            QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
+        )
+        self.autopilot_button.setSizePolicy(
+            QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
+        )
 
         self.start_button.clicked.connect(self.start_button_clicked)
         self.record_button.clicked.connect(self.record_button_clicked)
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
-    
+        self.autopilot_button.clicked.connect(self.autopilot_button_clicked)
+
     def setup_main_view(self):
-        """ Setup the layout for the main view """
+        """Setup the layout for the main view"""
         self.main_view_layout = QVBoxLayout()
         self.main_view_layout.addWidget(self.main_view)
 
@@ -167,22 +174,25 @@ class MainInterface(QMainWindow):
         # self.gps_reader = GPSReader()
         # self.fig = self.gps_reader.fig2
         self.main_view = QWebEngineView()
-        self.main_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
+        self.main_view.setUrl(
+            QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")
+        )  # just for testing view
+
         # self.main_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
 
-
     def setup_main_view_buttons(self):
-        """ Setup buttons for controlling the main view (map / cameras)"""
+        """Setup buttons for controlling the main view (map / cameras)"""
         self.main_view_button_layout = QHBoxLayout()
         self.main_view_button_layout.addStretch(0)
-
 
         # setup map view button
         map_button = QPushButton("Map View", self)
         map_button.clicked.connect(self.main_view_button_clicked)
-        map_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        map_button.setSizePolicy(
+            QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
+        )
         self.main_view_button_layout.addWidget(map_button)
-        
+
         # setup camera buttons dynamically based on detected streams
         self.cam_urls = get_camera_urls()
 
@@ -190,13 +200,15 @@ class MainInterface(QMainWindow):
 
             cam_button = QPushButton(f"Camera {i}", self)
             cam_button.clicked.connect(self.main_view_button_clicked)
-            cam_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+            cam_button.setSizePolicy(
+                QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding
+            )
             self.main_view_button_layout.addWidget(cam_button)
 
     def main_view_button_clicked(self):
-        """ Functionality for when a main view button is clicked"""
+        """Functionality for when a main view button is clicked"""
         sender = self.sender()
-        self.statusBar().showMessage(sender.text() + ' was pressed')
+        self.statusBar().showMessage(sender.text() + " was pressed")
         rospy.loginfo(sender.text() + " button was pressed")
 
         if sender.text() == "Map View":
@@ -209,19 +221,19 @@ class MainInterface(QMainWindow):
 
         self.setup_ui_layout()
 
-
     def start_button_clicked(self):
-        """ Functionality for when the start/stop system button is pressed""" 
-        self.statusBar().showMessage(self.sender().text() + ' was pressed')
+        """Functionality for when the start/stop system button is pressed"""
+        self.statusBar().showMessage(self.sender().text() + " was pressed")
         rospy.loginfo(self.sender().text() + " button was pressed")
 
         if self.sender().text() == "Start System":
 
             self.start_button.setText("Stop System")
+            self.start_button.setStyleSheet("background-color: green")
             self.launched_nodes = []
-            
+
             for node in self.config["nodes"]:
-                
+
                 rospy.loginfo("Launching %s", node)
                 launch_file = self.config["nodes"][node]["launch"]
 
@@ -231,58 +243,87 @@ class MainInterface(QMainWindow):
 
             rospy.loginfo("roslaunch successful. ")
 
-            time.sleep(3) # TODO: do this better. need to wait for nodes to actuaally launch before refreshing
-            self.setup_ui_layout()
-
         else:
             for launch_file in self.launched_nodes:
                 launch_file.shutdown()
 
-            self.camera_button_pressed = False # reset to map view
-            self.setup_ui_layout()
+            self.camera_button_pressed = False  # reset to map view
+
             self.start_button.setText("Start System")
+            self.start_button.setStyleSheet("background-color: gray")
+
+        # refresh the ui
+        self.timer.start(3000)
 
     def node_button_clicked(self):
         """Functionality for when the node button is pressed"""
-        self.statusBar().showMessage(self.sender().text() + ' was pressed')
+        self.statusBar().showMessage(self.sender().text() + " was pressed")
         rospy.loginfo(self.sender().text() + " button was pressed")
 
     def record_button_clicked(self):
-        """ Functionality for when the record button is pressed"""
-        self.statusBar().showMessage(self.sender().text() + ' was pressed')
+        """Functionality for when the record button is pressed"""
+        self.statusBar().showMessage(self.sender().text() + " was pressed")
         rospy.loginfo(self.sender().text() + " button was pressed")
 
         record_msg = Bool()
         # toggle between recording states
         if self.sender().text() == "Record Data":
-            
+
             # set the recording msg
             self.record_button.setText("Stop Recording")
+            self.record_button.setStyleSheet("background-color: red")
             record_msg.data = True
-            
+
         else:
             # set the stop recording msg
             self.record_button.setText("Record Data")
+            self.record_button.setStyleSheet("background-color: gray")
             record_msg.data = False
 
-        # publish the recording message        
+        # publish the recording message
         self.record_pub.publish(record_msg)
         print("Recording Status: ", record_msg.data)
 
     def auto_mode_button_clicked(self):
         """Functionality for when the auto mode button is clicked"""
-        self.statusBar().showMessage(self.sender().text() + ' was pressed')
+        self.statusBar().showMessage(self.sender().text() + " was pressed")
         rospy.loginfo(self.sender().text() + " button was pressed")
-        print(rosnode.get_node_names())
+
+        auto_msg = Bool()
         if self.sender().text() == "Manual Mode":
+            auto_msg.data = False
             self.auto_mode_button.setText("Autonomous Mode")
+            self.auto_mode_button.setStyleSheet("background-color: orange")
         else:
+            auto_msg.data = True
             self.auto_mode_button.setText("Manual Mode")
-        
+            self.auto_mode_button.setStyleSheet("background-color: gray")
+
+        # publish the autonomous message
+        self.auto_pub.publish(auto_msg)
         # refresh the ui
-        self.setup_ui_layout()
+        self.timer.start(3000)
+
+    def autopilot_button_clicked(self):
+        """Functionality for enabling autopilot"""
+        self.statusBar().showMessage(self.sender().text() + " was pressed")
+
+        if self.sender().text() == "Enable AutoPilot":
+
+            self.autopilot_launch = launch_node(self.config["autopilot"])
+            self.autopilot_button.setText("Disable AutoPilot")
+            self.autopilot_button.setStyleSheet("background-color: blue")
+
+        else:
+            self.autopilot_launch.shutdown()
+            self.autopilot_button.setText("Enable AutoPilot")
+            self.autopilot_button.setStyleSheet("background-color: gray")
+
+        self.timer.start(3000)  # refresh ui timer
+
 
 # TODO: jetson stats
+
 
 def main():
     app = QApplication(sys.argv)
@@ -290,23 +331,14 @@ def main():
     sys.exit(app.exec_())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     rospy.init_node("ui_node")
     main()
 
 
-
-#ref
+# ref
 # https://zetcode.com/gui/pyqt5/eventssignals/
-
-
-# emit signals
-# file dialog?
-# toggle buttons 
-# qslider
-# qsplitter
-
 
 # https://github.com/Geekgineer/ros_web_gui/blob/master/README.md
 

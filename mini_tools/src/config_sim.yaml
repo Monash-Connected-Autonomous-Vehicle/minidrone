@@ -1,0 +1,35 @@
+
+# sim config
+data:
+  path: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/data/
+  logo: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/logo.png
+
+nodes:
+  carla_simulator:
+    name: CARLA Simulator
+    launch: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/launch/mini_ui_sim.launch
+
+autopilot: /home/patrick/self_drive/catkin_ws/src/self_drive/launch/autopilot.launch
+
+required_nodes: [mini_ui, recorder, web_video_server, 
+                carla_ros_bridge, carla_manual_control_hero, carla_autopilot, 
+                   compressed_transport_0, compressed_transport_1]
+
+record:
+  sim: True
+  use_sync: True
+  topics: {camera: /carla/hero/camera/rgb/front/image_color/compressed, 
+            imu: /carla/hero/imu/imu1, 
+            gps: /carla/hero/gnss/gnss1/fix,
+            twist: /carla/hero/twist_cmd,
+            odom: /carla/hero/odometry, 
+            status: /carla/hero/vehicle_status, 
+            manual: /carla/hero/vehicle_control_manual_override} 
+extract:
+  topics: ["/carla/hero/camera/rgb/front/image_color/compressed", 
+          "/carla/hero/imu/default", 
+          "/carla/hero/gnss/default/fix", 
+          "/carla/hero/odometry",
+          "/carla/hero/vehicle_status"] 
+
+  
