@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
 import glob
+import os
 from pprint import pprint
 
 import cv_bridge
 import pandas as pd
-from PIL import Image as PILImage
 import rosbag
 import yaml
+from PIL import Image as PILImage
 from sensor_msgs.msg import CompressedImage, Imu, NavSatFix
 from tqdm import tqdm
 
@@ -18,7 +18,9 @@ def interpolate_data(df, method="pad"):
     """Helper for interpolating data for pandas dataframe"""
 
     # interpolate missing data (forward fill pad)
-    interpolated_columns = [col for col in df.columns if col not in ["field.header.stamp", "time"]]
+    interpolated_columns = [
+        col for col in df.columns if col not in ["field.header.stamp", "time"]
+    ]
 
     # TODO: there has got to be a better way to do this at the dataframe level
     for col in interpolated_columns:
@@ -44,12 +46,11 @@ def merge_data_into_single_dataframe(base_dir):
         list(zip(img_timestamp, img_filenames)), columns=["field.header.stamp", "img"]
     )
 
-
     df_to_concat = [df_img]
 
     # loop through each .csv file in directory to aggregate
     for fname in glob.glob(base_dir + "*.csv"):
-        if "data.csv" not in fname: # dont include the aggregate if already saved    
+        if "data.csv" not in fname:  # dont include the aggregate if already saved
             print(f"Appending from: {fname}")
             df = pd.read_csv(fname)
             df_to_concat.append(df)
@@ -80,7 +81,7 @@ def merge_data_into_single_dataframe(base_dir):
 
 
 def extract_data_from_rosbag(bag, config):
-    """ Extract all topics from a ROSBAG into images and csv files"""
+    """Extract all topics from a ROSBAG into images and csv files"""
 
     # topics to extract from the config file
     extraction_topics = config["extract"]["topics"]
@@ -159,7 +160,7 @@ if __name__ == "__main__":
         default="config.yaml",
         type=str,
         help="Configuration File",
-    )    
+    )
     args = parser.parse_args()
 
     filename = args.bagfile

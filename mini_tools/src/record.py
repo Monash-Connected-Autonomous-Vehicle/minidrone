@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 
-from datetime import datetime
 import sys
+from datetime import datetime
 
 import message_filters
 import rosbag
 import rospy
 import yaml
+from carla_msgs.msg import CarlaEgoVehicleControl, CarlaEgoVehicleStatus
 from geometry_msgs.msg import Twist, TwistStamped
-from sensor_msgs.msg import CompressedImage, Imu, NavSatFix
-from nav_msgs.msg import Odometry
-from std_msgs.msg import Bool
-from carla_msgs.msg import CarlaEgoVehicleStatus, CarlaEgoVehicleControl
-
 from mini_tools.msg import BoolStamped
+from nav_msgs.msg import Odometry
+from sensor_msgs.msg import CompressedImage, Imu, NavSatFix
+from std_msgs.msg import Bool
 
 # When button is pressed, start recording
 # initialise class when ui gets initialised?
+
 
 class RosbagRecorder:
 
@@ -58,8 +58,10 @@ class RosbagRecorder:
             imu_sub = message_filters.Subscriber(self.imu_topic, Imu)
             fix_sub = message_filters.Subscriber(self.gps_topic, NavSatFix)
             odom_sub = message_filters.Subscriber(self.odom_topic, Odometry)
-            status_sub = message_filters.Subscriber(self.status_topic, CarlaEgoVehicleStatus)
-            
+            status_sub = message_filters.Subscriber(
+                self.status_topic, CarlaEgoVehicleStatus
+            )
+
             # register time synchronizer
             ts = message_filters.ApproximateTimeSynchronizer(
                 [image_sub, imu_sub, fix_sub, odom_sub, status_sub],
@@ -96,20 +98,18 @@ class RosbagRecorder:
                 queue_size=1,
             )
 
-        #handle the manual flag separately
+        # handle the manual flag separately
         self.manual_pub = rospy.Subscriber(
-                self.manual_topic,
-                Bool,
-                self.manual_callback,
-                queue_size=1,
-            )
+            self.manual_topic,
+            Bool,
+            self.manual_callback,
+            queue_size=1,
+        )
 
         self.manual_stamped = BoolStamped()
         self.manual_stamped.header.stamp = rospy.Time.now()
         self.manual_stamped.data = False
         self.write_manual_status_enabled = True
-
-
 
     def create_initial_bag(self):
         self.bag = rosbag.Bag(self.DATA_PATH + self.ts + ".bag", "w")
@@ -222,13 +222,13 @@ class RosbagRecorder:
             # sync manual override with other topics
             if self.write_manual_status_enabled:
 
-                self.manual_stamped.header.stamp = status.header.stamp 
-                self.bag.write(self.manual_topic + "/stamped", self.manual_stamped) 
-                self.write_manual_status_enabled = False 
+                self.manual_stamped.header.stamp = status.header.stamp
+                self.bag.write(self.manual_topic + "/stamped", self.manual_stamped)
+                self.write_manual_status_enabled = False
             # Python too slow?
 
     def manual_callback(self, msg):
-        
+
         # set manual override data, and write status
         self.manual_stamped.data = msg.data
         self.write_manual_status_enabled = True
