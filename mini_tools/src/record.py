@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from datetime import datetime
+import sys
 
 import message_filters
 import rosbag
@@ -23,11 +24,8 @@ class RosbagRecorder:
 
     def __init__(self):
 
-        self.config = yaml.safe_load(
-            open(
-                "/home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"
-            )
-        )
+        config_file = sys.argv[1]
+        self.config = yaml.safe_load(open(config_file))
 
         self.DATA_PATH = self.config["data"][
             "path"

@@ -58,7 +58,8 @@ class MainInterface(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.config = yaml.safe_load(open("/home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/config.yaml"))
+        config_file = sys.argv[1]
+        self.config = yaml.safe_load(open(config_file))
         self.camera_button_pressed = False
 
         self.init_ui()

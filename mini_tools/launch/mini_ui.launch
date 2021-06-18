@@ -1,7 +1,13 @@
 <launch>
-    <!-- mini ui and web_video_server -->
-    <node pkg="web_video_server" type="web_video_server" name="web_video_server"/> 
-    <node pkg="mini_tools" type="ui.py" name="mini_ui" output="screen" />
-    <node pkg="mini_tools" type="record.py" name="recorder" output="screen" />
+
     
+    <!-- launch mini ui -->
+    <arg name="config" default="$(find mini_tools)/src/config_sim.yaml" />
+    <node pkg="mini_tools" type="ui.py" name="mini_ui" output="screen" args="$(arg config)"/>
+
+    <!-- launch recorder -->
+    <node pkg="mini_tools" type="record.py" name="recorder" output="screen" args="$(arg config)" />
+    
+    <!-- launch web_video_server -->
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server"/> 
 </launch>
