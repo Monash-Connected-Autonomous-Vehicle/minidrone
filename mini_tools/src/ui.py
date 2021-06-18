@@ -181,13 +181,13 @@ class MainInterface(QMainWindow):
     def setup_map_view(self):
         """Setup map data and browser based map view"""
         # map view (not working)
-        # self.gps_reader = GPSReader()
-        # self.fig = self.gps_reader.fig2
+        self.gps_reader = GPSReader()
+        self.fig = self.gps_reader.fig2
         self.main_view = QWebEngineView()
-        self.main_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
+        # self.main_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
 
-        # self.main_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
-
+        self.main_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
+        
 
     def setup_main_view_buttons(self):
         """ Setup buttons for controlling the main view (map / cameras)"""

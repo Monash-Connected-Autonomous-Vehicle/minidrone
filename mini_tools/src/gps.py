@@ -1,7 +1,7 @@
 #!/usr/bin/env python3 
 
 
-
+import folium
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -17,7 +17,11 @@ class GPSReader():
 
         # us_cities = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
 
-        df_gps = pd.read_csv("gps_data.csv")
+        df_gps = pd.read_csv("/home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/src/gps_data.csv")
+
+        # m = folium.Map(location=[45.5236, -122.6750])
+
+        # m.save("plot.html")
 
         fig = px.scatter_mapbox(df_gps, lat="field.latitude", lon="field.longitude", 
                                 color_discrete_sequence=["blue"])
@@ -51,10 +55,10 @@ class GPSReader():
         #     print(data)
 
 
-        # fig2.data[0].lat = [-37.8]
-        # fig2.data[0].lon = [145.1]  
-        # fig2.data[0].marker["color"]="red"
-        # fig2.data[0].marker["size"] = 10
+        self.fig2.data[0].lat = [0]
+        self.fig2.data[0].lon = [0]  
+        self.fig2.data[0].marker["color"]="red"
+        self.fig2.data[0].marker["size"] = 10
 
 
         # fig2.show()
