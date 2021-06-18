@@ -14,8 +14,8 @@ class EmergencyBrake
     // get stopping distance param
     ros::param::get("/stop_distance", stop_distance_);
     ros::param::get("/stop_time", stop_time_);
-    ROS_INFO("Stopping Distance set at %d m", stop_distance_);
-    // ROS_INFO("Stopping Time set at %d m", stop_time_);
+    ROS_INFO("Stopping Distance set at %f m", stop_distance_);
+    // ROS_INFO("Stopping Time set at %f m", stop_time_);
 
     // laser subscriber
     laser_sub_ = nh_.subscribe("/scan", 10, &EmergencyBrake::LaserCallback, this);

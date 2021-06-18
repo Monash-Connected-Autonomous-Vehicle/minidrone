@@ -1,0 +1,5 @@
+<launch>
+    <!-- launch camera  -->
+    <include file="$(find jetbot_ros)/launch/jetbot_cam_compressed_two.launch" />
+    
+</launch>

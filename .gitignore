@@ -4,3 +4,14 @@ devel/*
 .catkin_workspace
 .cache/*
 .vscode/*
+
+
+*.csv
+*.png
+*.bag
+imitation_learning/data/*
+imitation_learning/models/*.pt
+
+# include the logo file
+!logo.png
+*settings.json
