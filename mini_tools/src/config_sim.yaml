@@ -9,6 +9,8 @@ nodes:
     name: CARLA Simulator
     launch: /home/patrick/mcav/catkin_ws/src/minidrone/mini_tools/launch/mini_ui_sim.launch
 
+autopilot: /home/patrick/self_drive/catkin_ws/src/self_drive/launch/autopilot.launch
+
 required_nodes: ["carla_ros_bridge", "carla_manual_control_hero", "carla_autopilot", "web_video_server", 
                   "mini_ui", "recorder", "compressed_transport_0", "compressed_transport_1"]
 

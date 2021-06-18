@@ -16,10 +16,11 @@ from PyQt5.QtWidgets import *
 from std_msgs.msg import Bool
 
 from gps import GPSReader
+from utils import get_camera_urls, launch_node
 
 def get_camera_urls():
     """ return the url for viewing compressed image stream over http
-    assumes compressed image stream, and jetbot_camera
+    assumes compressed image stream
     
     """
 
@@ -48,10 +49,6 @@ def launch_node(launch_file):
     launch.start()
 
     return launch
-
-class ImageView(QMainWindow):
-    def __init__(self, parent=None):
-        super(ImageView, self).__init__(parent)
 
 class MainInterface(QMainWindow):
 
@@ -96,8 +93,7 @@ class MainInterface(QMainWindow):
         # refreshable parts of the ui
         self.setup_ui_layout()
 
-        self.image_view = ImageView(self)
-
+        # setup main window
         self.setGeometry(300, 300, 1000, 700)
         self.setWindowTitle('Mini UI')
         self.setWindowIcon(QIcon(self.config["data"]["logo"]))
@@ -119,12 +115,13 @@ class MainInterface(QMainWindow):
         self.action_button_layout.addWidget(self.start_button)
         self.action_button_layout.addWidget(self.record_button)
         self.action_button_layout.addWidget(self.auto_mode_button)
+        self.action_button_layout.addWidget(self.autopilot_button)
 
         vbox = QVBoxLayout()
         vbox.addStretch(0)
-        vbox.addLayout(self.main_view_layout)
-        vbox.addLayout(self.main_view_button_layout)
-        vbox.addLayout(self.action_button_layout)
+        vbox.addLayout(self.main_view_layout, 3)
+        vbox.addLayout(self.main_view_button_layout, 1)
+        vbox.addLayout(self.action_button_layout, 1)
 
         main_hbox = QHBoxLayout()
         main_hbox.addLayout(self.node_button_layout, 1)
@@ -160,19 +157,23 @@ class MainInterface(QMainWindow):
         self.auto_mode_button = QPushButton("Manual Mode", self)
         self.start_button = QPushButton("Start System", self)
         self.record_button = QPushButton("Record Data", self)
+        self.autopilot_button = QPushButton("Enable AutoPilot", self)
 
-        self.start_button.setStyleSheet("background-color: green")
-        self.record_button.setStyleSheet("background-color: red")
+        self.start_button.setStyleSheet("background-color: gray")
+        self.record_button.setStyleSheet("background-color: gray")
         self.auto_mode_button.setStyleSheet("background-color: gray")
+        self.autopilot_button.setStyleSheet("background-color: gray")
 
         self.start_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         self.record_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         self.auto_mode_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.autopilot_button.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
 
         self.start_button.clicked.connect(self.start_button_clicked)
         self.record_button.clicked.connect(self.record_button_clicked)
         self.auto_mode_button.clicked.connect(self.auto_mode_button_clicked)
-    
+        self.autopilot_button.clicked.connect(self.autopilot_button_clicked)
+
     def setup_main_view(self):
         """ Setup the layout for the main view """
         self.main_view_layout = QVBoxLayout()
@@ -181,12 +182,12 @@ class MainInterface(QMainWindow):
     def setup_map_view(self):
         """Setup map data and browser based map view"""
         # map view (not working)
-        self.gps_reader = GPSReader()
-        self.fig = self.gps_reader.fig2
+        # self.gps_reader = GPSReader()
+        # self.fig = self.gps_reader.fig2
         self.main_view = QWebEngineView()
-        # self.main_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
+        self.main_view.setUrl(QUrl("https://www.google.com.au/maps/@-37.9105836,145.133697,16.71z")) # just for testing view
 
-        self.main_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
+        # self.main_view.setHtml(self.fig.to_html(include_plotlyjs="cdn"))
         
 
     def setup_main_view_buttons(self):
@@ -236,6 +237,7 @@ class MainInterface(QMainWindow):
         if self.sender().text() == "Start System":
 
             self.start_button.setText("Stop System")
+            self.start_button.setStyleSheet("background-color: green")
             self.launched_nodes = []
             
             for node in self.config["nodes"]:
@@ -249,12 +251,7 @@ class MainInterface(QMainWindow):
 
             rospy.loginfo("roslaunch successful. ")
 
-            time.sleep(3) # TODO: do this better. need to wait for nodes to actuaally launch before refreshing
-                           
-
-
             self.timer.start(3000)
-            # self.setup_ui_layout()
 
         else:
             for launch_file in self.launched_nodes:
@@ -263,6 +260,8 @@ class MainInterface(QMainWindow):
             self.camera_button_pressed = False # reset to map view
             self.setup_ui_layout()
             self.start_button.setText("Start System")
+            self.start_button.setStyleSheet("background-color: gray")
+
 
     def node_button_clicked(self):
         """Functionality for when the node button is pressed"""
@@ -280,11 +279,13 @@ class MainInterface(QMainWindow):
             
             # set the recording msg
             self.record_button.setText("Stop Recording")
+            self.record_button.setStyleSheet("background-color: red")
             record_msg.data = True
             
         else:
             # set the stop recording msg
             self.record_button.setText("Record Data")
+            self.record_button.setStyleSheet("background-color: gray")
             record_msg.data = False
 
         # publish the recording message        
@@ -310,6 +311,23 @@ class MainInterface(QMainWindow):
         self.auto_pub.publish(auto_msg)
         # refresh the ui
         self.setup_ui_layout()
+
+    def autopilot_button_clicked(self):
+        """Functionality for enabling autopilot"""
+        self.statusBar().showMessage(self.sender().text() + ' was pressed')
+
+        if self.sender().text() == "Enable AutoPilot":
+
+            self.autopilot_launch = launch_node(self.config["autopilot"])
+            self.autopilot_button.setText("Disable AutoPilot")
+            self.autopilot_button.setStyleSheet("background-color: blue")
+
+        else:
+            self.autopilot_launch.shutdown()
+            self.autopilot_button.setText("Enable AutoPilot")
+            self.autopilot_button.setStyleSheet("background-color: gray")
+
+        self.timer.start(3000) # refresh ui timer   
 
 # TODO: jetson stats
 

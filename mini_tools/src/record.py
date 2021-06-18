@@ -59,9 +59,7 @@ class RosbagRecorder:
             fix_sub = message_filters.Subscriber(self.gps_topic, NavSatFix)
             odom_sub = message_filters.Subscriber(self.odom_topic, Odometry)
             status_sub = message_filters.Subscriber(self.status_topic, CarlaEgoVehicleStatus)
-            # manual_sub = message_filters.Subscriber(self.manual_topic, Bool)
-
-
+            
             # register time synchronizer
             ts = message_filters.ApproximateTimeSynchronizer(
                 [image_sub, imu_sub, fix_sub, odom_sub, status_sub],
@@ -245,9 +243,4 @@ if __name__ == "__main__":
 
     rospy.spin()
 
-
-# TODO: change imitation learner to use this recorder class
-
-
 # http://wiki.ros.org/rosbag/Code%20API#Python_API
-# pip3 install pycryptodomex python-gnupg
