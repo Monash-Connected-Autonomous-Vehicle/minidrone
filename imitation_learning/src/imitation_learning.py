@@ -16,7 +16,8 @@ import PIL
 
 
 class ImitationLearner:
-    def __init__(self):
+    def __init__(self, image_topic, use_compressed_image_type):
+        self.use_compressed = use_compressed_image_type
 
         self.bridge = cv_bridge.CvBridge()
 
@@ -60,9 +61,11 @@ class ImitationLearner:
         print(f"Record: {self.record}, Autopilot: {self.autopilot}")
 
         # subscriber setup
-        rospy.Subscriber(
-            "jetbot_camera/0/compressed_throttle", CompressedImage, self.image_callback
-        )
+        if self.use_compressed:
+            rospy.Subscriber(image_topic, CompressedImage, self.image_callback)
+        else:
+            rospy.Subscriber(image_topic, Image, self.image_callback)
+
         rospy.Subscriber("twist_mux/cmd_vel", Twist, self.twist_callback)
         rospy.Subscriber("/joy", Joy, self.joy_callback)
 
@@ -92,10 +95,13 @@ class ImitationLearner:
 
     def image_callback(self, data):
 
-        img = self.bridge.compressed_imgmsg_to_cv2(data)
+        if self.use_compressed:
+            img = self.bridge.compressed_imgmsg_to_cv2(data)
+        else:
+            img = self.bridge.imgmsg_to_cv2(data)
 
         # reverse image colour channels (bgr to rgb)
-        img = img[:, :, ::-1]
+        img = img[:, :, ::-1] # TODO pass desired_encoding to cvbridge instead
 
         # synch images and twist
         self.img = img
@@ -170,9 +176,12 @@ class ImitationLearner:
 if __name__ == "__main__":
 
     rospy.init_node("mini_imitation_learning")
-    rospy.loginfo("Hello Imitation")
+    use_compressed = rospy.get_param("~use_compressed_image_type")
+    image_topic = rospy.get_param("~image_topic")
+    rospy.loginfo(f"Image topic: {image_topic}")
+    rospy.loginfo(f"Using compressed images: {use_compressed}")
 
-    imitiation = ImitationLearner()
+    imitiation = ImitationLearner(image_topic, use_compressed)
 
     rospy.spin()
 

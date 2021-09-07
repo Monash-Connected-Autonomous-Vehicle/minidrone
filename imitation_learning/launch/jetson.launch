@@ -8,6 +8,9 @@
 
     <!-- imitation learning -->
     <node pkg="topic_tools" type="throttle" name="throttle" args="messages /jetbot_camera/0/compressed 2" /> 
-    <node pkg="imitation_learning" type="imitation_learning.py" name="imitation_learning" output="screen" />
+       
+    <node pkg="imitation_learning" type="imitation_learning.py" name="imitation_learning" output="screen">
+        <param name="use_compressed_image_type" type="bool" value="true" />
+    </node>
 
-</launch>
+</launch>"jetbot_camera/0/compressed_throttle"
