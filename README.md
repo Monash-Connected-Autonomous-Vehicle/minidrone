@@ -1,6 +1,6 @@
 # MiniDrone 
 
-This repository contains the software for the MCAV MiniDrone project.
+This repository contains the software for the [MCAV MiniDrone project](https://sites.google.com/student.monash.edu/minidrone)
 
 ## Installation
 
@@ -28,9 +28,9 @@ $ catkin_make
 
 - Install MiniDrone requirements
 
-  ```bash
-  $ ./install.sh 
-  ```
+```bash
+$ ./install.sh 
+```
 
 - Upload code to arduino
 
