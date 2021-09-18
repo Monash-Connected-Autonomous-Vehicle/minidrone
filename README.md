@@ -4,42 +4,73 @@ This repository contains the software for the MCAV MiniDrone project.
 
 ## Installation
 
-- Setup Jetson to run ROS and Arduino IDE
+- For help with setting up the Jetson Nano, see [MiniDrone Software Setup](https://docs.google.com/document/u/1/d/16hTuHI0GkWB7Fz8jkYoRb6zCtv_vSotQT3AZyo3yxcA/edit?usp=drive_web&ouid=101896295474612094790)
 
-  See [MiniDrone Software Setup](https://docs.google.com/document/u/1/d/16hTuHI0GkWB7Fz8jkYoRb6zCtv_vSotQT3AZyo3yxcA/edit?usp=drive_web&ouid=101896295474612094790)
+- Setting up a Catkin Workspace 
+
+```bash
+# create the catkin workspace
+$ mkdir -p ~/workspace/catkin_ws/src
+$ cd ~/workspace/catkin_ws
+$ catkin_make
+
+# source catkin_ws 
+$ sudo sh -c 'echo "source ~/workspace/catkin_ws/devel/setup.bash" >> ~/.bashrc'
+
+# clone the repo
+$ cd src/
+$ git clone https://github.com/Monash-Connected-Autonomous-Vehicle/minidrone.git
+
+# build the repo
+$ cd ../    
+$ catkin_make
+  ```
 
 - Install MiniDrone requirements
 
-  ``` ./install.sh ```
+  ```bash
+  $ ./install.sh 
+  ```
 
 - Upload code to arduino
 
-  See box_republisher/box_sensor_raw/box_sensor_raw.ino for details and pin layout
+  See [Arduino file](box_republisher/box_sensor_raw/box_sensor_raw.ino) for  pin layout
 
-## Getting started
+## ROS API
 
 ### mcav_box_sensor_republisher
 This package reads sensor data over Serial and republishes it as the corresponding ROS message.
 
 Currently supports:
-- Imu
-- Magnetic Field
-- IMU Calibration Data
-- GPS (Latitude, Longitude, Altitude)
+* `IMU`
+* `Magnetic Field`
+* `IMU Calibration Data`
+* `GPS (Latitude, Longitude, Altitude)`
+
 
 To run the node:
 
-` python run_box_republisher.py `
+```bash
+$ python run_box_republisher.py 
+```
 
 Options:
-- -port: select the arduino serial port name (default: /dev/ttyACM0)
-- -baud: select the arduino serial baud rate (default: 115200)
+- **-port**: select the arduino serial port name (default: /dev/ttyACM0)
+- **-baud**: select the arduino serial baud rate (default: 115200)
 
-Publishes:
-- /imu: raw imu data including fused orientation, linear_acceleration and angular_velocity
-- /imu/mag: raw imu magnetometer data
-- /imu/calibration: status information indicating the state of the onboard calibration
-- /gps: gps fix information including latitude, longitude, and altitude
+Published Topics:
+* `/imu` *(sensor_msgs/Imu)*\
+Raw imu data including fused orientation, linear_acceleration
+and angular_velocity
+
+* `/imu/mag` *(sensor_msgs/MagneticField)*\
+Raw imu magnetometer data
+
+* `/imu/calibration` *(std_msgs/UInt8MultiArray)* \
+ Status information indicating the state of the onboard calibration
+
+* `/gps` *(sensor_msgs/NavSatFix)*\
+Latitude, longitude, and altitude
 
 
 ### control
