@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import cv2
-import cv_bridge
+import fake_cv_bridge
 import pandas as pd
 import PIL
 import rospy
@@ -18,8 +18,6 @@ import PIL
 class ImitationLearner:
     def __init__(self, image_topic, use_compressed_image_type):
         self.use_compressed = use_compressed_image_type
-
-        self.bridge = cv_bridge.CvBridge()
 
         self.speed = 0
         self.steer = 0
@@ -96,9 +94,9 @@ class ImitationLearner:
     def image_callback(self, data):
 
         if self.use_compressed:
-            img = self.bridge.compressed_imgmsg_to_cv2(data)
+            img = fake_cv_bridge.compressed_imgmsg_to_cv2(data)
         else:
-            img = self.bridge.imgmsg_to_cv2(data)
+            img = fake_cv_bridge.imgmsg_to_cv2(data)
 
         # reverse image colour channels (bgr to rgb)
         img = img[:, :, ::-1] # TODO pass desired_encoding to cvbridge instead
