@@ -1,4 +1,4 @@
-# MiniDrone 
+# 🏎️ MiniDrone 
 
 This repository contains the software for the [MCAV MiniDrone project](https://sites.google.com/student.monash.edu/minidrone).
 
@@ -9,6 +9,6 @@ It is recommended to install and run this project using docker. See [Docker Inst
 `git clone https://github.com/Monash-Connected-Autonomous-Vehicle/minidrone.git`
 
 ## How to run
-`cd minidrone`
+1. `cd minidrone`
 
-`docker/run.sh`
+2. `docker/run.sh`
