@@ -20,12 +20,13 @@ run_with_gpu()
         -v "/dev:/dev:rw" \
         -v "$(pwd):/home/mcav/mcav_ws/src/minidrone:rw" \
         -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-        --runtime=nvidia \
         --net=host \
         --name $CONTAINER_NAME \
-        --gpus all \
         --entrypoint /ros_entrypoint.sh \
         -d $IMAGE_NAME /usr/bin/tail -f /dev/null
+    	# TODO: try to get these parameters to work
+        #--runtime=nvidia \
+        #--gpus all \
 }
 run_without_gpu()
 {
