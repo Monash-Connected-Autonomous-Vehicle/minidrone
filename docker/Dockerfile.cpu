@@ -25,6 +25,18 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
+# Install ROS 1 bridge
+# setup sources.list
+RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros1-latest.list
+# setup keys
+ENV ROS1_DISTRO noetic
+ENV ROS2_DISTRO foxy
+# install ros 1 packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-noetic-ros-comm=1.15.14-1* \
+    ros-foxy-ros1-bridge=0.9.6-1* \
+    && rm -rf /var/lib/apt/lists/*
+
 # Prepare to build the project
 ENV HOMEDIR=/home/${USERNAME}
 ENV COLCON_WS=${HOMEDIR}/mcav_ws
@@ -33,13 +45,9 @@ WORKDIR ${COLCON_WS}
 # Download and build carla ros bridge
 RUN git clone https://github.com/Monash-Connected-Autonomous-Vehicle/ros-bridge.git src/ros-bridge --recurse-submodules
 # RUN /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /${COLCON_WS}; colcon build --symlink-install'
+
 # Copy package xml files to decide dependencies
-COPY autonomy_launch/package.xml ${SOURCE_DIR}/autonomy_launch/package.xml
-COPY velocity_planner/package.xml ${SOURCE_DIR}/velocity_planner/package.xml
-COPY mcav_interfaces/package.xml ${SOURCE_DIR}/mcav_interfaces/package.xml
-COPY project_tracker/package.xml ${SOURCE_DIR}/project_tracker/package.xml
-COPY pure_pursuit/package.xml ${SOURCE_DIR}/pure_pursuit/package.xml
-COPY simulation/package.xml ${SOURCE_DIR}/simulation/package.xml
+#
 # Project-specific dependency install
 # RUN apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -r -y \
 #     && apt-get install -y python3-pcl \
