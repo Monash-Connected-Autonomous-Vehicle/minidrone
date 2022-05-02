@@ -25,6 +25,18 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
+# Install ROS 1 bridge
+# setup sources.list
+RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros1-latest.list
+# setup keys
+ENV ROS1_DISTRO noetic
+ENV ROS2_DISTRO foxy
+# install ros 1 packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-noetic-ros-comm=1.15.14-1* \
+    ros-foxy-ros1-bridge=0.9.6-1* \
+    && rm -rf /var/lib/apt/lists/*
+
 # Prepare to build the project
 ENV HOMEDIR=/home/${USERNAME}
 ENV COLCON_WS=${HOMEDIR}/mcav_ws
