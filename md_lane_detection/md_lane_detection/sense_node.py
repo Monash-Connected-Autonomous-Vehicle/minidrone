@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import CameraInfo
+from std_msgs.msg import String
 import cv2
 import numpy as np
 from cv_bridge import CvBridge
@@ -12,12 +13,15 @@ class Sense(Node):
         '''
         create a subscriber /custom_ns/depth_camera/image_raw
         '''
+        self.get_logger().info('test')
         self.subscription = self.create_subscription(
             CameraInfo,
             '/custom_ns/depth_camera/image_raw',
             self.lane_detect_callback,
             10)
         self.subscription  # prevent unused variable warning
+        self.publisher = self.create_publisher(String, '/test_md_ld', 10)
+        
         
     def make_points(image, line):
       slope, intercept = line
@@ -83,6 +87,11 @@ class Sense(Node):
         '''
         detect lane lines and publish image
         '''
+        msg = String()
+        msg.data = 'succesful run';
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        
         bridge = CvBridge()
         cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
         canny_image = self.canny(cv_image)
@@ -92,6 +101,7 @@ class Sense(Node):
         line_image = self.display_lines(frame, averaged_lines)
         combo_image = cv2.addWeighted(frame, 0.8, line_image, 1, 1)
         cv2.imshow("result", combo_image)
+        
 
 def main(args=None):
     rclpy.init(args=args)
