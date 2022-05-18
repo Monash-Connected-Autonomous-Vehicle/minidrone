@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import CameraInfo
+from sensor_msgs.msg import Image
 from std_msgs.msg import String
 import cv2
 import numpy as np
@@ -15,7 +15,7 @@ class Sense(Node):
         '''
         self.get_logger().info('test')
         self.subscription = self.create_subscription(
-            CameraInfo,
+            Image,
             '/custom_ns/depth_camera/image_raw',
             self.lane_detect_callback,
             10)
@@ -87,20 +87,18 @@ class Sense(Node):
         '''
         detect lane lines and publish image
         '''
-        msg = String()
-        msg.data = 'succesful run';
-        self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
         
-        bridge = CvBridge()
-        cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
-        canny_image = self.canny(cv_image)
-        cropped_canny = self.region_of_interest(canny_image)
-        lines = cv2.HoughLinesP(cropped_canny, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
-        averaged_lines = self.average_slope_intercept(frame, lines)
-        line_image = self.display_lines(frame, averaged_lines)
-        combo_image = cv2.addWeighted(frame, 0.8, line_image, 1, 1)
-        cv2.imshow("result", combo_image)
+        # USE msg.data to retrieve Image information!!!
+        
+        # bridge = CvBridge()
+        # cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
+        # canny_image = self.canny(cv_image)
+        # cropped_canny = self.region_of_interest(canny_image)
+        # lines = cv2.HoughLinesP(cropped_canny, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
+        # averaged_lines = self.average_slope_intercept(frame, lines)
+        # line_image = self.display_lines(frame, averaged_lines)
+        # combo_image = cv2.addWeighted(frame, 0.8, line_image, 1, 1)
+        # cv2.imshow("result", combo_image)
         
 
 def main(args=None):
