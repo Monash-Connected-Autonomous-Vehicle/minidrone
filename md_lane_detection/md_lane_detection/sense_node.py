@@ -20,10 +20,11 @@ class Sense(Node):
             self.lane_detect_callback,
             10)
         self.subscription  # prevent unused variable warning
-        self.publisher = self.create_publisher(String, '/test_md_ld', 10)
+        self.publisher_ = self.create_publisher(Image, '/test_md_ld', 10)
         
         
-    def make_points(image, line):
+    def make_points(self, image, line):
+      #slope, intercept = line[0], line[1]
       slope, intercept = line
       y1 = int(image.shape[0])# bottom of the image
       y2 = int(y1*3/5)         # slightly lower than the middle
@@ -31,7 +32,7 @@ class Sense(Node):
       x2 = int((y2 - intercept)/slope)
       return [[x1, y1, x2, y2]]
 
-    def average_slope_intercept(image, lines):
+    def average_slope_intercept(self, image, lines):
         left_fit    = []
         right_fit   = []
         if lines is None:
@@ -42,9 +43,9 @@ class Sense(Node):
                 slope = fit[0]
                 intercept = fit[1]
                 if slope < 0: # y is reversed in image
-                    left_fit.append((slope, intercept))
+                    left_fit.append((max(slope,-999), intercept))         
                 else:
-                    right_fit.append((slope, intercept))
+                    right_fit.append((min(slope,999), intercept))
         # add more weight to longer lines
         left_fit_average  = np.average(left_fit, axis=0)
         right_fit_average = np.average(right_fit, axis=0)
@@ -53,22 +54,27 @@ class Sense(Node):
         averaged_lines = [left_line, right_line]
         return averaged_lines
 
-    def canny(img):
+    def canny(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         kernel = 5
         blur = cv2.GaussianBlur(gray,(kernel, kernel),0)
         canny = cv2.Canny(gray, 50, 150)
         return canny
 
-    def display_lines(img,lines):
+    def display_lines(self,img,lines):
         line_image = np.zeros_like(img)
         if lines is not None:
             for line in lines:
+                print(line)
                 for x1, y1, x2, y2 in line:
+                    #x1 = int(line[0][0])
+                    #y1 = int(line[0][1])
+                    #x2 = int(line[0][2])
+                    #y2 = int(line[0][3])           
                     cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
         return line_image
 
-    def region_of_interest(canny):
+    def region_of_interest(self, canny):
         height = canny.shape[0]
         width = canny.shape[1]
         mask = np.zeros_like(canny)
@@ -87,18 +93,21 @@ class Sense(Node):
         '''
         detect lane lines and publish image
         '''
-        
-        # USE msg.data to retrieve Image information!!!
-        
-        # bridge = CvBridge()
-        # cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
-        # canny_image = self.canny(cv_image)
-        # cropped_canny = self.region_of_interest(canny_image)
-        # lines = cv2.HoughLinesP(cropped_canny, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
-        # averaged_lines = self.average_slope_intercept(frame, lines)
-        # line_image = self.display_lines(frame, averaged_lines)
-        # combo_image = cv2.addWeighted(frame, 0.8, line_image, 1, 1)
-        # cv2.imshow("result", combo_image)
+        try:
+          bridge = CvBridge()
+          cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
+          canny_image = self.canny(cv_image)
+          cropped_canny = self.region_of_interest(canny_image)
+          lines = cv2.HoughLinesP(cropped_canny, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
+          averaged_lines = self.average_slope_intercept(cv_image, lines)
+          line_image = self.display_lines(cv_image, averaged_lines)
+          combo_image = cv2.addWeighted(cv_image, 0.8, line_image, 1, 1)
+          
+          image_msg = bridge.cv2_to_imgmsg(combo_image, encoding="passthrough")
+          self.publisher_.publish(image_msg)
+          print("SUCCESSFUL \n\n\n\n")
+        except Exception as e:
+          print(e)
         
 
 def main(args=None):
@@ -111,6 +120,5 @@ def main(args=None):
 
 if __name__=="main":
     main()
-
 
 
