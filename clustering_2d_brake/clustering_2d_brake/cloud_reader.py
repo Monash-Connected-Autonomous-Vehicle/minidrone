@@ -31,20 +31,30 @@ def _get_struct_fmt(is_bigendian, fields, field_names=None):
             datatype_fmt, datatype_length = _DATATYPES[field.datatype]
             fmt    += field.count * datatype_fmt
             offset += field.count * datatype_length
-    return 
+    return fmt
 
 
-def read_pointcloud_layer(cloud, height, field_names=['x', 'y', 'z']):
-    # TODO: Find ros2 equivalent of roslib.message.Message
-    assert isinstance(cloud, roslib.message.Message) and cloud._type == 'sensor_msgs/PointCloud2', 'cloud is not a sensor_msgs.msg.PointCloud2'
+def read_pointcloud_slice(cloud, layer_z, z_var, field_names=['x', 'y', 'z']):
+    """
+    Constucts a generator reading xyz coordinates within specified z values from a pointcloud.
+    Adapted from ROS Noetic pointcloud functionality.
+    @param cloud: Input PointCloud2
+    @param layer_z: z value around which points should be read from pointcloud
+    @param z_var: Deviation from layer_z tolerated for reading points
+    @param field_names: Pointcloud fields to be read (NOTE: Reading additional fields not really supported, ask David if you would like it implemented)
+    """
+    assert isinstance(cloud, PointCloud2), 'cloud is not a sensor_msgs.msg.PointCloud2'
     fmt = _get_struct_fmt(cloud.is_bigendian, cloud.fields, field_names)
-    width, point_step, row_step, data = cloud.width, cloud.point_step, cloud.row_step, cloud.data
+    width, height, point_step, row_step, data = cloud.width, cloud.height, cloud.point_step, cloud.row_step, cloud.data
     unpack_from = struct.Struct(fmt).unpack_from
 
-    offset = row_step * height
-    for u in range(width):
-        yield unpack_from(data, offset)
-        offset += point_step
+    for v in range(height):
+        offset = row_step * v
+        for u in range(width):
+            coords = unpack_from(data, offset)
+            if layer_z - z_var < coords[2] and layer_z + z_var > coords[2]:
+                yield coords
+            offset += point_step
 
 
 def create_cloud(header, fields, points):
@@ -93,7 +103,9 @@ def create_cloud_xyz32(header, points):
     @return: The point cloud.
     @rtype:  L{sensor_msgs.msg.PointCloud2}
     """
-    fields = [PointField('x', 0, PointField.FLOAT32, 1),
-              PointField('y', 4, PointField.FLOAT32, 1),
-              PointField('z', 8, PointField.FLOAT32, 1)]
+    fields = []
+    for i, name in enumerate(['x', 'y', 'z']):
+        fields.append(PointField())
+        fields[-1].name, fields[-1].offset, fields[-1].datatype, fields[-1].count = name, 4*i, PointField.FLOAT32, 1
+
     return create_cloud(header, fields, points)
