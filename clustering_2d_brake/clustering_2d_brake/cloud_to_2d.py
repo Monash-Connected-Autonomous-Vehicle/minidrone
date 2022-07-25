@@ -1,9 +1,8 @@
 import rclpy
 from rclpy.node import Node
-import sys
 
 from sensor_msgs.msg import PointCloud2
-import clustering_2d_brake.cloud_reader as cloud_reader
+import clustering_2d_brake.cloud_tools as cloud_tools
 
 
 class CloudTo2DNode(Node):
@@ -39,8 +38,8 @@ class CloudTo2DNode(Node):
         header = msg.header
         height = self.get_parameter('slice_height').get_parameter_value().double_value
         height_var = self.get_parameter('height_var').get_parameter_value().double_value
-        points = [(p[0], p[1], height) for p in cloud_reader.read_pointcloud_slice(msg, height, height_var)]
-        out = cloud_reader.create_cloud_xyz32(header, points)
+        points = [(p[0], p[1], height) for p in cloud_tools.read_pointcloud_slice(msg, height, height_var)]
+        out = cloud_tools.create_cloud_xyz32(header, points)
         self.publisher_.publish(out)
 
 
