@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cloud_to_2d = clustering_2d_brake.cloud_to_2d:main'
+            'cloud_to_2d = clustering_2d_brake.cloud_to_2d:main',
+            'cluster_2d = clustering_2d_brake.cluster_2d:main'
         ],
     },
 )
