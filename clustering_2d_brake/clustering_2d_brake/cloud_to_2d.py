@@ -39,8 +39,9 @@ class CloudTo2DNode(Node):
         height = self.get_parameter('slice_height').get_parameter_value().double_value
         height_var = self.get_parameter('height_var').get_parameter_value().double_value
         points = [(p[0], p[1], height) for p in cloud_tools.read_pointcloud_slice(msg, height, height_var)]
-        out = cloud_tools.create_cloud_xyz32(header, points)
-        self.publisher_.publish(out)
+        if points:
+            out = cloud_tools.create_cloud_from_list(header, points)
+            self.publisher_.publish(out)
 
 
 def main(args=None):

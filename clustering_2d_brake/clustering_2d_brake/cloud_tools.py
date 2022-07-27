@@ -149,18 +149,20 @@ def create_cloud(header, fields, points):
                        data=buff.raw)
 
 
-def create_cloud_xyz32(header, points):
+def create_cloud_from_list(header, points, field_names=['x', 'y', 'z']):
     """
     Create a L{sensor_msgs.msg.PointCloud2} message with 3 float32 fields (x, y, z).
     @param header: The point cloud header.
     @type  header: L{std_msgs.msg.Header}
     @param points: The point cloud points.
     @type  points: iterable
+    @param field_names: The point cloud field names.
+    @type  field_names: iterable
     @return: The point cloud.
     @rtype:  L{sensor_msgs.msg.PointCloud2}
     """
     fields = []
-    for i, name in enumerate(['x', 'y', 'z']):
+    for i, name in enumerate(field_names):
         fields.append(PointField())
         fields[-1].name, fields[-1].offset, fields[-1].datatype, fields[-1].count = name, 4*i, PointField.FLOAT32, 1
 
