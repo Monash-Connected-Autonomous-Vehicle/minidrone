@@ -1,60 +1,70 @@
+import sklearn
 import rclpy
 import numpy as np 
 import cv2
 import math
 
 from rclpy.node import Node
+from geometry_msgs.msg import Twist
 from sensor_msgs.msg import PointCloud2
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, DBSCAN
 
 import clustering_2d_brake.cloud_tools as cloud_tools
 
 
 class Cluster2DNode(Node):
     """
-    k-means initialized with naive occupancy grid and connected components
+    A node that performs clustering with DBSCAN, and publishes a brake signal if any cluster is within a certain radius
+
+    ...
+
+    Parameters
+    ----------
+    brake_distance: double
+        radius to send brake signal when violated by a cluster
+
+    Topics
+    ------
+    cloud_2d:
+        Input pointcloud where z values are assumed to be equal throughout
+    labeled_cloud:
+        Published copy of cloud_2d with outlier points removed and clustering
+    brake:
+        Publishes an empty twist message when an obstacle is detected
+
     """
     def __init__(self):
         super().__init__('cloud_to_2d')
-        self.declare_parameter('cluster_range', 1.5)
-        self.declare_parameter('grid_fidelity', 200)
+        self.declare_parameter('brake_distance', 1.0)
         
         self.subscription_ = self.create_subscription(PointCloud2, 'cloud_2d', self.cloud_callback, 10)
         self.labeled_cloud_publisher_ = self.create_publisher(PointCloud2, 'labeled_cloud', 10)
-        self.cluster_publisher_ = self.create_publisher(PointCloud2, 'clusters', 10)
+        self.brake_publisher_ = self.create_publisher(Twist, 'brake', 10)  # TODO: actual relevant topic
 
     
     def cloud_callback(self, msg):
         header = msg.header
-        cluster_range = self.get_parameter('cluster_range').get_parameter_value().double_value
-        grid_fidelity = self.get_parameter('grid_fidelity').get_parameter_value().integer_value
 
-        # Read pointcloud to naive occupancy grid/binary image
-        grid, points, cloud_z = np.zeros((grid_fidelity, grid_fidelity), np.uint8), [], None
-        pixel_w = 2*cluster_range/grid_fidelity
+        # Read points and perform DBSCAN
+        points, cloud_z = [], None
         for x, y, z in cloud_tools.read_points(msg):
             if cloud_z is None: cloud_z = z
-            points.append((x, y))
-            if abs(x) < cluster_range and abs(y) < cluster_range:
-                grid[int((x + cluster_range) / pixel_w), int((y + cluster_range) / pixel_w)] = 255
+            points.append([x, y])
+        points = np.array(points).reshape(-1, 2)
+        dbscan = DBSCAN().fit(points)
+        labels = dbscan.labels_
         
-        # Perform connectivity analysis
-        n_labels, label_grid, _, pixel_centroids = cv2.connectedComponentsWithStats(grid, connectivity=8)
-        init_centroids = [(px*pixel_w-cluster_range, py*pixel_w-cluster_range) for px, py in pixel_centroids[1:]]
-        
-        # Perform k-means clustering
-        kmeans = KMeans(n_labels-1, init=init_centroids, n_init=1).fit(points)
-        labels = kmeans.labels_
-        
-        # Republish labeled pointcloud
-        labeled_points = ((p[0], p[1], cloud_z, labels[i]) for i, p in enumerate(points))
-        labeled_cloud = cloud_tools.create_cloud(header, ['x', 'y', 'z', 'label'], labeled_points)  # TODO: figure out why this doesn't work
+        # Republish labeled pointcloud without outliers
+        labeled_points = [(p[0], p[1], cloud_z, labels[i]) for i, p in enumerate(points) if labels[i] != -1]
+        labeled_cloud = cloud_tools.create_cloud_from_list(header, labeled_points, ['x', 'y', 'z', 'label'])
         self.labeled_cloud_publisher_.publish(labeled_cloud)
 
-        # TODO: publish cluster centroids
-
-
-
+        # Publish brake if any of the inlier points are close (assumes robot is at origin)
+        d = self.get_parameter('brake_distance').get_parameter_value().double_value
+        for p in labeled_points:
+            if p[0]**2 + p[1]**2 < d**2:
+                brake_msg = Twist()
+                self.brake_publisher_.publish(brake_msg)
 
 
 def main(args=None):
