@@ -1,0 +1,26 @@
+Error parsing '/home/mcav/mcav_ws/src/minidrone/control_ws/src/control_ros2/package.xml':
+Traceback (most recent call last):
+  File "/opt/ros/foxy/share/ament_cmake_core/cmake/core/package_xml_2_cmake.py", line 143, in <module>
+    main()
+  File "/opt/ros/foxy/share/ament_cmake_core/cmake/core/package_xml_2_cmake.py", line 52, in main
+    raise e
+  File "/opt/ros/foxy/share/ament_cmake_core/cmake/core/package_xml_2_cmake.py", line 48, in main
+    package = parse_package_string(
+  File "/usr/lib/python3/dist-packages/catkin_pkg/package.py", line 786, in parse_package_string
+    raise InvalidPackage('Error(s):%s' % (''.join(['\n- %s' % e for e in errors])), filename)
+catkin_pkg.package.InvalidPackage: Error(s) in package '/home/mcav/mcav_ws/src/minidrone/control_ws/src/control_ros2/package.xml':
+Error(s):
+- The manifest of package "control_ros2" (with format version 3) must not contain the following tags: build_depend_export
+CMake Error at /opt/ros/foxy/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:94 (message):
+  execute_process(/usr/bin/python3
+  /opt/ros/foxy/share/ament_cmake_core/cmake/core/package_xml_2_cmake.py
+  /home/mcav/mcav_ws/src/minidrone/control_ws/src/control_ros2/package.xml
+  /home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/ament_cmake_core/package.cmake)
+  returned error code 1
+Call Stack (most recent call first):
+  /opt/ros/foxy/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:49 (_ament_package_xml)
+  /opt/ros/foxy/share/ament_lint_auto/cmake/ament_lint_auto_find_test_dependencies.cmake:31 (ament_package_xml)
+  CMakeLists.txt:36 (ament_lint_auto_find_test_dependencies)
+
+
+make: *** [Makefile:222: cmake_check_build_system] Error 1

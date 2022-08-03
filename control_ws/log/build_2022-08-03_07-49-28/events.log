@@ -1,0 +1,70 @@
+[0.000000] (-) TimerEvent: {}
+[0.005643] (control_ros2) JobQueued: {'identifier': 'control_ros2', 'dependencies': OrderedDict()}
+[0.006929] (control_ros2) JobStarted: {'identifier': 'control_ros2'}
+[0.084908] (control_ros2) JobProgress: {'identifier': 'control_ros2', 'progress': 'cmake'}
+[0.086727] (control_ros2) JobProgress: {'identifier': 'control_ros2', 'progress': 'build'}
+[0.087940] (control_ros2) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2', '--', '-j2', '-l2'], 'cwd': '/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2', 'env': OrderedDict([('TMUX', '/tmp/tmux-1000/default,27123,0'), ('HOSTNAME', 'lachie-mcav'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('SOURCE_DIR', '/home/mcav/mcav_ws/src/minidrone'), ('HOME', '/home/mcav'), ('OLDPWD', '/home/mcav/mcav_ws/src/minidrone/control_ws/src'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '\\[\x1b]0;\\u@docker: \\w\x07\\]\\[\x1b[01;32m\\]\\u@docker\\[\x1b[00m\\]:\\[\x1b[01;34m\\]\\w\\[\x1b[00m\\]$'), ('COLCON_PREFIX_PATH', '/home/mcav/mcav_ws/src/minidrone/control_ws/install'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'screen-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('ROS1_DISTRO', 'noetic'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS2_DISTRO', 'foxy'), ('AMENT_PREFIX_PATH', '/home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2:/opt/ros/foxy'), ('SHELL', '/bin/sh'), ('COLCON_WS', '/home/mcav/mcav_ws'), ('PWD', '/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2'), ('LC_ALL', 'C.UTF-8'), ('HOMEDIR', '/home/mcav'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('TMUX_PANE', '%0'), ('CMAKE_PREFIX_PATH', '/home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2:/opt/ros/foxy')]), 'shell': False}
+[0.098000] (-) TimerEvent: {}
+[0.180050] (control_ros2) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[0.198193] (-) TimerEvent: {}
+[0.237490] (control_ros2) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.299146] (-) TimerEvent: {}
+[0.400049] (-) TimerEvent: {}
+[0.500827] (-) TimerEvent: {}
+[0.564860] (control_ros2) StdoutLine: {'line': b'-- Found rclcpp: 2.4.1 (/opt/ros/foxy/share/rclcpp/cmake)\n'}
+[0.601141] (-) TimerEvent: {}
+[0.645160] (control_ros2) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.651641] (control_ros2) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[0.701872] (-) TimerEvent: {}
+[0.804734] (-) TimerEvent: {}
+[0.908163] (-) TimerEvent: {}
+[1.008671] (-) TimerEvent: {}
+[1.050836] (control_ros2) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.109957] (-) TimerEvent: {}
+[1.183809] (control_ros2) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)\n'}
+[1.187545] (control_ros2) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[1.210109] (-) TimerEvent: {}
+[1.310943] (-) TimerEvent: {}
+[1.411591] (-) TimerEvent: {}
+[1.512339] (-) TimerEvent: {}
+[1.587479] (control_ros2) StdoutLine: {'line': b'-- Found rclpy: 1.0.8 (/opt/ros/foxy/share/rclpy/cmake)\n'}
+[1.589672] (control_ros2) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[1.613169] (-) TimerEvent: {}
+[1.713764] (-) TimerEvent: {}
+[1.806893] (control_ros2) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[1.810290] (control_ros2) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[1.811615] (control_ros2) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[1.812598] (control_ros2) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257\n"}
+[1.814265] (control_ros2) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[1.814631] (-) TimerEvent: {}
+[1.819709] (control_ros2) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.832017] (control_ros2) StdoutLine: {'line': b'-- Generating done\n'}
+[1.838260] (control_ros2) StdoutLine: {'line': b'-- Build files have been written to: /home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2\n'}
+[1.910392] (control_ros2) CommandEnded: {'returncode': 0}
+[1.919218] (-) TimerEvent: {}
+[2.000172] (control_ros2) JobProgress: {'identifier': 'control_ros2', 'progress': 'install'}
+[2.020426] (-) TimerEvent: {}
+[2.035034] (control_ros2) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2'], 'cwd': '/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2', 'env': OrderedDict([('TMUX', '/tmp/tmux-1000/default,27123,0'), ('HOSTNAME', 'lachie-mcav'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('SOURCE_DIR', '/home/mcav/mcav_ws/src/minidrone'), ('HOME', '/home/mcav'), ('OLDPWD', '/home/mcav/mcav_ws/src/minidrone/control_ws/src'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '\\[\x1b]0;\\u@docker: \\w\x07\\]\\[\x1b[01;32m\\]\\u@docker\\[\x1b[00m\\]:\\[\x1b[01;34m\\]\\w\\[\x1b[00m\\]$'), ('COLCON_PREFIX_PATH', '/home/mcav/mcav_ws/src/minidrone/control_ws/install'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'screen-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('ROS1_DISTRO', 'noetic'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS2_DISTRO', 'foxy'), ('AMENT_PREFIX_PATH', '/home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2:/opt/ros/foxy'), ('SHELL', '/bin/sh'), ('COLCON_WS', '/home/mcav/mcav_ws'), ('PWD', '/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2'), ('LC_ALL', 'C.UTF-8'), ('HOMEDIR', '/home/mcav'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('TMUX_PANE', '%0'), ('CMAKE_PREFIX_PATH', '/home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2:/opt/ros/foxy')]), 'shell': False}
+[2.062532] (control_ros2) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[2.063394] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/lib/control_ros2/control.py\n'}
+[2.064135] (control_ros2) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/lib/control_ros2/PWMController.py\n'}
+[2.065455] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/ament_index/resource_index/package_run_dependencies/control_ros2\n'}
+[2.066193] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/ament_index/resource_index/parent_prefix_path/control_ros2\n'}
+[2.067005] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/environment/ament_prefix_path.sh\n'}
+[2.067801] (control_ros2) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/environment/ament_prefix_path.dsv\n'}
+[2.069048] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/environment/path.sh\n'}
+[2.069796] (control_ros2) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/environment/path.dsv\n'}
+[2.071339] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/local_setup.bash\n'}
+[2.072445] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/local_setup.sh\n'}
+[2.073047] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/local_setup.zsh\n'}
+[2.073966] (control_ros2) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/local_setup.dsv\n'}
+[2.075201] (control_ros2) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/package.dsv\n'}
+[2.076608] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/ament_index/resource_index/packages/control_ros2\n'}
+[2.077489] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/cmake/control_ros2Config.cmake\n'}
+[2.078235] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/cmake/control_ros2Config-version.cmake\n'}
+[2.079121] (control_ros2) StdoutLine: {'line': b'-- Up-to-date: /home/mcav/mcav_ws/src/minidrone/control_ws/install/control_ros2/share/control_ros2/package.xml\n'}
+[2.087858] (control_ros2) CommandEnded: {'returncode': 0}
+[2.120778] (-) TimerEvent: {}
+[2.223784] (-) TimerEvent: {}
+[2.281342] (control_ros2) JobEnded: {'identifier': 'control_ros2', 'rc': 0}
+[2.283907] (-) EventReactorShutdown: {}

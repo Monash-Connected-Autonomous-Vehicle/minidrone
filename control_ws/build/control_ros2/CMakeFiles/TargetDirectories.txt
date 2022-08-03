@@ -1,0 +1,9 @@
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/install/strip.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/install/local.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/install.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/list_install_components.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/rebuild_cache.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/edit_cache.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/test.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/control_ros2_uninstall.dir
+/home/mcav/mcav_ws/src/minidrone/control_ws/build/control_ros2/CMakeFiles/uninstall.dir
