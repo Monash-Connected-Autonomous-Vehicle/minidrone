@@ -6,7 +6,7 @@ import ctypes
 import sys
 import math
 
-from sensor_msgs.msg import PointField, PointCloud2
+from sensor_msgs.msg import PointField, PointCloud2, LaserScan
 
 _DATATYPES = {}
 _DATATYPES[PointField.INT8]    = ('b', 1)
