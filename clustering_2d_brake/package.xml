@@ -11,6 +11,9 @@
   <depend>perception_pcl</depend>
   <depend>common_interfaces</depend>
 
+  <exec_depend>velodyne</exec_depend>
+  <exec_depend>rplidar_ros2</exec_depend>
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
