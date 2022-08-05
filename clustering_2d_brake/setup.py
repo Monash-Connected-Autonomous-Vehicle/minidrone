@@ -21,7 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             'cloud_to_2d = clustering_2d_brake.cloud_to_2d:main',
-            'cluster_2d = clustering_2d_brake.cluster_2d:main'
+            'cluster_2d = clustering_2d_brake.cluster_2d:main',
+            'scan_to_cloud = clustering_2d_brake.scan_to_cloud:main'
         ],
     },
 )
