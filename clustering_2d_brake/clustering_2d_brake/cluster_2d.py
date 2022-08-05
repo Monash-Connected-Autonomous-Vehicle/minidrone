@@ -1,13 +1,11 @@
 import sklearn
 import rclpy
 import numpy as np 
-import cv2
-import math
 
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import PointCloud2
-from sklearn.cluster import KMeans, DBSCAN
+from sklearn.cluster import DBSCAN
 
 import clustering_2d_brake.cloud_tools as cloud_tools
 

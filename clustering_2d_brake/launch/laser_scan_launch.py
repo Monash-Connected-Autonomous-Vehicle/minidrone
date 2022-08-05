@@ -4,7 +4,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     return LaunchDescription([
         Node(
-            package='rplidar_ros',
+            package='rplidar_ros2',
             executable='rplidar_scan_publisher',
         ),
         Node(
