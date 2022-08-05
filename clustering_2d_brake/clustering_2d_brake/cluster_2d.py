@@ -33,7 +33,7 @@ class Cluster2DNode(Node):
     """
     def __init__(self):
         super().__init__('cloud_to_2d')
-        self.declare_parameter('brake_distance', 1.0)
+        self.declare_parameter('brake_distance', 0.25)
         
         self.subscription_ = self.create_subscription(PointCloud2, 'cloud_2d', self.cloud_callback, 10)
         self.labeled_cloud_publisher_ = self.create_publisher(PointCloud2, 'labeled_cloud', 10)
@@ -49,20 +49,22 @@ class Cluster2DNode(Node):
             if cloud_z is None: cloud_z = z
             points.append([x, y])
         points = np.array(points).reshape(-1, 2)
-        dbscan = DBSCAN().fit(points)
-        labels = dbscan.labels_
-        
-        # Republish labeled pointcloud without outliers
-        labeled_points = [(p[0], p[1], cloud_z, labels[i]) for i, p in enumerate(points) if labels[i] != -1]
-        labeled_cloud = cloud_tools.create_cloud_from_list(header, labeled_points, ['x', 'y', 'z', 'label'])
-        self.labeled_cloud_publisher_.publish(labeled_cloud)
+        if points.size > 0:
+            dbscan = DBSCAN().fit(points)
+            labels = dbscan.labels_
+            
+            # Republish labeled pointcloud without outliers
+            labeled_points = [(p[0], p[1], cloud_z, labels[i]) for i, p in enumerate(points) if labels[i] != -1]
+            labeled_cloud = cloud_tools.create_cloud_from_list(header, labeled_points, ['x', 'y', 'z', 'label'])
+            self.labeled_cloud_publisher_.publish(labeled_cloud)
 
-        # Publish brake if any of the inlier points are close (assumes robot is at origin)
-        d = self.get_parameter('brake_distance').get_parameter_value().double_value
-        for p in labeled_points:
-            if p[0]**2 + p[1]**2 < d**2:
-                brake_msg = Twist()
-                self.brake_publisher_.publish(brake_msg)
+            # Publish brake if any of the inlier points are close (assumes robot is at origin)
+            d = self.get_parameter('brake_distance').get_parameter_value().double_value
+            for p in labeled_points:
+                if p[0]**2 + p[1]**2 < d**2:
+                    brake_msg = Twist()
+                    self.brake_publisher_.publish(brake_msg)
+                    break
 
 
 def main(args=None):
