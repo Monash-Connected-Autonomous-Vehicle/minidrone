@@ -23,10 +23,10 @@ def main():
     run_static_test(pub)
     
     # chicane test
-    run_chicane_test(pub)
+    # run_chicane_test(pub)
 
-    # finish test
-    run_test_cleanup(pub)
+    # # finish test
+    # run_test_cleanup(pub)
 
 def run_static_test(pub):
     
@@ -34,7 +34,7 @@ def run_static_test(pub):
     idx = 0
 
     # testing setup
-    test_values = [(0.2, 0), (0.0, 0.5), (0.0, -0.5), (0.2, 0.5), (0.2, -0.5), (0.0, 0.0)]
+    test_values = [(0, 0), (0.0, 0.5), (0.0, -0.5), (0.2, 0.5), (0.2, -0.5), (0.0, 0.0)]
     test_desc = ["Forward", "Left", "Right", "Forward Left", "Forward Right", "Stationary"]
 
     rospy.loginfo("-------------- Beginning Static Test --------------")
@@ -48,7 +48,10 @@ def run_static_test(pub):
         # twist message
         twist = TwistStamped()
         twist.twist.linear.x = x
+        # rospy.loginfo("--------------x only --------------")
+        # twist.twist.linear.x = 0.1
         twist.twist.angular.z = z
+        # twist.twist.angular.z = 0
 
         rospy.loginfo(f"Testing: {desc}")
         time_start = time.time()
