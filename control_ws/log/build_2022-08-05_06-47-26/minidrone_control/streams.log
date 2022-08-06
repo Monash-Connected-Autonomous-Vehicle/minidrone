@@ -1,0 +1,34 @@
+[2.433s] Invoking command in '/home/mcav/mcav_ws/src/minidrone/control_ws/src/minidrone_control': PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ PYTHONPATH=/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/minidrone_control build --build-base /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build install --prefix /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control --record /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/install.log --single-version-externally-managed
+[3.234s] running egg_info
+[3.236s] creating ../../build/minidrone_control/minidrone_control.egg-info
+[3.237s] writing ../../build/minidrone_control/minidrone_control.egg-info/PKG-INFO
+[3.237s] writing dependency_links to ../../build/minidrone_control/minidrone_control.egg-info/dependency_links.txt
+[3.238s] writing entry points to ../../build/minidrone_control/minidrone_control.egg-info/entry_points.txt
+[3.238s] writing requirements to ../../build/minidrone_control/minidrone_control.egg-info/requires.txt
+[3.239s] writing top-level names to ../../build/minidrone_control/minidrone_control.egg-info/top_level.txt
+[3.244s] writing manifest file '../../build/minidrone_control/minidrone_control.egg-info/SOURCES.txt'
+[3.403s] reading manifest file '../../build/minidrone_control/minidrone_control.egg-info/SOURCES.txt'
+[3.408s] writing manifest file '../../build/minidrone_control/minidrone_control.egg-info/SOURCES.txt'
+[3.408s] running build
+[3.408s] running build_py
+[3.409s] creating /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build
+[3.409s] creating /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build/lib
+[3.409s] creating /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build/lib/minidrone_control
+[3.410s] copying minidrone_control/__init__.py -> /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build/lib/minidrone_control
+[3.411s] running install
+[3.412s] running install_lib
+[3.416s] creating /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control
+[3.416s] copying /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build/lib/minidrone_control/__init__.py -> /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control
+[3.418s] byte-compiling /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control/__init__.py to __init__.cpython-38.pyc
+[3.423s] running install_data
+[3.425s] creating /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/ament_index
+[3.426s] creating /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/ament_index/resource_index
+[3.426s] creating /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/ament_index/resource_index/packages
+[3.427s] copying resource/minidrone_control -> /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/ament_index/resource_index/packages
+[3.427s] copying package.xml -> /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control
+[3.427s] running install_egg_info
+[3.433s] Copying ../../build/minidrone_control/minidrone_control.egg-info to /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control-0.0.0-py3.8.egg-info
+[3.436s] running install_scripts
+[3.506s] Installing twist_to_PWM script to /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/minidrone_control
+[3.507s] writing list of installed files to '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/install.log'
+[3.608s] Invoked command in '/home/mcav/mcav_ws/src/minidrone/control_ws/src/minidrone_control' returned '0': PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ PYTHONPATH=/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/minidrone_control build --build-base /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build install --prefix /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control --record /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/install.log --single-version-externally-managed

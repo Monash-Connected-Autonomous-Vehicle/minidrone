@@ -1,0 +1,3 @@
+[console_scripts]
+twist_to_PWM = minidrone_control.twist_to_PWM:main
+

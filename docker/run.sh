@@ -17,7 +17,14 @@ run_with_gpu()
 {
     docker run -e DISPLAY -e TERM \
         --privileged \
-        -v "/dev:/dev:rw" \
+	--group-add $(cut -d: -f3 < <(getent group gpio))\
+        --device /dev/spidev0.0:/dev/spidev0.0:rw \
+	--device /dev/i2c-1 \
+        --device /dev/i2c-0 \ 
+	-v /sys/class/pwm:/sys/class/pwm \
+	-v /sys/class/gpio:/sys/class/gpio \
+	-v /etc/udev/rules.d:/etc/udev/rules.d \
+	-v "/dev:/dev:rw" \
         -v "$(pwd):/home/mcav/mcav_ws/src/minidrone:rw" \
         -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
         --net=host \

@@ -1,0 +1,128 @@
+[0.977s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.978s] DEBUG:colcon:Parsed command line arguments: Namespace(ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fb082edc0>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=4, paths=None, symlink_install=True, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fb082edc0>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7fb0836370>)
+[1.166s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.166s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.167s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.167s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.167s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.167s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.168s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/mcav/mcav_ws/src/minidrone/control_ws'
+[1.168s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.168s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.169s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.169s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.169s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.170s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.170s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.170s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.170s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.247s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.247s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.248s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.248s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.248s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.249s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.249s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.250s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.250s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.251s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.251s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.252s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.252s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.252s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.255s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[1.256s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[1.256s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[1.257s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[1.257s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[1.257s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[1.257s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[1.258s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[1.258s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[1.258s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[1.258s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[1.259s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[1.260s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extensions ['ignore', 'ignore_ament_install']
+[1.260s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extension 'ignore'
+[1.261s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extension 'ignore_ament_install'
+[1.261s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extensions ['colcon_pkg']
+[1.261s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extension 'colcon_pkg'
+[1.262s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extensions ['colcon_meta']
+[1.262s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extension 'colcon_meta'
+[1.262s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extensions ['ros']
+[1.262s] Level 1:colcon.colcon_core.package_identification:_identify(src/minidrone_control) by extension 'ros'
+[1.277s] DEBUG:colcon.colcon_core.package_identification:Package 'src/minidrone_control' with type 'ros.ament_python' and name 'minidrone_control'
+[1.278s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.278s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.278s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.278s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.278s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.410s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'cmake_args' from command line to 'None'
+[1.410s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'cmake_target' from command line to 'None'
+[1.410s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.411s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'cmake_clean_cache' from command line to 'False'
+[1.411s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'cmake_clean_first' from command line to 'False'
+[1.411s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'cmake_force_configure' from command line to 'False'
+[1.411s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'ament_cmake_args' from command line to 'None'
+[1.411s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'catkin_cmake_args' from command line to 'None'
+[1.411s] Level 5:colcon.colcon_core.verb:set package 'minidrone_control' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.412s] DEBUG:colcon.colcon_core.verb:Building package 'minidrone_control' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control', 'merge_install': False, 'path': '/home/mcav/mcav_ws/src/minidrone/control_ws/src/minidrone_control', 'symlink_install': True, 'test_result_base': None}
+[1.413s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[1.427s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[1.428s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/mcav/mcav_ws/src/minidrone/control_ws/src/minidrone_control' with build type 'ament_python'
+[1.429s] Level 1:colcon.colcon_core.shell:create_environment_hook('minidrone_control', 'ament_prefix_path')
+[1.458s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[1.459s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/hook/ament_prefix_path.ps1'
+[1.465s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/hook/ament_prefix_path.dsv'
+[1.602s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/hook/ament_prefix_path.sh'
+[1.746s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.747s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[3.170s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/mcav/mcav_ws/src/minidrone/control_ws/src/minidrone_control'
+[3.173s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.173s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.237s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control': PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ PYTHONPATH=/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control --editable --build-directory /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build --no-deps install_data --install-dir /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control
+[11.945s] Level 1:colcon.colcon_core.shell:create_environment_hook('minidrone_control', 'pythonpath_develop')
+[11.953s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/share/minidrone_control/hook/pythonpath_develop.ps1'
+[11.979s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control' returned '0': PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ PYTHONPATH=/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control --editable --build-directory /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build --no-deps install_data --install-dir /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control
+[12.446s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/share/minidrone_control/hook/pythonpath_develop.dsv'
+[12.468s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/share/minidrone_control/hook/pythonpath_develop.sh'
+[12.792s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control' for CMake module files
+[12.796s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control' for CMake config files
+[12.800s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib'
+[12.801s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/bin'
+[12.802s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/pkgconfig/minidrone_control.pc'
+[12.803s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages'
+[12.803s] Level 1:colcon.colcon_core.shell:create_environment_hook('minidrone_control', 'pythonpath')
+[12.806s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/hook/pythonpath.ps1'
+[12.808s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/hook/pythonpath.dsv'
+[12.809s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/hook/pythonpath.sh'
+[12.811s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/bin'
+[12.812s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(minidrone_control)
+[12.814s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/package.ps1'
+[12.838s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/package.dsv'
+[12.847s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/package.sh'
+[12.858s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/package.bash'
+[12.871s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/minidrone_control/package.zsh'
+[12.883s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/share/colcon-core/packages/minidrone_control)
+[12.885s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[12.886s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[12.886s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[12.886s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[13.125s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[13.126s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[13.126s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[13.126s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[13.154s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.Spawn.ExecFailed: /usr/bin/dbus-launch terminated abnormally without any error message
+[13.155s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[13.158s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/local_setup.ps1'
+[13.164s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mcav/mcav_ws/src/minidrone/control_ws/install/_local_setup_util_ps1.py'
+[13.180s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/setup.ps1'
+[13.197s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/local_setup.sh'
+[13.206s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mcav/mcav_ws/src/minidrone/control_ws/install/_local_setup_util_sh.py'
+[13.209s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/setup.sh'
+[13.228s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/local_setup.bash'
+[13.236s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/setup.bash'
+[13.247s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/local_setup.zsh'
+[13.252s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/control_ws/install/setup.zsh'

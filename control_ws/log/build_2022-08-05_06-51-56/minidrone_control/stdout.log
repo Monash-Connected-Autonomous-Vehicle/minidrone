@@ -1,0 +1,22 @@
+running egg_info
+writing ../../build/minidrone_control/minidrone_control.egg-info/PKG-INFO
+writing dependency_links to ../../build/minidrone_control/minidrone_control.egg-info/dependency_links.txt
+writing entry points to ../../build/minidrone_control/minidrone_control.egg-info/entry_points.txt
+writing requirements to ../../build/minidrone_control/minidrone_control.egg-info/requires.txt
+writing top-level names to ../../build/minidrone_control/minidrone_control.egg-info/top_level.txt
+reading manifest file '../../build/minidrone_control/minidrone_control.egg-info/SOURCES.txt'
+writing manifest file '../../build/minidrone_control/minidrone_control.egg-info/SOURCES.txt'
+running build
+running build_py
+copying minidrone_control/twist_to_PWM.py -> /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build/lib/minidrone_control
+running install
+running install_lib
+copying /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build/lib/minidrone_control/twist_to_PWM.py -> /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control
+byte-compiling /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control/twist_to_PWM.py to twist_to_PWM.cpython-38.pyc
+running install_data
+running install_egg_info
+removing '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control-0.0.0-py3.8.egg-info' (and everything under it)
+Copying ../../build/minidrone_control/minidrone_control.egg-info to /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone_control-0.0.0-py3.8.egg-info
+running install_scripts
+Installing twist_to_PWM script to /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/minidrone_control
+writing list of installed files to '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/install.log'

@@ -1,0 +1,64 @@
+[0.000000] (-) TimerEvent: {}
+[0.001024] (minidrone_control) JobQueued: {'identifier': 'minidrone_control', 'dependencies': OrderedDict()}
+[0.002140] (minidrone_control) JobStarted: {'identifier': 'minidrone_control'}
+[0.099187] (-) TimerEvent: {}
+[0.200038] (-) TimerEvent: {}
+[0.300665] (-) TimerEvent: {}
+[0.401271] (-) TimerEvent: {}
+[0.501883] (-) TimerEvent: {}
+[0.602536] (-) TimerEvent: {}
+[0.703129] (-) TimerEvent: {}
+[0.803730] (-) TimerEvent: {}
+[0.904402] (-) TimerEvent: {}
+[1.005242] (-) TimerEvent: {}
+[1.107288] (-) TimerEvent: {}
+[1.208051] (-) TimerEvent: {}
+[1.308658] (-) TimerEvent: {}
+[1.409301] (-) TimerEvent: {}
+[1.509932] (-) TimerEvent: {}
+[1.610562] (-) TimerEvent: {}
+[1.711158] (-) TimerEvent: {}
+[1.811779] (-) TimerEvent: {}
+[1.912386] (-) TimerEvent: {}
+[2.013013] (-) TimerEvent: {}
+[2.113632] (-) TimerEvent: {}
+[2.214282] (-) TimerEvent: {}
+[2.314873] (-) TimerEvent: {}
+[2.415492] (-) TimerEvent: {}
+[2.500173] (minidrone_control) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'develop', '--prefix', '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control', '--editable', '--build-directory', '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control/build', '--no-deps', 'install_data', '--install-dir', '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control'], 'cwd': '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'TMUX': '/tmp/tmux-1000/default,1311,0', 'PYTHONIOENCODING': 'utf-8', 'HOSTNAME': 'jetson-desktop', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/mcav/mcav_ws/install/zed_interfaces/lib:/home/mcav/mcav_ws/install/opencv_cam/lib:/opt/ros/foxy/install/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/install/lib:/usr/local/cuda/lib64:', 'SOURCE_DIR': '/home/mcav/mcav_ws/src/minidrone', 'HOME': '/home/mcav', 'OLDPWD': '/home/mcav/mcav_ws/src/minidrone/control_ws/src/minidrone_control/minidrone_control', 'ROS_PYTHON_VERSION': '3', 'PS1': '\\[\\e]0;\\u@docker: \\w\\a\\]\\[\\033[01;32m\\]\\u@docker\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]$', 'COLCON_PREFIX_PATH': '/home/mcav/mcav_ws/src/minidrone/control_ws/install:/home/mcav/mcav_ws/install:/opt/ros/foxy/install', 'ROS_DISTRO': 'foxy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'PKG_CONFIG_PATH': '/opt/ros/foxy/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/foxy/install/lib/pkgconfig', 'NVIDIA_DRIVER_CAPABILITIES': 'all,graphics', 'TERM': 'screen-256color', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/foxy/install/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'ROS1_DISTRO': 'noetic', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS2_DISTRO': 'foxy', 'ROS_ROOT': '/opt/ros/foxy', 'AMENT_PREFIX_PATH': '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control:/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/clustering_2d_brake:/home/mcav/mcav_ws/install/rplidar_ros2:/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/home/mcav/mcav_ws/install/md_lane_detection:/opt/ros/foxy/install', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'COLCON_WS': '/home/mcav/mcav_ws', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'PWD': '/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control', 'CUDA_HOME': '/usr/local/cuda', 'HOMEDIR': '/home/mcav', 'PYTHONPATH': '/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages:/home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control:/home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages:/home/mcav/mcav_ws/install/zed_interfaces/lib/python3.8/site-packages:/home/mcav/mcav_ws/build/clustering_2d_brake:/home/mcav/mcav_ws/install/clustering_2d_brake/lib/python3.8/site-packages:/home/mcav/mcav_ws/install/md_lane_detection/lib/python3.8/site-packages:/opt/ros/foxy/install/lib/python3.8/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1', 'TMUX_PANE': '%0', 'CMAKE_PREFIX_PATH': '/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/rplidar_ros2:/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/opt/ros/foxy/install'}, 'shell': False}
+[2.515705] (-) TimerEvent: {}
+[2.616984] (-) TimerEvent: {}
+[2.717593] (-) TimerEvent: {}
+[2.818191] (-) TimerEvent: {}
+[2.918812] (-) TimerEvent: {}
+[3.019393] (-) TimerEvent: {}
+[3.119992] (-) TimerEvent: {}
+[3.220587] (-) TimerEvent: {}
+[3.321215] (-) TimerEvent: {}
+[3.392863] (minidrone_control) StdoutLine: {'line': b'running develop\n'}
+[3.421364] (-) TimerEvent: {}
+[3.521955] (-) TimerEvent: {}
+[3.622581] (-) TimerEvent: {}
+[3.723173] (-) TimerEvent: {}
+[3.823772] (-) TimerEvent: {}
+[3.876378] (minidrone_control) StdoutLine: {'line': b'running egg_info\n'}
+[3.877089] (minidrone_control) StdoutLine: {'line': b'writing minidrone_control.egg-info/PKG-INFO\n'}
+[3.878974] (minidrone_control) StdoutLine: {'line': b'writing dependency_links to minidrone_control.egg-info/dependency_links.txt\n'}
+[3.879704] (minidrone_control) StdoutLine: {'line': b'writing entry points to minidrone_control.egg-info/entry_points.txt\n'}
+[3.880494] (minidrone_control) StdoutLine: {'line': b'writing requirements to minidrone_control.egg-info/requires.txt\n'}
+[3.880902] (minidrone_control) StdoutLine: {'line': b'writing top-level names to minidrone_control.egg-info/top_level.txt\n'}
+[3.923931] (-) TimerEvent: {}
+[4.024554] (-) TimerEvent: {}
+[4.036677] (minidrone_control) StdoutLine: {'line': b"reading manifest file 'minidrone_control.egg-info/SOURCES.txt'\n"}
+[4.043738] (minidrone_control) StdoutLine: {'line': b"writing manifest file 'minidrone_control.egg-info/SOURCES.txt'\n"}
+[4.049339] (minidrone_control) StdoutLine: {'line': b'running build_ext\n'}
+[4.050542] (minidrone_control) StdoutLine: {'line': b'Creating /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/python3.8/site-packages/minidrone-control.egg-link (link to .)\n'}
+[4.062611] (minidrone_control) StdoutLine: {'line': b'Installing twist_to_PWM script to /home/mcav/mcav_ws/src/minidrone/control_ws/install/minidrone_control/lib/minidrone_control\n'}
+[4.063662] (minidrone_control) StdoutLine: {'line': b'\n'}
+[4.064146] (minidrone_control) StdoutLine: {'line': b'Installed /home/mcav/mcav_ws/src/minidrone/control_ws/build/minidrone_control\n'}
+[4.064773] (minidrone_control) StdoutLine: {'line': b'running install_data\n'}
+[4.124742] (-) TimerEvent: {}
+[4.177244] (minidrone_control) CommandEnded: {'returncode': 0}
+[4.225016] (-) TimerEvent: {}
+[4.243902] (minidrone_control) JobEnded: {'identifier': 'minidrone_control', 'rc': 0}
+[4.246762] (-) EventReactorShutdown: {}
