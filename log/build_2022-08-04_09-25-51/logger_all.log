@@ -1,0 +1,301 @@
+[0.526s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'opencv_cam']
+[0.526s] DEBUG:colcon:Parsed command line arguments: Namespace(ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7faeda2d60>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=['opencv_cam'], packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=4, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7faeda2d60>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7faed2c310>)
+[0.628s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.629s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.629s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.629s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.629s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.630s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.630s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/mcav/mcav_ws/src/minidrone'
+[0.630s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.631s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.631s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.631s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.631s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.632s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.681s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.682s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.682s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.682s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.682s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.683s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.683s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.683s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.684s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extensions ['ignore', 'ignore_ament_install']
+[0.684s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'ignore'
+[0.684s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'ignore_ament_install'
+[0.685s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extensions ['colcon_pkg']
+[0.685s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'colcon_pkg'
+[0.685s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extensions ['colcon_meta']
+[0.685s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'colcon_meta'
+[0.685s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extensions ['ros']
+[0.685s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'ros'
+[0.686s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extensions ['cmake', 'python']
+[0.686s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'cmake'
+[0.686s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'python'
+[0.686s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extensions ['python_setup_py']
+[0.686s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake) by extension 'python_setup_py'
+[0.687s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extensions ['ignore', 'ignore_ament_install']
+[0.687s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'ignore'
+[0.687s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'ignore_ament_install'
+[0.688s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extensions ['colcon_pkg']
+[0.688s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'colcon_pkg'
+[0.688s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extensions ['colcon_meta']
+[0.688s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'colcon_meta'
+[0.688s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extensions ['ros']
+[0.688s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'ros'
+[0.689s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extensions ['cmake', 'python']
+[0.689s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'cmake'
+[0.689s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'python'
+[0.689s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extensions ['python_setup_py']
+[0.689s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake) by extension 'python_setup_py'
+[0.690s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[0.690s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'ignore'
+[0.691s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'ignore_ament_install'
+[0.691s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extensions ['colcon_pkg']
+[0.691s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'colcon_pkg'
+[0.691s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extensions ['colcon_meta']
+[0.691s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'colcon_meta'
+[0.692s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extensions ['ros']
+[0.692s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'ros'
+[0.692s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extensions ['cmake', 'python']
+[0.692s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'cmake'
+[0.692s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'python'
+[0.693s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extensions ['python_setup_py']
+[0.693s] Level 1:colcon.colcon_core.package_identification:_identify(clustering_2d_brake/clustering_2d_brake/__pycache__) by extension 'python_setup_py'
+[0.693s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['ignore', 'ignore_ament_install']
+[0.693s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'ignore'
+[0.694s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'ignore_ament_install'
+[0.694s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['colcon_pkg']
+[0.694s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'colcon_pkg'
+[0.694s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['colcon_meta']
+[0.694s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'colcon_meta'
+[0.695s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['ros']
+[0.695s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'ros'
+[0.695s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['cmake', 'python']
+[0.695s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'cmake'
+[0.695s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'python'
+[0.695s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['python_setup_py']
+[0.696s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'python_setup_py'
+[0.696s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.696s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.697s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.697s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.697s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.697s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.698s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extensions ['ignore', 'ignore_ament_install']
+[0.698s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extension 'ignore'
+[0.698s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extension 'ignore_ament_install'
+[0.699s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extensions ['colcon_pkg']
+[0.699s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extension 'colcon_pkg'
+[0.699s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extensions ['colcon_meta']
+[0.699s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extension 'colcon_meta'
+[0.699s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extensions ['ros']
+[0.699s] Level 1:colcon.colcon_core.package_identification:_identify(md_lane_detection) by extension 'ros'
+[0.710s] DEBUG:colcon.colcon_core.package_identification:Package 'md_lane_detection' with type 'ros.ament_python' and name 'md_lane_detection'
+[0.710s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extensions ['ignore', 'ignore_ament_install']
+[0.711s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extension 'ignore'
+[0.711s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extension 'ignore_ament_install'
+[0.711s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extensions ['colcon_pkg']
+[0.711s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extension 'colcon_pkg'
+[0.712s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extensions ['colcon_meta']
+[0.712s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extension 'colcon_meta'
+[0.712s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extensions ['ros']
+[0.712s] Level 1:colcon.colcon_core.package_identification:_identify(opencv_cam) by extension 'ros'
+[0.717s] DEBUG:colcon.colcon_core.package_identification:Package 'opencv_cam' with type 'ros.ament_cmake' and name 'opencv_cam'
+[0.717s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extensions ['ignore', 'ignore_ament_install']
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extension 'ignore'
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extension 'ignore_ament_install'
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extensions ['colcon_pkg']
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extension 'colcon_pkg'
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extensions ['colcon_meta']
+[0.719s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extension 'colcon_meta'
+[0.719s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extensions ['ros']
+[0.719s] Level 1:colcon.colcon_core.package_identification:_identify(ros2_shared) by extension 'ros'
+[0.720s] DEBUG:colcon.colcon_core.package_identification:Package 'ros2_shared' with type 'ros.ament_cmake' and name 'ros2_shared'
+[0.721s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extensions ['ignore', 'ignore_ament_install']
+[0.721s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extension 'ignore'
+[0.721s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extension 'ignore_ament_install'
+[0.722s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extensions ['colcon_pkg']
+[0.722s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extension 'colcon_pkg'
+[0.722s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extensions ['colcon_meta']
+[0.722s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extension 'colcon_meta'
+[0.722s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extensions ['ros']
+[0.722s] Level 1:colcon.colcon_core.package_identification:_identify(rplidar_ros2) by extension 'ros'
+[0.725s] DEBUG:colcon.colcon_core.package_identification:Package 'rplidar_ros2' with type 'ros.ament_cmake' and name 'rplidar_ros2'
+[0.726s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['ignore', 'ignore_ament_install']
+[0.726s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'ignore'
+[0.726s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'ignore_ament_install'
+[0.726s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['colcon_pkg']
+[0.727s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'colcon_pkg'
+[0.727s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['colcon_meta']
+[0.727s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'colcon_meta'
+[0.727s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['ros']
+[0.727s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'ros'
+[0.727s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['cmake', 'python']
+[0.728s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'cmake'
+[0.728s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'python'
+[0.728s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['python_setup_py']
+[0.728s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'python_setup_py'
+[0.729s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['ignore', 'ignore_ament_install']
+[0.729s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'ignore'
+[0.729s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'ignore_ament_install'
+[0.729s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['colcon_pkg']
+[0.730s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'colcon_pkg'
+[0.730s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['colcon_meta']
+[0.730s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'colcon_meta'
+[0.730s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['ros']
+[0.730s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'ros'
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['cmake', 'python']
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'cmake'
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'python'
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['python_setup_py']
+[0.731s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'python_setup_py'
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extension 'ignore'
+[0.732s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extension 'ignore_ament_install'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extensions ['colcon_pkg']
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extension 'colcon_pkg'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extensions ['colcon_meta']
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extension 'colcon_meta'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extensions ['ros']
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed-ros2-interfaces) by extension 'ros'
+[0.736s] DEBUG:colcon.colcon_core.package_identification:Package 'zed-ros2-wrapper/zed-ros2-interfaces' with type 'ros.ament_cmake' and name 'zed_interfaces'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['ignore', 'ignore_ament_install']
+[0.737s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'ignore'
+[0.737s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'ignore_ament_install'
+[0.737s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['colcon_pkg']
+[0.737s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'colcon_pkg'
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['colcon_meta']
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'colcon_meta'
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['ros']
+[0.738s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'ros'
+[0.744s] DEBUG:colcon.colcon_core.package_identification:Package 'zed-ros2-wrapper/zed_components' with type 'ros.ament_cmake' and name 'zed_components'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['ignore', 'ignore_ament_install']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'ignore'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'ignore_ament_install'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['colcon_pkg']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'colcon_pkg'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['colcon_meta']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'colcon_meta'
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['ros']
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'ros'
+[0.748s] DEBUG:colcon.colcon_core.package_identification:Package 'zed-ros2-wrapper/zed_ros2' with type 'ros.ament_cmake' and name 'zed_ros2'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['ignore', 'ignore_ament_install']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'ignore'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'ignore_ament_install'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['colcon_pkg']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'colcon_pkg'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['colcon_meta']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'colcon_meta'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['ros']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'ros'
+[0.753s] DEBUG:colcon.colcon_core.package_identification:Package 'zed-ros2-wrapper/zed_wrapper' with type 'ros.ament_cmake' and name 'zed_wrapper'
+[0.753s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.754s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.754s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.754s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.754s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.832s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'md_lane_detection' in 'md_lane_detection'
+[0.832s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'ros2_shared' in 'ros2_shared'
+[0.833s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'rplidar_ros2' in 'rplidar_ros2'
+[0.833s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'zed_interfaces' in 'zed-ros2-wrapper/zed-ros2-interfaces'
+[0.833s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'zed_components' in 'zed-ros2-wrapper/zed_components'
+[0.833s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'zed_wrapper' in 'zed-ros2-wrapper/zed_wrapper'
+[0.833s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'zed_ros2' in 'zed-ros2-wrapper/zed_ros2'
+[0.836s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'cmake_args' from command line to 'None'
+[0.836s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'cmake_target' from command line to 'None'
+[0.836s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.837s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'cmake_clean_cache' from command line to 'False'
+[0.837s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'cmake_clean_first' from command line to 'False'
+[0.837s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'cmake_force_configure' from command line to 'False'
+[0.837s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'ament_cmake_args' from command line to 'None'
+[0.837s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'catkin_cmake_args' from command line to 'None'
+[0.837s] Level 5:colcon.colcon_core.verb:set package 'opencv_cam' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.837s] DEBUG:colcon.colcon_core.verb:Building package 'opencv_cam' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam', 'merge_install': False, 'path': '/home/mcav/mcav_ws/src/minidrone/opencv_cam', 'symlink_install': False, 'test_result_base': None}
+[0.839s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.847s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.849s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/mcav/mcav_ws/src/minidrone/opencv_cam' with build type 'ament_cmake'
+[0.849s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/mcav/mcav_ws/src/minidrone/opencv_cam'
+[0.866s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.867s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.867s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.908s] WARNING:colcon.colcon_core.shell:The following packages are in the workspace but haven't been built:
+- ros2_shared
+They are being used from the following locations instead:
+- /home/mcav/mcav_ws/install/ros2_shared
+To suppress this warning ignore these packages in the workspace:
+--packages-ignore ros2_shared
+[0.928s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake /home/mcav/mcav_ws/src/minidrone/opencv_cam -DCMAKE_INSTALL_PREFIX=/home/mcav/mcav_ws/src/minidrone/install/opencv_cam
+[8.253s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake /home/mcav/mcav_ws/src/minidrone/opencv_cam -DCMAKE_INSTALL_PREFIX=/home/mcav/mcav_ws/src/minidrone/install/opencv_cam
+[8.263s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --build /home/mcav/mcav_ws/src/minidrone/build/opencv_cam -- -j4 -l4
+[44.841s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --build /home/mcav/mcav_ws/src/minidrone/build/opencv_cam -- -j4 -l4
+[44.958s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --install /home/mcav/mcav_ws/src/minidrone/build/opencv_cam
+[45.039s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(opencv_cam)
+[45.042s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --install /home/mcav/mcav_ws/src/minidrone/build/opencv_cam
+[45.063s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam' for CMake module files
+[45.066s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam' for CMake config files
+[45.067s] Level 1:colcon.colcon_core.shell:create_environment_hook('opencv_cam', 'cmake_prefix_path')
+[45.069s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/cmake_prefix_path.ps1'
+[45.075s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/cmake_prefix_path.dsv'
+[45.077s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/cmake_prefix_path.sh'
+[45.081s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib'
+[45.082s] Level 1:colcon.colcon_core.shell:create_environment_hook('opencv_cam', 'ld_library_path_lib')
+[45.084s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/ld_library_path_lib.ps1'
+[45.085s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/ld_library_path_lib.dsv'
+[45.086s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/ld_library_path_lib.sh'
+[45.087s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/bin'
+[45.087s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/pkgconfig/opencv_cam.pc'
+[45.091s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/python3.8/site-packages'
+[45.092s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/bin'
+[45.094s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.ps1'
+[45.103s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.dsv'
+[45.107s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.sh'
+[45.112s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.bash'
+[45.115s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.zsh'
+[45.119s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/colcon-core/packages/opencv_cam)
+[45.222s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(opencv_cam)
+[45.226s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam' for CMake module files
+[45.229s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam' for CMake config files
+[45.230s] Level 1:colcon.colcon_core.shell:create_environment_hook('opencv_cam', 'cmake_prefix_path')
+[45.233s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/cmake_prefix_path.ps1'
+[45.234s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/cmake_prefix_path.dsv'
+[45.236s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/cmake_prefix_path.sh'
+[45.238s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib'
+[45.238s] Level 1:colcon.colcon_core.shell:create_environment_hook('opencv_cam', 'ld_library_path_lib')
+[45.240s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/ld_library_path_lib.ps1'
+[45.242s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/ld_library_path_lib.dsv'
+[45.243s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/hook/ld_library_path_lib.sh'
+[45.244s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/bin'
+[45.245s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/pkgconfig/opencv_cam.pc'
+[45.246s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/python3.8/site-packages'
+[45.246s] Level 1:colcon.colcon_core.environment:checking '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/bin'
+[45.249s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.ps1'
+[45.251s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.dsv'
+[45.253s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.sh'
+[45.255s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.bash'
+[45.257s] INFO:colcon.colcon_core.shell:Creating package script '/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.zsh'
+[45.259s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/colcon-core/packages/opencv_cam)
+[45.261s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[45.262s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[45.263s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[45.263s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[45.305s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[45.306s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[45.306s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[45.306s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[45.311s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.Spawn.ExecFailed: /usr/bin/dbus-launch terminated abnormally without any error message
+[45.312s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[45.315s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/install/local_setup.ps1'
+[45.319s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mcav/mcav_ws/src/minidrone/install/_local_setup_util_ps1.py'
+[45.327s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/install/setup.ps1'
+[45.337s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/install/local_setup.sh'
+[45.339s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/mcav/mcav_ws/src/minidrone/install/_local_setup_util_sh.py'
+[45.340s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/install/setup.sh'
+[45.346s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/install/local_setup.bash'
+[45.348s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/install/setup.bash'
+[45.353s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/mcav/mcav_ws/src/minidrone/install/local_setup.zsh'
+[45.355s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/mcav/mcav_ws/src/minidrone/install/setup.zsh'

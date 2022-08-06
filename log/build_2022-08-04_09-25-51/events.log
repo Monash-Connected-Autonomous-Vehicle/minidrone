@@ -1,0 +1,551 @@
+[0.000000] (-) TimerEvent: {}
+[0.000926] (-) JobUnselected: {'identifier': 'md_lane_detection'}
+[0.001095] (-) JobUnselected: {'identifier': 'ros2_shared'}
+[0.001419] (-) JobUnselected: {'identifier': 'rplidar_ros2'}
+[0.002165] (-) JobUnselected: {'identifier': 'zed_components'}
+[0.002704] (-) JobUnselected: {'identifier': 'zed_interfaces'}
+[0.004165] (-) JobUnselected: {'identifier': 'zed_ros2'}
+[0.004337] (-) JobUnselected: {'identifier': 'zed_wrapper'}
+[0.004476] (opencv_cam) JobQueued: {'identifier': 'opencv_cam', 'dependencies': OrderedDict([('ros2_shared', '/home/mcav/mcav_ws/src/minidrone/install/ros2_shared')])}
+[0.004601] (opencv_cam) JobStarted: {'identifier': 'opencv_cam'}
+[0.077856] (opencv_cam) JobProgress: {'identifier': 'opencv_cam', 'progress': 'cmake'}
+[0.078686] (opencv_cam) Command: {'cmd': ['/usr/bin/cmake', '/home/mcav/mcav_ws/src/minidrone/opencv_cam', '-DCMAKE_INSTALL_PREFIX=/home/mcav/mcav_ws/src/minidrone/install/opencv_cam'], 'cwd': '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam', 'env': OrderedDict([('TMUX', '/tmp//tmux-1000/default,16,0'), ('PYTHONIOENCODING', 'utf-8'), ('HOSTNAME', 'jetson-desktop'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/home/mcav/mcav_ws/install/opencv_cam/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/home/mcav/mcav_ws/install/zed_interfaces/lib:/opt/ros/foxy/install/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/install/lib:/usr/local/cuda/lib64:'), ('SOURCE_DIR', '/home/mcav/mcav_ws/src/minidrone'), ('HOME', '/home/mcav'), ('OLDPWD', '/home/mcav/mcav_ws/src'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '\\[\\e]0;\\u@docker: \\w\\a\\]\\[\\033[01;32m\\]\\u@docker\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]$'), ('COLCON_PREFIX_PATH', '/home/mcav/mcav_ws/install:/opt/ros/foxy/install'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/opt/ros/foxy/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/foxy/install/lib/pkgconfig'), ('NVIDIA_DRIVER_CAPABILITIES', 'all,graphics'), ('TERM', 'screen-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/opt/ros/foxy/install/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('ROS1_DISTRO', 'noetic'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS2_DISTRO', 'foxy'), ('ROS_ROOT', '/opt/ros/foxy'), ('AMENT_PREFIX_PATH', '/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/opt/ros/foxy:/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/clustering_2d_brake:/home/mcav/mcav_ws/install/rplidar_ros2:/opt/ros/foxy/install'), ('DEBIAN_FRONTEND', 'noninteractive'), ('SHELL', '/bin/bash'), ('COLCON_WS', '/home/mcav/mcav_ws'), ('PWD', '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam'), ('CUDA_HOME', '/usr/local/cuda'), ('HOMEDIR', '/home/mcav'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages:/home/mcav/mcav_ws/install/zed_interfaces/lib/python3.8/site-packages:/home/mcav/mcav_ws/build/clustering_2d_brake:/home/mcav/mcav_ws/install/clustering_2d_brake/lib/python3.8/site-packages:/opt/ros/foxy/install/lib/python3.8/site-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('TMUX_PANE', '%0'), ('CMAKE_PREFIX_PATH', '/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/rplidar_ros2:/opt/ros/foxy/install:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake')]), 'shell': False}
+[0.099319] (-) TimerEvent: {}
+[0.200231] (-) TimerEvent: {}
+[0.300933] (-) TimerEvent: {}
+[0.402357] (-) TimerEvent: {}
+[0.504945] (-) TimerEvent: {}
+[0.605754] (-) TimerEvent: {}
+[0.695431] (opencv_cam) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.4.0\n'}
+[0.705895] (-) TimerEvent: {}
+[0.806566] (-) TimerEvent: {}
+[0.907618] (-) TimerEvent: {}
+[1.009173] (-) TimerEvent: {}
+[1.110041] (-) TimerEvent: {}
+[1.191531] (opencv_cam) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.4.0\n'}
+[1.210206] (-) TimerEvent: {}
+[1.225339] (opencv_cam) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.310385] (-) TimerEvent: {}
+[1.411048] (-) TimerEvent: {}
+[1.435494] (opencv_cam) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.471359] (opencv_cam) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.475904] (opencv_cam) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.478037] (opencv_cam) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.491170] (opencv_cam) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.511204] (-) TimerEvent: {}
+[1.611904] (-) TimerEvent: {}
+[1.713016] (-) TimerEvent: {}
+[1.717652] (opencv_cam) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.754470] (opencv_cam) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.755478] (opencv_cam) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.757266] (opencv_cam) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.813168] (-) TimerEvent: {}
+[1.897042] (opencv_cam) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[1.913329] (-) TimerEvent: {}
+[2.013954] (-) TimerEvent: {}
+[2.114636] (-) TimerEvent: {}
+[2.126653] (opencv_cam) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[2.127697] (opencv_cam) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[2.214796] (-) TimerEvent: {}
+[2.315544] (-) TimerEvent: {}
+[2.346963] (opencv_cam) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed\n'}
+[2.347798] (opencv_cam) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads\n'}
+[2.418911] (-) TimerEvent: {}
+[2.512204] (opencv_cam) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads - not found\n'}
+[2.512930] (opencv_cam) StdoutLine: {'line': b'-- Looking for pthread_create in pthread\n'}
+[2.519030] (-) TimerEvent: {}
+[2.619684] (-) TimerEvent: {}
+[2.709469] (opencv_cam) StdoutLine: {'line': b'-- Looking for pthread_create in pthread - found\n'}
+[2.712996] (opencv_cam) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[2.719809] (-) TimerEvent: {}
+[2.779687] (opencv_cam) StdoutLine: {'line': b'-- Found CUDA: /usr/local/cuda (found suitable exact version "11.4") \n'}
+[2.819986] (-) TimerEvent: {}
+[2.828055] (opencv_cam) StdoutLine: {'line': b'-- Found OpenCV version 4.5.0\n'}
+[2.853364] (opencv_cam) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/install/share/ament_cmake/cmake)\n'}
+[2.920142] (-) TimerEvent: {}
+[2.990347] (opencv_cam) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[2.991019] (opencv_cam) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[3.020288] (-) TimerEvent: {}
+[3.120934] (-) TimerEvent: {}
+[3.221541] (-) TimerEvent: {}
+[3.322141] (-) TimerEvent: {}
+[3.422742] (-) TimerEvent: {}
+[3.523369] (-) TimerEvent: {}
+[3.623993] (-) TimerEvent: {}
+[3.724648] (-) TimerEvent: {}
+[3.820124] (opencv_cam) StdoutLine: {'line': b'-- Found camera_calibration_parsers: 2.3.0 (/opt/ros/foxy/install/share/camera_calibration_parsers/cmake)\n'}
+[3.824772] (-) TimerEvent: {}
+[3.925849] (-) TimerEvent: {}
+[4.026956] (-) TimerEvent: {}
+[4.053676] (opencv_cam) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[4.102738] (opencv_cam) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/install/share/rosidl_adapter/cmake)\n'}
+[4.127104] (-) TimerEvent: {}
+[4.227784] (-) TimerEvent: {}
+[4.328429] (-) TimerEvent: {}
+[4.429099] (-) TimerEvent: {}
+[4.467685] (opencv_cam) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "1.1.1f")  \n'}
+[4.529268] (-) TimerEvent: {}
+[4.586456] (opencv_cam) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/foxy/install/include  \n'}
+[4.629436] (-) TimerEvent: {}
+[4.730070] (-) TimerEvent: {}
+[4.831208] (-) TimerEvent: {}
+[4.931896] (-) TimerEvent: {}
+[4.978638] (opencv_cam) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[5.032104] (-) TimerEvent: {}
+[5.133107] (-) TimerEvent: {}
+[5.233806] (-) TimerEvent: {}
+[5.238701] (opencv_cam) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/install/share/rmw_implementation_cmake/cmake)\n'}
+[5.248135] (opencv_cam) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_cyclonedds_cpp' as default\n"}
+[5.333973] (-) TimerEvent: {}
+[5.434738] (-) TimerEvent: {}
+[5.536162] (-) TimerEvent: {}
+[5.636790] (-) TimerEvent: {}
+[5.737425] (-) TimerEvent: {}
+[5.838709] (-) TimerEvent: {}
+[5.939900] (-) TimerEvent: {}
+[6.041090] (-) TimerEvent: {}
+[6.142166] (-) TimerEvent: {}
+[6.242836] (-) TimerEvent: {}
+[6.343540] (-) TimerEvent: {}
+[6.403149] (opencv_cam) StdoutLine: {'line': b"-- Setting yaml-cpp_DIR to: '/opt/ros/foxy/install/share/yaml_cpp_vendor/cmake/../../../opt/yaml_cpp_vendor/lib/cmake/yaml-cpp'\n"}
+[6.426249] (opencv_cam) StdoutLine: {'line': b'-- Found class_loader: 2.0.2 (/opt/ros/foxy/install/share/class_loader/cmake)\n'}
+[6.443679] (-) TimerEvent: {}
+[6.460464] (opencv_cam) StdoutLine: {'line': b'-- Found rclcpp_components: 2.4.1 (/opt/ros/foxy/install/share/rclcpp_components/cmake)\n'}
+[6.543848] (-) TimerEvent: {}
+[6.644486] (-) TimerEvent: {}
+[6.672326] (opencv_cam) StdoutLine: {'line': b'-- Found ros2_shared: 0.1.0 (/home/mcav/mcav_ws/install/ros2_shared/share/ros2_shared/cmake)\n'}
+[6.744656] (-) TimerEvent: {}
+[6.845270] (-) TimerEvent: {}
+[6.945872] (-) TimerEvent: {}
+[7.046987] (-) TimerEvent: {}
+[7.093065] (opencv_cam) StdoutLine: {'line': b'-- Configuring done\n'}
+[7.147158] (-) TimerEvent: {}
+[7.248272] (-) TimerEvent: {}
+[7.349632] (-) TimerEvent: {}
+[7.357964] (opencv_cam) StdoutLine: {'line': b'-- Generating done\n'}
+[7.365484] (opencv_cam) StdoutLine: {'line': b'-- Build files have been written to: /home/mcav/mcav_ws/src/minidrone/build/opencv_cam\n'}
+[7.405286] (opencv_cam) CommandEnded: {'returncode': 0}
+[7.407762] (opencv_cam) JobProgress: {'identifier': 'opencv_cam', 'progress': 'build'}
+[7.411066] (opencv_cam) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam', '--', '-j4', '-l4'], 'cwd': '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam', 'env': OrderedDict([('TMUX', '/tmp//tmux-1000/default,16,0'), ('PYTHONIOENCODING', 'utf-8'), ('HOSTNAME', 'jetson-desktop'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/home/mcav/mcav_ws/install/opencv_cam/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/home/mcav/mcav_ws/install/zed_interfaces/lib:/opt/ros/foxy/install/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/install/lib:/usr/local/cuda/lib64:'), ('SOURCE_DIR', '/home/mcav/mcav_ws/src/minidrone'), ('HOME', '/home/mcav'), ('OLDPWD', '/home/mcav/mcav_ws/src'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '\\[\\e]0;\\u@docker: \\w\\a\\]\\[\\033[01;32m\\]\\u@docker\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]$'), ('COLCON_PREFIX_PATH', '/home/mcav/mcav_ws/install:/opt/ros/foxy/install'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/opt/ros/foxy/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/foxy/install/lib/pkgconfig'), ('NVIDIA_DRIVER_CAPABILITIES', 'all,graphics'), ('TERM', 'screen-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/opt/ros/foxy/install/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('ROS1_DISTRO', 'noetic'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS2_DISTRO', 'foxy'), ('ROS_ROOT', '/opt/ros/foxy'), ('AMENT_PREFIX_PATH', '/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/opt/ros/foxy:/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/clustering_2d_brake:/home/mcav/mcav_ws/install/rplidar_ros2:/opt/ros/foxy/install'), ('DEBIAN_FRONTEND', 'noninteractive'), ('SHELL', '/bin/bash'), ('COLCON_WS', '/home/mcav/mcav_ws'), ('PWD', '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam'), ('CUDA_HOME', '/usr/local/cuda'), ('HOMEDIR', '/home/mcav'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages:/home/mcav/mcav_ws/install/zed_interfaces/lib/python3.8/site-packages:/home/mcav/mcav_ws/build/clustering_2d_brake:/home/mcav/mcav_ws/install/clustering_2d_brake/lib/python3.8/site-packages:/opt/ros/foxy/install/lib/python3.8/site-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('TMUX_PANE', '%0'), ('CMAKE_PREFIX_PATH', '/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/rplidar_ros2:/opt/ros/foxy/install:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake')]), 'shell': False}
+[7.449869] (-) TimerEvent: {}
+[7.520163] (opencv_cam) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/subscriber_node.dir/src/subscriber_node.cpp.o\x1b[0m\n'}
+[7.520878] (opencv_cam) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/opencv_cam_node.dir/src/opencv_cam_node.cpp.o\x1b[0m\n'}
+[7.550013] (-) TimerEvent: {}
+[7.651217] (-) TimerEvent: {}
+[7.752394] (-) TimerEvent: {}
+[7.853157] (-) TimerEvent: {}
+[7.954411] (-) TimerEvent: {}
+[8.055051] (-) TimerEvent: {}
+[8.156346] (-) TimerEvent: {}
+[8.257018] (-) TimerEvent: {}
+[8.358592] (-) TimerEvent: {}
+[8.459366] (-) TimerEvent: {}
+[8.560569] (-) TimerEvent: {}
+[8.661771] (-) TimerEvent: {}
+[8.764550] (-) TimerEvent: {}
+[8.865230] (-) TimerEvent: {}
+[8.965899] (-) TimerEvent: {}
+[9.066540] (-) TimerEvent: {}
+[9.167547] (-) TimerEvent: {}
+[9.268224] (-) TimerEvent: {}
+[9.368884] (-) TimerEvent: {}
+[9.469553] (-) TimerEvent: {}
+[9.570227] (-) TimerEvent: {}
+[9.670900] (-) TimerEvent: {}
+[9.771783] (-) TimerEvent: {}
+[9.872443] (-) TimerEvent: {}
+[9.974072] (-) TimerEvent: {}
+[10.075692] (-) TimerEvent: {}
+[10.177260] (-) TimerEvent: {}
+[10.278011] (-) TimerEvent: {}
+[10.378719] (-) TimerEvent: {}
+[10.479442] (-) TimerEvent: {}
+[10.580400] (-) TimerEvent: {}
+[10.681120] (-) TimerEvent: {}
+[10.781794] (-) TimerEvent: {}
+[10.882581] (-) TimerEvent: {}
+[10.983235] (-) TimerEvent: {}
+[11.083992] (-) TimerEvent: {}
+[11.184657] (-) TimerEvent: {}
+[11.285317] (-) TimerEvent: {}
+[11.386008] (-) TimerEvent: {}
+[11.486693] (-) TimerEvent: {}
+[11.587405] (-) TimerEvent: {}
+[11.688075] (-) TimerEvent: {}
+[11.788723] (-) TimerEvent: {}
+[11.889391] (-) TimerEvent: {}
+[11.989996] (-) TimerEvent: {}
+[12.090662] (-) TimerEvent: {}
+[12.191385] (-) TimerEvent: {}
+[12.292038] (-) TimerEvent: {}
+[12.392707] (-) TimerEvent: {}
+[12.493385] (-) TimerEvent: {}
+[12.594099] (-) TimerEvent: {}
+[12.694776] (-) TimerEvent: {}
+[12.795493] (-) TimerEvent: {}
+[12.896175] (-) TimerEvent: {}
+[12.996849] (-) TimerEvent: {}
+[13.097555] (-) TimerEvent: {}
+[13.198224] (-) TimerEvent: {}
+[13.298887] (-) TimerEvent: {}
+[13.399549] (-) TimerEvent: {}
+[13.500252] (-) TimerEvent: {}
+[13.601023] (-) TimerEvent: {}
+[13.701679] (-) TimerEvent: {}
+[13.802349] (-) TimerEvent: {}
+[13.903028] (-) TimerEvent: {}
+[14.003808] (-) TimerEvent: {}
+[14.104515] (-) TimerEvent: {}
+[14.205216] (-) TimerEvent: {}
+[14.305955] (-) TimerEvent: {}
+[14.406776] (-) TimerEvent: {}
+[14.507559] (-) TimerEvent: {}
+[14.608503] (-) TimerEvent: {}
+[14.709241] (-) TimerEvent: {}
+[14.810045] (-) TimerEvent: {}
+[14.911095] (-) TimerEvent: {}
+[15.011925] (-) TimerEvent: {}
+[15.112757] (-) TimerEvent: {}
+[15.213488] (-) TimerEvent: {}
+[15.314851] (-) TimerEvent: {}
+[15.416422] (-) TimerEvent: {}
+[15.517079] (-) TimerEvent: {}
+[15.618273] (-) TimerEvent: {}
+[15.719536] (-) TimerEvent: {}
+[15.820748] (-) TimerEvent: {}
+[15.921437] (-) TimerEvent: {}
+[16.022097] (-) TimerEvent: {}
+[16.122755] (-) TimerEvent: {}
+[16.223410] (-) TimerEvent: {}
+[16.324075] (-) TimerEvent: {}
+[16.424750] (-) TimerEvent: {}
+[16.525408] (-) TimerEvent: {}
+[16.626411] (-) TimerEvent: {}
+[16.727384] (-) TimerEvent: {}
+[16.828083] (-) TimerEvent: {}
+[16.928778] (-) TimerEvent: {}
+[17.029438] (-) TimerEvent: {}
+[17.130709] (-) TimerEvent: {}
+[17.232222] (-) TimerEvent: {}
+[17.332869] (-) TimerEvent: {}
+[17.433529] (-) TimerEvent: {}
+[17.534176] (-) TimerEvent: {}
+[17.635821] (-) TimerEvent: {}
+[17.737787] (-) TimerEvent: {}
+[17.839024] (-) TimerEvent: {}
+[17.939927] (-) TimerEvent: {}
+[18.041588] (-) TimerEvent: {}
+[18.142777] (-) TimerEvent: {}
+[18.243499] (-) TimerEvent: {}
+[18.344161] (-) TimerEvent: {}
+[18.444822] (-) TimerEvent: {}
+[18.545500] (-) TimerEvent: {}
+[18.646183] (-) TimerEvent: {}
+[18.746887] (-) TimerEvent: {}
+[18.847614] (-) TimerEvent: {}
+[18.948282] (-) TimerEvent: {}
+[19.049372] (-) TimerEvent: {}
+[19.150053] (-) TimerEvent: {}
+[19.250769] (-) TimerEvent: {}
+[19.351480] (-) TimerEvent: {}
+[19.452156] (-) TimerEvent: {}
+[19.552831] (-) TimerEvent: {}
+[19.653528] (-) TimerEvent: {}
+[19.754203] (-) TimerEvent: {}
+[19.854884] (-) TimerEvent: {}
+[19.955585] (-) TimerEvent: {}
+[20.056306] (-) TimerEvent: {}
+[20.156966] (-) TimerEvent: {}
+[20.257688] (-) TimerEvent: {}
+[20.358396] (-) TimerEvent: {}
+[20.459071] (-) TimerEvent: {}
+[20.559798] (-) TimerEvent: {}
+[20.660568] (-) TimerEvent: {}
+[20.761259] (-) TimerEvent: {}
+[20.861941] (-) TimerEvent: {}
+[20.962667] (-) TimerEvent: {}
+[21.063387] (-) TimerEvent: {}
+[21.164128] (-) TimerEvent: {}
+[21.264804] (-) TimerEvent: {}
+[21.365473] (-) TimerEvent: {}
+[21.466121] (-) TimerEvent: {}
+[21.566798] (-) TimerEvent: {}
+[21.667495] (-) TimerEvent: {}
+[21.768137] (-) TimerEvent: {}
+[21.868792] (-) TimerEvent: {}
+[21.969560] (-) TimerEvent: {}
+[22.070395] (-) TimerEvent: {}
+[22.171393] (-) TimerEvent: {}
+[22.273170] (-) TimerEvent: {}
+[22.374337] (-) TimerEvent: {}
+[22.475775] (-) TimerEvent: {}
+[22.576442] (-) TimerEvent: {}
+[22.677093] (-) TimerEvent: {}
+[22.777765] (-) TimerEvent: {}
+[22.878447] (-) TimerEvent: {}
+[22.979753] (-) TimerEvent: {}
+[23.081182] (-) TimerEvent: {}
+[23.182322] (-) TimerEvent: {}
+[23.282965] (-) TimerEvent: {}
+[23.383679] (-) TimerEvent: {}
+[23.484333] (-) TimerEvent: {}
+[23.584983] (-) TimerEvent: {}
+[23.685635] (-) TimerEvent: {}
+[23.786295] (-) TimerEvent: {}
+[23.886986] (-) TimerEvent: {}
+[23.987669] (-) TimerEvent: {}
+[24.088338] (-) TimerEvent: {}
+[24.189553] (-) TimerEvent: {}
+[24.291402] (-) TimerEvent: {}
+[24.392118] (-) TimerEvent: {}
+[24.492769] (-) TimerEvent: {}
+[24.593415] (-) TimerEvent: {}
+[24.695696] (-) TimerEvent: {}
+[24.796349] (-) TimerEvent: {}
+[24.897001] (-) TimerEvent: {}
+[24.997650] (-) TimerEvent: {}
+[25.098311] (-) TimerEvent: {}
+[25.198965] (-) TimerEvent: {}
+[25.299699] (-) TimerEvent: {}
+[25.400375] (-) TimerEvent: {}
+[25.501024] (-) TimerEvent: {}
+[25.601726] (-) TimerEvent: {}
+[25.702438] (-) TimerEvent: {}
+[25.803132] (-) TimerEvent: {}
+[25.903834] (-) TimerEvent: {}
+[26.004502] (-) TimerEvent: {}
+[26.105201] (-) TimerEvent: {}
+[26.205920] (-) TimerEvent: {}
+[26.306648] (-) TimerEvent: {}
+[26.407363] (-) TimerEvent: {}
+[26.508017] (-) TimerEvent: {}
+[26.608708] (-) TimerEvent: {}
+[26.709403] (-) TimerEvent: {}
+[26.810102] (-) TimerEvent: {}
+[26.910814] (-) TimerEvent: {}
+[27.011558] (-) TimerEvent: {}
+[27.112235] (-) TimerEvent: {}
+[27.212944] (-) TimerEvent: {}
+[27.313596] (-) TimerEvent: {}
+[27.414266] (-) TimerEvent: {}
+[27.514980] (-) TimerEvent: {}
+[27.615691] (-) TimerEvent: {}
+[27.716366] (-) TimerEvent: {}
+[27.817065] (-) TimerEvent: {}
+[27.917731] (-) TimerEvent: {}
+[28.018437] (-) TimerEvent: {}
+[28.119111] (-) TimerEvent: {}
+[28.191841] (opencv_cam) StdoutLine: {'line': b'[ 37%] \x1b[32m\x1b[1mLinking CXX shared library libopencv_cam_node.so\x1b[0m\n'}
+[28.230697] (-) TimerEvent: {}
+[28.331425] (-) TimerEvent: {}
+[28.432112] (-) TimerEvent: {}
+[28.532789] (-) TimerEvent: {}
+[28.633598] (-) TimerEvent: {}
+[28.734350] (-) TimerEvent: {}
+[28.835768] (-) TimerEvent: {}
+[28.929992] (opencv_cam) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX shared library libsubscriber_node.so\x1b[0m\n'}
+[28.935920] (-) TimerEvent: {}
+[29.037166] (-) TimerEvent: {}
+[29.137953] (-) TimerEvent: {}
+[29.238704] (-) TimerEvent: {}
+[29.339555] (-) TimerEvent: {}
+[29.440387] (-) TimerEvent: {}
+[29.541228] (-) TimerEvent: {}
+[29.641967] (-) TimerEvent: {}
+[29.742667] (-) TimerEvent: {}
+[29.843384] (-) TimerEvent: {}
+[29.944046] (-) TimerEvent: {}
+[30.044742] (-) TimerEvent: {}
+[30.059791] (opencv_cam) StdoutLine: {'line': b'[ 50%] Built target subscriber_node\n'}
+[30.144931] (-) TimerEvent: {}
+[30.184558] (opencv_cam) StdoutLine: {'line': b'[ 50%] Built target opencv_cam_node\n'}
+[30.245111] (-) TimerEvent: {}
+[30.258285] (opencv_cam) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/opencv_cam_main.dir/src/opencv_cam_main.cpp.o\x1b[0m\n'}
+[30.258934] (opencv_cam) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/ipc_test_main.dir/src/ipc_test_main.cpp.o\x1b[0m\n'}
+[30.345297] (-) TimerEvent: {}
+[30.446027] (-) TimerEvent: {}
+[30.547194] (-) TimerEvent: {}
+[30.648406] (-) TimerEvent: {}
+[30.749029] (-) TimerEvent: {}
+[30.850011] (-) TimerEvent: {}
+[30.950731] (-) TimerEvent: {}
+[31.051404] (-) TimerEvent: {}
+[31.152035] (-) TimerEvent: {}
+[31.252675] (-) TimerEvent: {}
+[31.354029] (-) TimerEvent: {}
+[31.455209] (-) TimerEvent: {}
+[31.556537] (-) TimerEvent: {}
+[31.657739] (-) TimerEvent: {}
+[31.758933] (-) TimerEvent: {}
+[31.859672] (-) TimerEvent: {}
+[31.960667] (-) TimerEvent: {}
+[32.061376] (-) TimerEvent: {}
+[32.162891] (-) TimerEvent: {}
+[32.263783] (-) TimerEvent: {}
+[32.364444] (-) TimerEvent: {}
+[32.465100] (-) TimerEvent: {}
+[32.565767] (-) TimerEvent: {}
+[32.666441] (-) TimerEvent: {}
+[32.767088] (-) TimerEvent: {}
+[32.868367] (-) TimerEvent: {}
+[32.970289] (-) TimerEvent: {}
+[33.071701] (-) TimerEvent: {}
+[33.172407] (-) TimerEvent: {}
+[33.273143] (-) TimerEvent: {}
+[33.373811] (-) TimerEvent: {}
+[33.474467] (-) TimerEvent: {}
+[33.575136] (-) TimerEvent: {}
+[33.675838] (-) TimerEvent: {}
+[33.776961] (-) TimerEvent: {}
+[33.877615] (-) TimerEvent: {}
+[33.978800] (-) TimerEvent: {}
+[34.080532] (-) TimerEvent: {}
+[34.181228] (-) TimerEvent: {}
+[34.281880] (-) TimerEvent: {}
+[34.382543] (-) TimerEvent: {}
+[34.483192] (-) TimerEvent: {}
+[34.583889] (-) TimerEvent: {}
+[34.684554] (-) TimerEvent: {}
+[34.785755] (-) TimerEvent: {}
+[34.886946] (-) TimerEvent: {}
+[34.988242] (-) TimerEvent: {}
+[35.089435] (-) TimerEvent: {}
+[35.190624] (-) TimerEvent: {}
+[35.291634] (-) TimerEvent: {}
+[35.393049] (-) TimerEvent: {}
+[35.493718] (-) TimerEvent: {}
+[35.594900] (-) TimerEvent: {}
+[35.695622] (-) TimerEvent: {}
+[35.796274] (-) TimerEvent: {}
+[35.896943] (-) TimerEvent: {}
+[35.997605] (-) TimerEvent: {}
+[36.098268] (-) TimerEvent: {}
+[36.199403] (-) TimerEvent: {}
+[36.300949] (-) TimerEvent: {}
+[36.401608] (-) TimerEvent: {}
+[36.502789] (-) TimerEvent: {}
+[36.603489] (-) TimerEvent: {}
+[36.704166] (-) TimerEvent: {}
+[36.804820] (-) TimerEvent: {}
+[36.905478] (-) TimerEvent: {}
+[37.006140] (-) TimerEvent: {}
+[37.106795] (-) TimerEvent: {}
+[37.208300] (-) TimerEvent: {}
+[37.309235] (-) TimerEvent: {}
+[37.409909] (-) TimerEvent: {}
+[37.510566] (-) TimerEvent: {}
+[37.611984] (-) TimerEvent: {}
+[37.713542] (-) TimerEvent: {}
+[37.814801] (-) TimerEvent: {}
+[37.915803] (-) TimerEvent: {}
+[38.016748] (-) TimerEvent: {}
+[38.117905] (-) TimerEvent: {}
+[38.219090] (-) TimerEvent: {}
+[38.320604] (-) TimerEvent: {}
+[38.421256] (-) TimerEvent: {}
+[38.521911] (-) TimerEvent: {}
+[38.623536] (-) TimerEvent: {}
+[38.724911] (-) TimerEvent: {}
+[38.825594] (-) TimerEvent: {}
+[38.926260] (-) TimerEvent: {}
+[39.027596] (-) TimerEvent: {}
+[39.128830] (-) TimerEvent: {}
+[39.229530] (-) TimerEvent: {}
+[39.330955] (-) TimerEvent: {}
+[39.432733] (-) TimerEvent: {}
+[39.534305] (-) TimerEvent: {}
+[39.635641] (-) TimerEvent: {}
+[39.736827] (-) TimerEvent: {}
+[39.838673] (-) TimerEvent: {}
+[39.940446] (-) TimerEvent: {}
+[40.042005] (-) TimerEvent: {}
+[40.142690] (-) TimerEvent: {}
+[40.243871] (-) TimerEvent: {}
+[40.345097] (-) TimerEvent: {}
+[40.446336] (-) TimerEvent: {}
+[40.547638] (-) TimerEvent: {}
+[40.648319] (-) TimerEvent: {}
+[40.749277] (-) TimerEvent: {}
+[40.849955] (-) TimerEvent: {}
+[40.950894] (-) TimerEvent: {}
+[41.052147] (-) TimerEvent: {}
+[41.153951] (-) TimerEvent: {}
+[41.254677] (-) TimerEvent: {}
+[41.355488] (-) TimerEvent: {}
+[41.456223] (-) TimerEvent: {}
+[41.557171] (-) TimerEvent: {}
+[41.628607] (opencv_cam) StdoutLine: {'line': b'[ 87%] \x1b[32m\x1b[1mLinking CXX executable opencv_cam_main\x1b[0m\n'}
+[41.657467] (-) TimerEvent: {}
+[41.758223] (-) TimerEvent: {}
+[41.859583] (-) TimerEvent: {}
+[41.931330] (opencv_cam) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable ipc_test_main\x1b[0m\n'}
+[41.959759] (-) TimerEvent: {}
+[42.061038] (-) TimerEvent: {}
+[42.163417] (-) TimerEvent: {}
+[42.264189] (-) TimerEvent: {}
+[42.365034] (-) TimerEvent: {}
+[42.465858] (-) TimerEvent: {}
+[42.567599] (-) TimerEvent: {}
+[42.668335] (-) TimerEvent: {}
+[42.769015] (-) TimerEvent: {}
+[42.869732] (-) TimerEvent: {}
+[42.970545] (-) TimerEvent: {}
+[43.071336] (-) TimerEvent: {}
+[43.172094] (-) TimerEvent: {}
+[43.272832] (-) TimerEvent: {}
+[43.373582] (-) TimerEvent: {}
+[43.474303] (-) TimerEvent: {}
+[43.575662] (-) TimerEvent: {}
+[43.597381] (opencv_cam) StdoutLine: {'line': b'[100%] Built target opencv_cam_main\n'}
+[43.675839] (-) TimerEvent: {}
+[43.777132] (-) TimerEvent: {}
+[43.877809] (-) TimerEvent: {}
+[43.970587] (opencv_cam) StdoutLine: {'line': b'[100%] Built target ipc_test_main\n'}
+[43.977980] (-) TimerEvent: {}
+[43.988383] (opencv_cam) CommandEnded: {'returncode': 0}
+[44.078184] (-) TimerEvent: {}
+[44.086220] (opencv_cam) JobProgress: {'identifier': 'opencv_cam', 'progress': 'install'}
+[44.105056] (opencv_cam) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam'], 'cwd': '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam', 'env': OrderedDict([('TMUX', '/tmp//tmux-1000/default,16,0'), ('PYTHONIOENCODING', 'utf-8'), ('HOSTNAME', 'jetson-desktop'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/home/mcav/mcav_ws/install/opencv_cam/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/home/mcav/mcav_ws/install/zed_interfaces/lib:/opt/ros/foxy/install/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/install/lib:/usr/local/cuda/lib64:'), ('SOURCE_DIR', '/home/mcav/mcav_ws/src/minidrone'), ('HOME', '/home/mcav'), ('OLDPWD', '/home/mcav/mcav_ws/src'), ('ROS_PYTHON_VERSION', '3'), ('PS1', '\\[\\e]0;\\u@docker: \\w\\a\\]\\[\\033[01;32m\\]\\u@docker\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]$'), ('COLCON_PREFIX_PATH', '/home/mcav/mcav_ws/install:/opt/ros/foxy/install'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/opt/ros/foxy/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/foxy/install/lib/pkgconfig'), ('NVIDIA_DRIVER_CAPABILITIES', 'all,graphics'), ('TERM', 'screen-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/opt/ros/foxy/install/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('ROS1_DISTRO', 'noetic'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS2_DISTRO', 'foxy'), ('ROS_ROOT', '/opt/ros/foxy'), ('AMENT_PREFIX_PATH', '/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/opt/ros/foxy:/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/clustering_2d_brake:/home/mcav/mcav_ws/install/rplidar_ros2:/opt/ros/foxy/install'), ('DEBIAN_FRONTEND', 'noninteractive'), ('SHELL', '/bin/bash'), ('COLCON_WS', '/home/mcav/mcav_ws'), ('PWD', '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam'), ('CUDA_HOME', '/usr/local/cuda'), ('HOMEDIR', '/home/mcav'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages:/home/mcav/mcav_ws/install/zed_interfaces/lib/python3.8/site-packages:/home/mcav/mcav_ws/build/clustering_2d_brake:/home/mcav/mcav_ws/install/clustering_2d_brake/lib/python3.8/site-packages:/opt/ros/foxy/install/lib/python3.8/site-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('TMUX_PANE', '%0'), ('CMAKE_PREFIX_PATH', '/home/mcav/mcav_ws/install/opencv_cam:/home/mcav/mcav_ws/install/ros2_shared:/home/mcav/mcav_ws/install/zed_interfaces:/home/mcav/mcav_ws/install/rplidar_ros2:/opt/ros/foxy/install:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake')]), 'shell': False}
+[44.127144] (opencv_cam) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[44.127868] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/library_path.sh\n'}
+[44.129138] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/library_path.dsv\n'}
+[44.130569] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/package_run_dependencies/opencv_cam\n'}
+[44.132082] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/parent_prefix_path/opencv_cam\n'}
+[44.133085] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/ament_prefix_path.sh\n'}
+[44.134319] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/ament_prefix_path.dsv\n'}
+[44.135491] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/path.sh\n'}
+[44.136435] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/path.dsv\n'}
+[44.137530] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.bash\n'}
+[44.138716] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.sh\n'}
+[44.139717] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.zsh\n'}
+[44.140871] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.dsv\n'}
+[44.141842] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.dsv\n'}
+[44.142970] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/packages/opencv_cam\n'}
+[44.144509] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/rclcpp_components/opencv_cam\n'}
+[44.146649] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_opencv_cam_nodeExport.cmake\n'}
+[44.147675] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_opencv_cam_nodeExport-noconfig.cmake\n'}
+[44.148650] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_subscriber_nodeExport.cmake\n'}
+[44.149646] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_subscriber_nodeExport-noconfig.cmake\n'}
+[44.150645] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[44.151697] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[44.152693] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[44.153658] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[44.154761] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/opencv_camConfig.cmake\n'}
+[44.155656] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/opencv_camConfig-version.cmake\n'}
+[44.157059] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.xml\n'}
+[44.158252] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libopencv_cam_node.so\n'}
+[44.167107] (opencv_cam) StdoutLine: {'line': b'-- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libopencv_cam_node.so" to ""\n'}
+[44.167796] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libsubscriber_node.so\n'}
+[44.178320] (-) TimerEvent: {}
+[44.180394] (opencv_cam) StdoutLine: {'line': b'-- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libsubscriber_node.so" to ""\n'}
+[44.181022] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/opencv_cam_main\n'}
+[44.182649] (opencv_cam) StdoutLine: {'line': b'-- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/opencv_cam_main" to ""\n'}
+[44.183239] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/ipc_test_main\n'}
+[44.184824] (opencv_cam) StdoutLine: {'line': b'-- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/ipc_test_main" to ""\n'}
+[44.185489] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/launch\n'}
+[44.187950] (opencv_cam) StdoutLine: {'line': b'-- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/launch/composition_launch.py\n'}
+[44.192839] (opencv_cam) CommandEnded: {'returncode': 0}
+[44.278648] (-) TimerEvent: {}
+[44.380102] (-) TimerEvent: {}
+[44.414432] (opencv_cam) JobEnded: {'identifier': 'opencv_cam', 'rc': 0}
+[44.417689] (-) EventReactorShutdown: {}

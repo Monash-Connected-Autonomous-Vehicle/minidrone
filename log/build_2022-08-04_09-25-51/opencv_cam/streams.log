@@ -1,0 +1,96 @@
+[0.077s] Invoking command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake /home/mcav/mcav_ws/src/minidrone/opencv_cam -DCMAKE_INSTALL_PREFIX=/home/mcav/mcav_ws/src/minidrone/install/opencv_cam
+[0.691s] -- The C compiler identification is GNU 9.4.0
+[1.187s] -- The CXX compiler identification is GNU 9.4.0
+[1.221s] -- Detecting C compiler ABI info
+[1.431s] -- Detecting C compiler ABI info - done
+[1.467s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.472s] -- Detecting C compile features
+[1.474s] -- Detecting C compile features - done
+[1.487s] -- Detecting CXX compiler ABI info
+[1.713s] -- Detecting CXX compiler ABI info - done
+[1.750s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.751s] -- Detecting CXX compile features
+[1.753s] -- Detecting CXX compile features - done
+[1.893s] -- Looking for pthread.h
+[2.123s] -- Looking for pthread.h - found
+[2.123s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[2.343s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[2.343s] -- Looking for pthread_create in pthreads
+[2.508s] -- Looking for pthread_create in pthreads - not found
+[2.509s] -- Looking for pthread_create in pthread
+[2.705s] -- Looking for pthread_create in pthread - found
+[2.709s] -- Found Threads: TRUE  
+[2.777s] -- Found CUDA: /usr/local/cuda (found suitable exact version "11.4") 
+[2.824s] -- Found OpenCV version 4.5.0
+[2.849s] -- Found ament_cmake: 0.9.9 (/opt/ros/foxy/install/share/ament_cmake/cmake)
+[2.986s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[2.987s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[3.816s] -- Found camera_calibration_parsers: 2.3.0 (/opt/ros/foxy/install/share/camera_calibration_parsers/cmake)
+[4.049s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[4.098s] -- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/install/share/rosidl_adapter/cmake)
+[4.463s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[4.582s] -- Found FastRTPS: /opt/ros/foxy/install/include  
+[4.974s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[5.234s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/install/share/rmw_implementation_cmake/cmake)
+[5.244s] -- Using RMW implementation 'rmw_cyclonedds_cpp' as default
+[6.399s] -- Setting yaml-cpp_DIR to: '/opt/ros/foxy/install/share/yaml_cpp_vendor/cmake/../../../opt/yaml_cpp_vendor/lib/cmake/yaml-cpp'
+[6.422s] -- Found class_loader: 2.0.2 (/opt/ros/foxy/install/share/class_loader/cmake)
+[6.456s] -- Found rclcpp_components: 2.4.1 (/opt/ros/foxy/install/share/rclcpp_components/cmake)
+[6.668s] -- Found ros2_shared: 0.1.0 (/home/mcav/mcav_ws/install/ros2_shared/share/ros2_shared/cmake)
+[7.089s] -- Configuring done
+[7.354s] -- Generating done
+[7.361s] -- Build files have been written to: /home/mcav/mcav_ws/src/minidrone/build/opencv_cam
+[7.401s] Invoked command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake /home/mcav/mcav_ws/src/minidrone/opencv_cam -DCMAKE_INSTALL_PREFIX=/home/mcav/mcav_ws/src/minidrone/install/opencv_cam
+[7.410s] Invoking command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --build /home/mcav/mcav_ws/src/minidrone/build/opencv_cam -- -j4 -l4
+[7.516s] [ 25%] [32mBuilding CXX object CMakeFiles/subscriber_node.dir/src/subscriber_node.cpp.o[0m
+[7.517s] [ 25%] [32mBuilding CXX object CMakeFiles/opencv_cam_node.dir/src/opencv_cam_node.cpp.o[0m
+[28.225s] [ 37%] [32m[1mLinking CXX shared library libopencv_cam_node.so[0m
+[28.926s] [ 50%] [32m[1mLinking CXX shared library libsubscriber_node.so[0m
+[30.056s] [ 50%] Built target subscriber_node
+[30.180s] [ 50%] Built target opencv_cam_node
+[30.254s] [ 75%] [32mBuilding CXX object CMakeFiles/opencv_cam_main.dir/src/opencv_cam_main.cpp.o[0m
+[30.255s] [ 75%] [32mBuilding CXX object CMakeFiles/ipc_test_main.dir/src/ipc_test_main.cpp.o[0m
+[41.624s] [ 87%] [32m[1mLinking CXX executable opencv_cam_main[0m
+[41.927s] [100%] [32m[1mLinking CXX executable ipc_test_main[0m
+[43.593s] [100%] Built target opencv_cam_main
+[43.966s] [100%] Built target ipc_test_main
+[43.988s] Invoked command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --build /home/mcav/mcav_ws/src/minidrone/build/opencv_cam -- -j4 -l4
+[44.105s] Invoking command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --install /home/mcav/mcav_ws/src/minidrone/build/opencv_cam
+[44.123s] -- Install configuration: ""
+[44.124s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/library_path.sh
+[44.125s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/library_path.dsv
+[44.126s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/package_run_dependencies/opencv_cam
+[44.128s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/parent_prefix_path/opencv_cam
+[44.129s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/ament_prefix_path.sh
+[44.130s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/ament_prefix_path.dsv
+[44.131s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/path.sh
+[44.132s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/environment/path.dsv
+[44.133s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.bash
+[44.134s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.sh
+[44.135s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.zsh
+[44.137s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/local_setup.dsv
+[44.137s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.dsv
+[44.139s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/packages/opencv_cam
+[44.140s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/ament_index/resource_index/rclcpp_components/opencv_cam
+[44.143s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_opencv_cam_nodeExport.cmake
+[44.143s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_opencv_cam_nodeExport-noconfig.cmake
+[44.144s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_subscriber_nodeExport.cmake
+[44.145s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/export_subscriber_nodeExport-noconfig.cmake
+[44.146s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_dependencies-extras.cmake
+[44.147s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_include_directories-extras.cmake
+[44.148s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_targets-extras.cmake
+[44.149s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/ament_cmake_export_libraries-extras.cmake
+[44.150s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/opencv_camConfig.cmake
+[44.151s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/cmake/opencv_camConfig-version.cmake
+[44.153s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/package.xml
+[44.154s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libopencv_cam_node.so
+[44.163s] -- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libopencv_cam_node.so" to ""
+[44.163s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libsubscriber_node.so
+[44.176s] -- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/libsubscriber_node.so" to ""
+[44.177s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/opencv_cam_main
+[44.178s] -- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/opencv_cam_main" to ""
+[44.179s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/ipc_test_main
+[44.181s] -- Set runtime path of "/home/mcav/mcav_ws/src/minidrone/install/opencv_cam/lib/opencv_cam/ipc_test_main" to ""
+[44.181s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/launch
+[44.184s] -- Installing: /home/mcav/mcav_ws/src/minidrone/install/opencv_cam/share/opencv_cam/launch/composition_launch.py
+[44.190s] Invoked command in '/home/mcav/mcav_ws/src/minidrone/build/opencv_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy:/home/mcav/mcav_ws/install/clustering_2d_brake PS1=\[\e]0;\u@docker: \w\a\]\[\033[01;32m\]\u@docker\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ /usr/bin/cmake --install /home/mcav/mcav_ws/src/minidrone/build/opencv_cam
