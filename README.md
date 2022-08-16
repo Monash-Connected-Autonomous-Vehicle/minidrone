@@ -8,6 +8,9 @@ It is recommended to install and run this project using docker. See [Docker Inst
 ## Installation
 `git clone https://github.com/Monash-Connected-Autonomous-Vehicle/minidrone.git`
 
+Install the ZED SDK for Jeton: https://www.stereolabs.com/docs/installation/jetson/
+Used ZED_SDK_Tegra_L4T32.7_v3.7.6.run
+
 ## How to run
 1. `cd minidrone`
 
