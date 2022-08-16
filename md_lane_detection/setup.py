@@ -1,4 +1,5 @@
 from setuptools import setup
+from glob import glob
 
 package_name = 'md_lane_detection'
 
@@ -10,6 +11,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name, glob('launch/*.launch.xml')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -20,8 +22,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'sense = md_lane_detection.sense_node:main',
-            'follow = md_lane_detection.follow_node:main'
+            'sense_node = md_lane_detection.sense_node:main',
+            'follow_node = md_lane_detection.follow_node:main'
         ],
     },
 )
