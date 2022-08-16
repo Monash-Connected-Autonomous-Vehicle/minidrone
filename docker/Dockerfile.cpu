@@ -43,16 +43,22 @@ ENV COLCON_WS=${HOMEDIR}/mcav_ws
 ENV SOURCE_DIR=${COLCON_WS}/src/minidrone
 WORKDIR ${COLCON_WS}
 # Download and build carla ros bridge
-RUN git clone https://github.com/Monash-Connected-Autonomous-Vehicle/ros-bridge.git src/ros-bridge --recurse-submodules
+# RUN git clone https://github.com/Monash-Connected-Autonomous-Vehicle/ros-bridge.git src/ros-bridge --recurse-submodules
 # RUN /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /${COLCON_WS}; colcon build --symlink-install'
 
 # Copy package xml files to decide dependencies
 #
 # Project-specific dependency install
-# RUN apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -r -y \
-#     && apt-get install -y python3-pcl \
-#     && rm -rf /var/lib/apt/lists/* \
-#     && apt-get clean
+# opencv_cam required for ??
+RUN git clone https://github.com/clydemcqueen/opencv_cam.git src/opencv_cam
+# ros2_shared required for opencv_cam
+RUN git clone https://github.com/ptrmu/ros2_shared.git
+# rplidar_ros2 required for the lidar
+RUN git clone --branch ros2 https://github.com/CreedyNZ/rplidar_ros2.git src/rplidar_ros2
+RUN apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -r -y \
+    && apt-get install -y python3-opencv \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 # Build project
 COPY . ${SOURCE_DIR}
 # RUN /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /${COLCON_WS}; colcon build --symlink-install'

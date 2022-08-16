@@ -1,5 +1,0 @@
-/opencv_cam:
-  ros__parameters:
-    fps: 30
-    width: 1344
-    height: 376
