@@ -1,0 +1,13 @@
+<launch>
+    
+    <!-- launch carla ros bridge to publish sensor data to ros topics  -->
+    <include file="$(find carla_ros_bridge)/launch/carla_ros_bridge.launch" />
+
+    <!-- imitation learning -->
+    <!-- <node pkg="topic_tools" type="throttle" name="throttle" args="messages /jetbot_camera/0/compressed 2" /> -->
+    <node pkg="imitation_learning" type="imitation_learning.py" name="imitation_learning" output="screen">
+        <param name="use_compressed_image_type" type="bool" value="false" />
+        <param name="image_topic" type="str" value="/carla/hero/camera/rgb/front/image_color" />
+    </node>
+
+</launch>
