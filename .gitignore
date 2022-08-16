@@ -5,7 +5,7 @@ devel/*
 .cache/*
 .vscode/*
 
-
+*.pt
 *.csv
 *.png
 *.bag
