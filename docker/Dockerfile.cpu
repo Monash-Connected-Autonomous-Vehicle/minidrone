@@ -1,4 +1,4 @@
-FROM osrf/ros:foxy-desktop
+FROM osrf/ros:humble-desktop
 
 # Dev tools
 # Try to keep ROS-related dependencies out of here and inside package.xml to be installed with rosdep instead
@@ -33,8 +33,8 @@ ENV ROS1_DISTRO noetic
 ENV ROS2_DISTRO foxy
 # install ros 1 packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ros-noetic-ros-comm=1.15.14-1* \
-    ros-foxy-ros1-bridge=0.9.6-1* \
+    ros-${ROS1_DISTRO}-ros-comm=1.15.14-1* \
+    ros-${ROS2_DISTRO}-ros1-bridge=0.9.6-1* \
     && rm -rf /var/lib/apt/lists/*
 
 # Prepare to build the project
