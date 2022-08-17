@@ -20,5 +20,6 @@ Can start the ros 1 bridge by going to tmux window 2. (See [Tmux Instructions](.
 2. (Optional): Run gazebo to simulate: 
 ```
 . /usr/share/gazebo/setup.sh
+. ~/mcav_ws/install/setup.bash
 ros2 launch minidrone_gazebo grassy_circuit.launch.py 
 ```

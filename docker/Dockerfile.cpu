@@ -55,6 +55,10 @@ RUN git clone https://github.com/clydemcqueen/opencv_cam.git src/opencv_cam
 RUN git clone https://github.com/ptrmu/ros2_shared.git
 # rplidar_ros2 required for the lidar
 RUN git clone --branch ros2 https://github.com/CreedyNZ/rplidar_ros2.git src/rplidar_ros2
+# linorobot2 required for gazebo simulation
+RUN git clone -b ${ROS2_DISTRO} https://github.com/linorobot/linorobot2 src/linorobot2
+RUN git clone https://github.com/linorobot/linorobot2_viz src/linorobot2_viz
+RUN echo "export LINOROBOT2_BASE=2wd" >> ~/.bashrc
 RUN apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -r -y \
     && apt-get install -y python3-opencv \
     && rm -rf /var/lib/apt/lists/* \
