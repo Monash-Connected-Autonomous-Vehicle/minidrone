@@ -6,6 +6,7 @@
 A messy, mostly bare-bones execution of the yolopv2 network, to be adapted into ROS and the minidrone software stack.
 The letterbox function is from the YOLOPv2 github (https://github.com/CAIC-AD/YOLOPv2), appears to be rescaling and padding the image to fit the network.
 As far as I'm aware, the only specific requirement is the latest version of PyTorch (1.12), don't worry about the requirements.txt file.
+Model has to be downloaded separately from https://github.com/CAIC-AD/YOLOPv2/releases/download/V0.0.1/yolopv2.pt
 
 If it's too messy or needs clarification bug David.
 """
