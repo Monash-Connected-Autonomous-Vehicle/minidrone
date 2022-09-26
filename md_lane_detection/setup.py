@@ -23,7 +23,8 @@ setup(
     entry_points={
         'console_scripts': [
             'sense_node = md_lane_detection.sense_node:main',
-            'follow_node = md_lane_detection.follow_node:main'
+            'follow_node = md_lane_detection.follow_node:main',
+            'warp_perspective_node = md_lane_detection.warp_perspective_node:main'
         ],
     },
 )
