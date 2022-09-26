@@ -30,9 +30,9 @@ class Sense(Node):
         try:
             print("start")
             bridge = CvBridge()
-            cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')  
-            image = cv_image.astype("float64")
-            image = cv2.resize(image, (400,700))
+            cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='rgb8')  
+            # image = cv_image.astype("float64")
+            image = cv2.resize(cv_image, (400,700))
             pts = np.array([[185,540], [235,540], [185, 560], [235,560]], dtype = np.float32)
             # specify input coordinates for corners of red quadrilateral in order TL, TR, BR, BL as x,
 
@@ -44,8 +44,7 @@ class Sense(Node):
             # do perspective transformation setting area outside input to black
             # Note that output size is the same as the input image size
             imgOutput = cv2.warpPerspective(image, matrix, image.shape[:2][::-1])
-            print(imgOutput)
-            image_msg = bridge.cv2_to_imgmsg(imgOutput, encoding="passthrough")
+            image_msg = bridge.cv2_to_imgmsg(imgOutput, encoding="rgb8")
             self.publisher_.publish(image_msg)
             #self.publisher_1.publish(msg_list)
             print("SUCCESSFUL \n\n")
