@@ -2,10 +2,8 @@ from calendar import c
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from std_msgs.msg import String
 import cv2
 import numpy as np
-from std_msgs.msg import Float32MultiArray
 from cv_bridge import CvBridge
 
 class Sense(Node):
@@ -26,7 +24,6 @@ class Sense(Node):
         '''
         detect lane lines and publish image
         '''
-        print("start")
         try:
             print("start")
             bridge = CvBridge()
