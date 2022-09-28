@@ -1,4 +1,9 @@
-ekf_filter_node:
+#################
+# Odometry
+#################
+
+# Publish: odom->base_link
+ekf_odometry_filter_node:
     ros__parameters:
         frequency: 50.0
         sensor_timeout: 0.2
@@ -7,8 +12,10 @@ ekf_filter_node:
  
         map_frame: map             
         odom_frame: odom            
-        base_link_frame: base_footprint 
+        base_link_frame: base_footprint #base_footprint? 
         world_frame: odom 
+
+        transform_time_offset: 0.0
 
         #x     , y     , z,
         #roll  , pitch , yaw,
@@ -16,24 +23,26 @@ ekf_filter_node:
         #vroll , vpitch, vyaw,
         #ax    , ay    , az
         odom0: odom/unfiltered
-        odom0_config: [false, false, false,
-                       false, false, false,
-                       true, true, false,
-                       false, false, true,
+        odom0_config: [true, true, true,
+                       true, true, true,
+                       true, true, true,
+                       true, true, true,
                        false, false, false]
-
+      
         imu0: imu/data
         imu0_config: [false, false, false,
+                      true, true, true,
                       false, false, false,
-                      false, false, false,
-                      false, false, true,
-                      false, false, false]
+                      true, true, true,
+                      true, true, true]
 
         odom0_differential: false
         imu0_differential: false 
 
-      imu0_remove_gravitational_acceleration: false"
-
+      imu0_remove_gravitational_acceleration: false
+      print_diagnostics: true
+      # debug: false
+      # debug_out_file: debug_ekf_localisation.txt
       process_noise_covariance: [0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                            0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                            0,    0,    0.06, 0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
@@ -66,4 +75,111 @@ ekf_filter_node:
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]
 
+#################
+# Positioning
+#################
+
+# odom -> base link: IMU, odom
+# map -> odom: GPS, LIDAR
+
+# Publish: map->odom
+# ekf_positioning_filter_node:
+#     ros__parameters:
+#         frequency: 50.0
+#         sensor_timeout: 0.2
+#         two_d_mode: true
+#         publish_tf: true
+ 
+#         map_frame: map             
+#         odom_frame: odom            
+#         base_link_frame: base_footprint #base_footprint 
+#         world_frame: map
+
+#         transform_time_offset: 0.0
+#         #x     , y     , z,
+#         #roll  , pitch , yaw,
+#         #vx    , vy    , vz,
+#         #vroll , vpitch, vyaw,
+#         #ax    , ay    , az
+#         odom0: odom/unfiltered
+#         odom0_config: [true, true, true,
+#                        true, true, true,
+#                        true, true, true,
+#                        true, true, true,
+#                        false, false, false]
+      
+#         imu0: imu/data
+#         imu0_config: [false, false, false,
+#                       true, true, true,
+#                       false, false, false,
+#                       true, true, true,
+#                       true, true, true]
+
+#         odom0_differential: false
+#         imu0_differential: false 
+#         print_diagnostics: true
+#         imu0_remove_gravitational_acceleration: false"
+
+#         process_noise_covariance: [0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+#                            0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+#                            0,    0,    0.06, 0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+#                            0,    0,    0,    0.03, 0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+#                            0,    0,    0,    0,    0.03, 0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+#                            0,    0,    0,    0,    0,    0.06, 0,     0,     0,    0,    0,    0,    0,    0,    0,
+#                            0,    0,    0,    0,    0,    0,    0.025, 0,     0,    0,    0,    0,    0,    0,    0,
+#                            0,    0,    0,    0,    0,    0,    0,     0.025, 0,    0,    0,    0,    0,    0,    0,
+#                            0,    0,    0,    0,    0,    0,    0,     0,     0.04, 0,    0,    0,    0,    0,    0,
+#                            0,    0,    0,    0,    0,    0,    0,     0,     0,    0.01, 0,    0,    0,    0,    0,
+#                            0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0.01, 0,    0,    0,    0,
+#                            0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0.02, 0,    0,    0,
+#                            0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0.01, 0,    0,
+#                            0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0.01, 0,
+#                            0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0.015]
+
+#         initial_estimate_covariance: [1e-9, 0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+#                               0,    1e-9, 0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+#                               0,    0,    1e-9, 0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+#                               0,    0,    0,    1e-9, 0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+#                               0,    0,    0,    0,    1e-9, 0,    0,    0,    0,    0,     0,     0,     0,    0,    0,
+#                               0,    0,    0,    0,    0,    1e-9, 0,    0,    0,    0,     0,     0,     0,    0,    0,
+#                               0,    0,    0,    0,    0,    0,    1e-9, 0,    0,    0,     0,     0,     0,    0,    0,
+#                               0,    0,    0,    0,    0,    0,    0,    1e-9, 0,    0,     0,     0,     0,    0,    0,
+#                               0,    0,    0,    0,    0,    0,    0,    0,    1e-9, 0,     0,     0,     0,    0,    0,
+#                               0,    0,    0,    0,    0,    0,    0,    0,    0,    1e-9,  0,     0,     0,    0,    0,
+#                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     1e-9,  0,     0,    0,    0,
+#                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     1e-9,  0,    0,    0,
+#                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-9, 0,    0,
+#                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
+#                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]
+
+# #################
+# # GPS
+# #################
+# navsat_transform:
+#     ros__parameters:
+#       frequency: 30
+#       delay: 3
+#       magnetic_declination_radians: 0.20839231268 #11.94 degrees from Monash Lat Long
+#       yaw_offset: 1.57079632679
+#       zero_altitude: true
+#       broadcast_utm_transform: true
+#       publish_filtered_gps: true
+#       use_odometry_yaw: false
+#       wait_for_datum: false
+      
+
+# Inputs
+# /gps (base_footprint)
+# /odom/unfiltered (base_footprint)
+# /imu/data (base_footprint)
+
+# Outputs
+# /gps/filtered (publisher, TBC)
+# /gps/fix (subscriber, TBC)
+# /odom (TBC)
+# /odometry/filtered (TBC) #same as /odom?
+# /odometry/gps (TBC)
+# /imu (TBC)
+
+# /true_odom: ground truth reference in MAP frame
 

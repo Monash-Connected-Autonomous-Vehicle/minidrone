@@ -25,65 +25,50 @@ def generate_launch_description():
     use_sim_time = True
 
     ekf_config_path = PathJoinSubstitution(
-        ["config", "ekf.yaml"]
+        [FindPackageShare("robot_localisation_pkg"),"config", "ekf.yaml"]
     )
 
-    # description_launch_path = PathJoinSubstitution(
-    #     [FindPackageShare('linorobot2_description'), 'launch', 'minidrone_description.launch.py']
-    # )
-
     return LaunchDescription([
-        # DeclareLaunchArgument(
-        #     name='world', 
-        #     default_value=world_path,
-        #     description='Gazebo world'
-        # ),
-
-        # ExecuteProcess(
-        #     cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so',  '-s', 'libgazebo_ros_init.so', LaunchConfiguration('world')],
-        #     output='screen'
-        # ),
 
         # Node(
-        #     package='gazebo_ros',
-        #     executable='spawn_entity.py',
-        #     name='urdf_spawner',
+        #     package='robot_localization',
+        #     executable='ekf_node',
+        #     name='ekf_positioning_filter_node',
         #     output='screen',
-        #     arguments=["-topic", "robot_description", "-entity", "linorobot2"]
-        # ),
-
-        # Node(
-        #     package='linorobot2_gazebo',
-        #     executable='command_timeout.py',
-        #     name='command_timeout'
+        #     parameters=[
+        #         {'use_sim_time': use_sim_time},
+        #         ekf_config_path
+        #     ],
+        #     remappings=[("odometry/filtered", "odom")]
         # ),
 
         Node(
             package='robot_localization',
             executable='ekf_node',
-            name='ekf_filter_node',
+            name='ekf_odometry_filter_node',
             output='screen',
             parameters=[
-                {'use_sim_time': use_sim_time}, 
+                {'use_sim_time': use_sim_time},
                 ekf_config_path
-            ],
-            remappings=[("odometry/filtered", "odom")]
+            ]
         ),
 
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(description_launch_path),
-        #     launch_arguments={
-        #         'use_sim_time': str(use_sim_time),
-        #         'publish_joints': 'false',
-        #     }.items()
+        # Node(
+        #     package='robot_localization',
+        #     executable='navsat_transform_node',
+        #     name='navsat_transform',
+        #     output='screen',
+        #     parameters=[
+        #         {'use_sim_time': use_sim_time},
+        #         ekf_config_path
+        #     ],
+        #     remappings=[("odometry/filtered", "odom"), ("/gps", "/fix")],
         # ),
 
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(joy_launch_path),
-        # )
+
     ])
 
-#sources: 
+# sources:
 #https://navigation.ros.org/setup_guides/index.html#
-#https://answers.ros.org/question/374976/ros2-launch-gazebolaunchpy-from-my-own-launch-file/
-#https://github.com/ros2/rclcpp/issues/940
+# https://answers.ros.org/question/374976/ros2-launch-gazebolaunchpy-from-my-own-launch-file/
+# https://github.com/ros2/rclcpp/issues/940
