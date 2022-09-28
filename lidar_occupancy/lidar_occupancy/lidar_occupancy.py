@@ -1,5 +1,6 @@
 import rclpy
 import numpy as np
+from sklearn.cluster import DBSCAN
 from rclpy.node import Node
 from std_msgs.msg import Header
 from sensor_msgs.msg import PointCloud2
@@ -34,11 +35,33 @@ class LidarOccupancyNode(Node):
 
         # ROS parameters
         self.declare_parameter('grid_resolution', 0.1)
-        self.declare_parameter('grid width', 100)
+        self.declare_parameter('grid_width', 100)
+        self.declare_parameter('scan_dim_factor', 10.0)  # Scan importance factor between angular and radial data, in rad/m
         
         # Important ROS objects
         self.cloud_sub = self.create_subscription(PointCloud2, 'cloud_in', self.cloud_callback, 10)
         self.occ_pub = self.create_publisher(OccupancyGrid, 'grid_out', 10)
+
+        # Other important objects
+        self.scan = DBSCAN(eps=0.5,  # TODO: add these numbers as ros params
+                           min_samples=5, 
+                           metric=self.cluser_metric, 
+                           algorithm='auto',  # What needs to change here?
+                           leaf_size=10)
+
+    def cluser_metric(self, p1, p2):
+        """
+        Custom distance metric between two 2D scanned points, with scanner at origin (WIP)
+        This might be better done by first transforming all points into polar
+        """
+        # Calculate square differences of r, theta
+        rr1, rr2 = p1[0]**2 + p1[1]**2, p2[0]**2 + p2[1]**2
+        dr2, dth2 = abs(rr1-rr2), np.arccos((p1[0]*p2[0] + p1[1]*p2[1])/np.sqrt(rr1*rr2))**2
+        # Calculate scan distance metric
+        alpha = self.get_parameter('scan_dim_factor').get_parameter_value().double_value
+        return np.sqrt(alpha**2*dr2 + dth2)
+        
+
 
     def cloud_callback(self, msg):
         # TODO: Read cloud in to desired format and segment
