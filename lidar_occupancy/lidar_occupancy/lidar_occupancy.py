@@ -5,7 +5,7 @@ from rclpy.node import Node
 from std_msgs.msg import Header
 from sensor_msgs.msg import PointCloud2
 from nav_msgs.msg import OccupancyGrid, MapMetaData
-from lidar_occupancy.lidar_occupancy import naive_bresenham
+from lidar_occupancy.lidar_occupancy import true_bresenham
 
 class LidarOccupancyNode(Node):
     """
@@ -77,7 +77,7 @@ class LidarOccupancyNode(Node):
             for i in range(len(cluster)-1):
                 # Handle points outside of grid
                 if not np.any(np.logical_or(cluster[i:i+1, :] < 0, cluster[i:i+1, :] > grid_w)):
-                    for px, py in naive_bresenham(cluster[i, :], cluster[i+1, :]):
+                    for px, py in true_bresenham(cluster[i, :], cluster[i+1, :]):
                         grid[px, py] = True  # Populate grid
         
         # Create occupancy grid object
