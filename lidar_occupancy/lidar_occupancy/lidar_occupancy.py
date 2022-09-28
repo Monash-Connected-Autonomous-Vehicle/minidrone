@@ -2,10 +2,9 @@ import rclpy
 import numpy as np
 from sklearn.cluster import DBSCAN
 from rclpy.node import Node
-from std_msgs.msg import Header
 from sensor_msgs.msg import PointCloud2
 from nav_msgs.msg import OccupancyGrid, MapMetaData
-from lidar_occupancy.lidar_occupancy import true_bresenham
+from lidar_occupancy.true_bresenham import true_bresenham
 
 class LidarOccupancyNode(Node):
     """
@@ -39,7 +38,7 @@ class LidarOccupancyNode(Node):
         self.declare_parameter('scan_dim_factor', 10.0)  # Scan importance factor between angular and radial data, in rad/m
         
         # Important ROS objects
-        self.cloud_sub = self.create_subscription(PointCloud2, 'cloud_in', self.cloud_callback, 10)
+        self.cloud_sub = self.create_subscription(PointCloud2, '/velodyne_points', self.cloud_callback, 10)
         self.occ_pub = self.create_publisher(OccupancyGrid, 'grid_out', 10)
 
         # Other important objects
@@ -66,11 +65,11 @@ class LidarOccupancyNode(Node):
     def cloud_callback(self, msg):
         # TODO: Read cloud in to desired format and segment
         # TODO: Determine contiguity of points
-        pts = []  # let pts contain numpy arrays of sequential contiguous points
+        pts = [np.array([[1.0, 0.0], [0.5, 4.0]])]  # let pts contain numpy arrays of sequential contiguous points
 
         grid_res = self.get_parameter('grid_resolution').get_parameter_value().double_value
         grid_w = self.get_parameter('grid_width').get_parameter_value().integer_value
-        grid = np.zeros((grid_w, grid_w), dtype=bool)
+        grid = np.zeros((grid_w, grid_w), dtype=int)
         for cluster in pts:
             # Convert points to nearest grid coordinates
             cluster = (cluster/grid_res + grid_w/2).astype(int)
@@ -78,15 +77,18 @@ class LidarOccupancyNode(Node):
                 # Handle points outside of grid
                 if not np.any(np.logical_or(cluster[i:i+1, :] < 0, cluster[i:i+1, :] > grid_w)):
                     for px, py in true_bresenham(cluster[i, :], cluster[i+1, :]):
-                        grid[px, py] = True  # Populate grid
+                        grid[px, py] = 127  # Populate grid
         
         # Create occupancy grid object
-        meta = MapMetaData()
-        meta.time, meta.resolution = self.get_clock().now(), grid_res
-        meta.height, meta.width = grid_w, grid_w
+        pub_time = self.get_clock().now().to_msg()
         occ = OccupancyGrid()
-        occ.info = meta
-        occ.data = grid.tolist()
+        occ.header.frame_id = 'velodyne'
+        occ.header.stamp, occ.info.map_load_time = pub_time, pub_time
+        occ.info.resolution = grid_res
+        occ.info.height, occ.info.width = grid_w, grid_w
+        occ.info.origin.position.x = -grid_res*grid_w/2
+        occ.info.origin.position.y = -grid_res*grid_w/2
+        occ.data = grid.flatten().tolist()
 
         # Publish grid
         self.occ_pub.publish(occ)
