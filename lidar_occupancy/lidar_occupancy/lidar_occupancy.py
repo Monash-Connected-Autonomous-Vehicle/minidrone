@@ -4,7 +4,13 @@ from sklearn.cluster import DBSCAN
 from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2
 from nav_msgs.msg import OccupancyGrid, MapMetaData
+
 from lidar_occupancy.true_bresenham import true_bresenham
+from lidar_occupancy.pcl2_serialization import read_points
+
+from tf2_ros.transform_listener import TransformListener
+from tf2_ros.buffer import Buffer
+from tf2_ros import TransformException
 
 class LidarOccupancyNode(Node):
     """
@@ -47,6 +53,10 @@ class LidarOccupancyNode(Node):
                            metric=self.cluster_metric, 
                            algorithm='auto',  # What needs to change here?
                            leaf_size=10)
+                           
+        # TODO Transformation bewteen velodyne frame and base frame for finding z_slice
+        self.buffer = Buffer()
+        self.listener = TransformListener(self.buffer, self)
 
     def cluster_metric(self, p1, p2):
         """
@@ -63,6 +73,20 @@ class LidarOccupancyNode(Node):
 
     def cloud_callback(self, msg):
         # TODO: Read cloud in to desired format and segment
+        
+        # TODO z_slice = velodyne z - base_footprint z = 0.523 from tf data
+        try:
+            tf = self.buffer.lookup_transform('velodyne', 'base_footprint', rclpy.time.Time())
+        except TransformException:
+            pass
+            
+        # print(tf)
+        z_slice = 0.523  
+        
+        cloud_points = read_points(msg)
+        filter = [True if p[2] > -z_slice and p[2] < z_slice else False for p in cloud_points]
+        cloud_points = cloud_points[filter]
+
 
         # TODO: Determine contiguity of points
         example_array = np.array([[1.0, 1.1],[2.0, -2.2]])
