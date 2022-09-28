@@ -1,7 +1,7 @@
 def true_bresenham(p1, p2):
     """
     Takes 2 points with integer coordinates and outputs a list of integer coordinates approximating the line between
-    them using bresenham's algorithm involving integer only arithmetic.
+    them using bresenham's algorithm involving integer only arithmetic. Utilises the cartesian coordinate system.
 
     :param p1: integer coordinate as a tuple (x, y)
     :param p2: integer coordinate as a tuple (x, y)
