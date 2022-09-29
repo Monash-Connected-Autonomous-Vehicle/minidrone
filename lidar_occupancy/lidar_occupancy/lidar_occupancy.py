@@ -70,21 +70,38 @@ class LidarOccupancyNode(Node):
         a = self.get_parameter('scan_dim_factor').get_parameter_value().double_value
         return np.sqrt(a**2*abs(rr1-rr2) + dth**2)
         
+    def point_filter(self, p):
+    	"""
+    	Returns true for points worth considering i.e. ignores points that are the drone itself
+    	and ignores points below ground or above drone
+    	
+    	:param p: point where p[0], p[1], p[2] = x, y, z
+    	"""
+    	# TODO is a static method atm, slice values derived from linorobot xacros + tf info
+    	x_slice, y_slice, z_slice = 0.55, 0.62, 0.523
+    	
+    	# if within the area occupied by minidrone, ignore point
+    	if p[0] >= -x_slice and p[0] <= x_slice and p[1] >= -y_slice and p[1] <= y_slice:
+    		return false
+    	# if above ground or below top of minidrone, don't ignore point
+    	if p[2] > -z_slice and p[2] < z_slice:
+    	        return true
+    	return false
+        
 
     def cloud_callback(self, msg):
         # TODO: Read cloud in to desired format and segment
         
         # TODO z_slice = velodyne z - base_footprint z = 0.523 from tf data
-        try:
-            tf = self.buffer.lookup_transform('velodyne', 'base_footprint', rclpy.time.Time())
-        except TransformException:
-            pass
-            
+        # try:
+        #     tf = self.buffer.lookup_transform('velodyne', 'base_footprint', rclpy.time.Time())
+        # except TransformException:
+        #     pass  
         # print(tf)
-        z_slice = 0.523  
+        
         
         cloud_points = read_points(msg)
-        filter = [True if p[2] > -z_slice and p[2] < z_slice else False for p in cloud_points]
+        filter = [True if point_filter(p) else False for p in cloud_points]
         cloud_points = cloud_points[filter]
 
 
