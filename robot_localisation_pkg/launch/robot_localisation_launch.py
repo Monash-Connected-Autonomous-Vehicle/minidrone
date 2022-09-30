@@ -29,18 +29,25 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        Node( 
+            package='tf2_ros',
+            node_executable='static_transform_publisher',
+            node_name='static_transform1',
+            arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '1.0', 'map', 'odom'],
+    	    parameters=[{'use_sim_time': use_sim_time}]
+        ),
 
-        # Node(
-        #     package='robot_localization',
-        #     executable='ekf_node',
-        #     name='ekf_positioning_filter_node',
-        #     output='screen',
-        #     parameters=[
-        #         {'use_sim_time': use_sim_time},
-        #         ekf_config_path
-        #     ],
-        #     remappings=[("odometry/filtered", "odom")]
-        # ),
+        Node(
+            package='robot_localization',
+            executable='ekf_node',
+            name='ekf_positioning_filter_node',
+            output='screen',
+            parameters=[
+                {'use_sim_time': use_sim_time},
+                ekf_config_path
+            ],
+            remappings=[("odometry/filtered", "odom")]
+        ),
 
         Node(
             package='robot_localization',
@@ -63,7 +70,7 @@ def generate_launch_description():
         #         ekf_config_path
         #     ],
         #     remappings=[("odometry/filtered", "odom"), ("/gps", "/fix")],
-        # ),
+        # )
 
 
     ])
