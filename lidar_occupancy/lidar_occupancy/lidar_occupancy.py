@@ -7,7 +7,7 @@ from sensor_msgs.msg import PointCloud2
 from nav_msgs.msg import OccupancyGrid, MapMetaData
 
 from lidar_occupancy.true_bresenham import true_bresenham
-from lidar_occupancy.pcl2_serialization import read_points
+from lidar_occupancy.pcl2_serialization import read_points, read_points_numpy
 
 from tf2_ros.transform_listener import TransformListener
 from tf2_ros.buffer import Buffer
@@ -43,7 +43,7 @@ class LidarOccupancyNode(Node):
 
         # ROS parameters
         self.declare_parameter('grid_resolution', 0.1)
-        self.declare_parameter('grid_width', 100)
+        self.declare_parameter('grid_width', 500)
         self.declare_parameter('scan_dim_factor',
                                10.0)  # Scan importance factor between angular and radial data, in rad/m
 
@@ -52,29 +52,17 @@ class LidarOccupancyNode(Node):
         self.occ_pub = self.create_publisher(OccupancyGrid, 'grid_out', 10)
 
         # Other important objects
-        self.scan = DBSCAN(eps=0.5,  # TODO: add these numbers as ros params
+        self.scan = DBSCAN(eps=0.1,  # TODO: add these numbers as ros params
                            min_samples=5,
-                           metric=self.cluster_metric,
-                           algorithm='auto',  # What needs to change here?
                            leaf_size=10)
 
         # TODO Transformation bewteen velodyne frame and base frame for finding z_slice
         self.buffer = Buffer()
         self.listener = TransformListener(self.buffer, self)
 
-    def cluster_metric(self, p1, p2):
-        """
-        Custom distance metric between two 2D scanned points, with scanner at origin.
-        """
-        # Calculate angle difference and squared radii
-        rr1, rr2 = p1[0] ** 2 + p1[1] ** 2, p1[0] ** 2 + p1[1] ** 2
-        dth = np.arccos((p1[0] * p2[0] + p1[1] * p2[1]) / np.sqrt(rr1 * rr2))
-        if dth > np.pi: dth = 2 * np.pi - dth
-        # Calculate scan distance metric
-        a = self.get_parameter('scan_dim_factor').get_parameter_value().double_value
-        return np.sqrt(a ** 2 * abs(rr1 - rr2) + dth ** 2)
 
     def cloud_callback(self, msg):
+        print('callback')
         # TODO: Read cloud in to desired format and segment
 
         # TODO z_slice = velodyne z - base_footprint z = 0.523 from tf data
@@ -84,22 +72,26 @@ class LidarOccupancyNode(Node):
         #     pass
         # print(tf)
 
-        cartesian_cld_pts = read_points(msg)
-        filter_array = [True if self.point_filter(p) else False for p in cartesian_cld_pts]
-        cartesian_cld_pts = cartesian_cld_pts[filter_array]
-        polar_cloud_pts = [polar_coord(p[0], p[1]) for p in cartesian_cld_pts]
+        # Read in relevant points as cartesian and polar
+        cartesian_cld_pts = np.array([[x, y, z] for x, y, z, _, _, _ in read_points(msg) if self.point_filter([x, y, z])])[:, :2]
+        print(read_points(msg).shape, cartesian_cld_pts.shape)
+        #print('cartesian_cloud_pts', cartesian_cld_pts, type(cartesian_cld_pts), cartesian_cld_pts.shape)
+        polar_cloud_pts = np.array([polar_coord(p[0], p[1]) for p in cartesian_cld_pts])
 
-        # TODO: Determine contiguity of points
-        example_array = np.array([[1.0, 1.1], [2.0, -2.2]])
-        labels = self.scan.fit(example_array).labels_
+        # Order points based on dbscan labels
+        labels = self.scan.fit(polar_cloud_pts).labels_
+        sort_ind = np.argsort(labels)
+        sorted_pts, sorted_labels = cartesian_cld_pts[sort_ind], labels[sort_ind]
+        point_clusters = np.split(sorted_pts[1:], np.where(sorted_labels[:-1] != sorted_labels[1:])[0])[1:]
+        # point_clusters should be a list containing arrays of contiguous points, unsure if points within a cluster are ordered
 
-        pts = [np.array([[1.0, 0.0], [0.5, 4.0]])]  # let pts contain numpy arrays of sequential contiguous points
-
+        # Convert clustered points into occupancy grid with interpolation
         grid_res = self.get_parameter('grid_resolution').get_parameter_value().double_value
         grid_w = self.get_parameter('grid_width').get_parameter_value().integer_value
         grid = np.zeros((grid_w, grid_w), dtype=int)
-        for cluster in pts:
+        for cluster in point_clusters:
             # Convert points to nearest grid coordinates
+            #print('cluster', cluster)
             cluster = (cluster / grid_res + grid_w / 2).astype(int)
             for i in range(len(cluster) - 1):
                 # Handle points outside of grid
@@ -122,23 +114,23 @@ class LidarOccupancyNode(Node):
         self.occ_pub.publish(occ)
 
 
-def point_filter(self, p):
-    """
-    Returns true for points worth considering i.e. ignores points that are the drone itself
-    and ignores points below ground or above drone
+    def point_filter(self, p):
+        """
+        Returns true for points worth considering i.e. ignores points that are the drone itself
+        and ignores points below ground or above drone
 
-    :param p: point where p[0], p[1], p[2] = x, y, z
-    """
-    # TODO is a static method atm, slice values derived from linorobot xacros + tf info
-    x_slice, y_slice, z_slice = 0.55, 0.62, 0.523
+        :param p: point where p[0], p[1], p[2] = x, y, z
+        """
+        # TODO is a static method atm, slice values derived from linorobot xacros + tf info
+        x_slice, y_slice, z_slice = 0.55, 0.62, 0.52
 
-    # if within the area occupied by minidrone, ignore point
-    if -x_slice <= p[0] <= x_slice and -y_slice <= p[1] <= y_slice:
+        # if within the area occupied by minidrone, ignore point
+        if -x_slice <= p[0] <= x_slice and -y_slice <= p[1] <= y_slice:
+            return False
+        # if above ground, don't ignore point
+        if -z_slice < p[2]:
+            return True
         return False
-    # if above ground or below top of minidrone, don't ignore point
-    if -z_slice < p[2] < z_slice:
-        return True
-    return False
 
 
 def polar_coord(x, y):
