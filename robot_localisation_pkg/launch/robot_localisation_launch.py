@@ -25,7 +25,7 @@ def generate_launch_description():
     use_sim_time = True
 
     ekf_config_path = PathJoinSubstitution(
-        [FindPackageShare("robot_localisation_pkg"),"launch","config", "ekf.yaml"]
+        [FindPackageShare("robot_localisation_pkg"),"config", "ekf.yaml"]
     )
 
     return LaunchDescription([
