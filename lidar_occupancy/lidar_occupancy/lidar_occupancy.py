@@ -39,21 +39,19 @@ class LidarOccupancyNode(Node):
     """
 
     def __init__(self):
-        super().__init__('minimal_publisher')
+        super().__init__('lidar_occupancy')
 
         # ROS parameters
-        self.declare_parameter('grid_resolution', 0.1)
-        self.declare_parameter('grid_width', 200)
-        self.declare_parameter('scan_dim_factor', 10.0)  # Scan importance factor between angular and radial data, in rad/m
+        self.declare_parameter('grid_resolution', 0.05)
+        self.declare_parameter('grid_width', 500)
+        self.declare_parameter('scan_dim_factor', 0.2)  # Scan importance factor between angular and radial data
 
         # Important ROS objects
         self.cloud_sub = self.create_subscription(PointCloud2, '/velodyne_points', self.cloud_callback, 10)
         self.occ_pub = self.create_publisher(OccupancyGrid, 'grid_out', 10)
 
         # Other important objects
-        self.scan = DBSCAN(eps=0.15,  # TODO: add these numbers as ros params
-                           min_samples=4,
-                           leaf_size=3)
+        self.scan = DBSCAN(eps=0.05, min_samples=4, leaf_size=3)
 
         # TODO Transformation bewteen velodyne frame and base frame for finding z_slice
         self.buffer = Buffer()
@@ -71,13 +69,15 @@ class LidarOccupancyNode(Node):
         # Read in relevant points as cartesian and polar
         cartesian_pts = np.array([[x, y, z] for x, y, z, _, _, _ in read_points(msg) if self.point_filter([x, y, z])])[:, :2]
         polar_pts = np.array([polar_coord(p[0], p[1]) for p in cartesian_pts])
-        # TODO: Scale r coordinate relative to theta appropriately, and update dpscan eps
+        # Scale the radial dimension, as a better distance metric for DBSCAN
+        polar_pts[:, 0] *= self.get_parameter('scan_dim_factor').get_parameter_value().double_value
 
         # Order points based on dbscan labels
         labels = self.scan.fit(polar_pts).labels_
         sort_ind = np.argsort(labels)
         sorted_data, sorted_labels = np.concatenate((cartesian_pts, polar_pts[:, 1:]), axis=1)[sort_ind][1:], labels[sort_ind]
-        point_clusters = np.split(sorted_data, np.where(sorted_labels[:-1] != sorted_labels[1:])[0])[1:]
+        point_clusters = np.split(sorted_data, np.where(sorted_labels[:-1] != sorted_labels[1:])[0])
+        if sorted_labels[0] == -1: point_clusters = point_clusters[1:]
         # point_clusters should be a list containing arrays of contiguous points in cartesian, with their polar angle attached
 
         # Convert clustered points into occupancy grid with interpolation
@@ -89,7 +89,7 @@ class LidarOccupancyNode(Node):
             cluster = (cluster[cluster[:, 2].argsort(), :2]/grid_res + grid_w/2).astype(int)
             for i in range(len(cluster) - 1):
                 # Handle points outside of grid
-                if not np.any(np.logical_or(cluster[i:i + 1, :] < 0, cluster[i:i + 1, :] > grid_w)):
+                if not np.any(np.logical_or(cluster[i:i+2, :] < 0, cluster[i:i+2, :] >= grid_w)):
                     for px, py in true_bresenham(cluster[i, :], cluster[i + 1, :]):
                         grid[py, px] = 127  # Populate grid
 
