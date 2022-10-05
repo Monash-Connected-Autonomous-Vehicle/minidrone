@@ -1,0 +1,31 @@
+# #################
+# # GPS
+# #################
+navsat_transform:
+    ros__parameters:
+      frequency: 30.0
+      delay: 3.0
+      magnetic_declination_radians: 0.20839231268 #11.94 degrees from Monash Lat Long
+      yaw_offset: 1.57079632679
+      zero_altitude: true
+      broadcast_utm_transform: true
+      publish_filtered_gps: true
+      use_odometry_yaw: false
+      wait_for_datum: false
+      
+
+# Inputs
+# /gps (base_footprint)
+# /odom/unfiltered (base_footprint)
+# /imu/data (base_footprint)
+
+# Outputs
+# /gps/filtered (publisher, TBC)
+# /gps/fix (subscriber, TBC)
+# /odom (TBC)
+# /odometry/filtered (TBC) #same as /odom?
+# /odometry/gps (TBC)
+# /imu (TBC)
+
+# /true_odom: ground truth reference in MAP frame
+

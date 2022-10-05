@@ -24,8 +24,16 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
     use_sim_time = True
 
-    ekf_config_path = PathJoinSubstitution(
-        [FindPackageShare("robot_localisation_pkg"),"config", "ekf.yaml"]
+    ekf_gps_config_path = PathJoinSubstitution(
+        [FindPackageShare("robot_localisation_pkg"),"config", "ekf_gps.yaml"]
+    )
+
+    ekf_odom_config_path = PathJoinSubstitution(
+        [FindPackageShare("robot_localisation_pkg"),"config", "ekf_odom.yaml"]
+    )
+
+    ekf_pos_config_path = PathJoinSubstitution(
+        [FindPackageShare("robot_localisation_pkg"),"config", "ekf_pos.yaml"]
     )
 
     return LaunchDescription([
@@ -44,9 +52,9 @@ def generate_launch_description():
             output='screen',
             parameters=[
                 {'use_sim_time': use_sim_time},
-                ekf_config_path
+                ekf_pos_config_path
             ],
-            remappings=[("odometry/filtered", "odom")]
+            remappings=[("odometry/filtered", "odometry/filtered_map")]
         ),
 
         Node(
@@ -56,23 +64,21 @@ def generate_launch_description():
             output='screen',
             parameters=[
                 {'use_sim_time': use_sim_time},
-                ekf_config_path
+                ekf_odom_config_path
             ]
+        ),
+
+        Node(
+            package='robot_localization',
+            executable='navsat_transform_node',
+            name='navsat_transform',
+            output='screen',
+            parameters=[
+                {'use_sim_time': use_sim_time},
+                ekf_gps_config_path
+            ],
+            remappings=[("odometry/filtered", "odometry/filtered_map"),("/gps/fix", "/gps"),("/imu", "/imu/data")], 
         )
-
-        # Node(
-        #     package='robot_localization',
-        #     executable='navsat_transform_node',
-        #     name='navsat_transform',
-        #     output='screen',
-        #     parameters=[
-        #         {'use_sim_time': use_sim_time},
-        #         ekf_config_path
-        #     ],
-        #     remappings=[("odometry/filtered", "odom"), ("/gps", "/fix")],
-        # )
-
-
     ])
 
 # sources:
