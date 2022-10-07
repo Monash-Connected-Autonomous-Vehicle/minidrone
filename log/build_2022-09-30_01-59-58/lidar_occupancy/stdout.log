@@ -1,0 +1,44 @@
+running egg_info
+creating ../build/lidar_occupancy/lidar_occupancy.egg-info
+writing ../build/lidar_occupancy/lidar_occupancy.egg-info/PKG-INFO
+writing dependency_links to ../build/lidar_occupancy/lidar_occupancy.egg-info/dependency_links.txt
+writing entry points to ../build/lidar_occupancy/lidar_occupancy.egg-info/entry_points.txt
+writing requirements to ../build/lidar_occupancy/lidar_occupancy.egg-info/requires.txt
+writing top-level names to ../build/lidar_occupancy/lidar_occupancy.egg-info/top_level.txt
+writing manifest file '../build/lidar_occupancy/lidar_occupancy.egg-info/SOURCES.txt'
+reading manifest file '../build/lidar_occupancy/lidar_occupancy.egg-info/SOURCES.txt'
+writing manifest file '../build/lidar_occupancy/lidar_occupancy.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build
+creating /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib
+creating /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy
+copying lidar_occupancy/__init__.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy
+copying lidar_occupancy/naive_bresenham.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy
+copying lidar_occupancy/pcl2_serialization.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy
+copying lidar_occupancy/lidar_occupancy.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy
+copying lidar_occupancy/true_bresenham.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy
+running install
+running install_lib
+creating /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy
+copying /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy/__init__.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy
+copying /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy/naive_bresenham.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy
+copying /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy/pcl2_serialization.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy
+copying /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy/lidar_occupancy.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy
+copying /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/build/lib/lidar_occupancy/true_bresenham.py -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy
+byte-compiling /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy/__init__.py to __init__.cpython-38.pyc
+byte-compiling /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy/naive_bresenham.py to naive_bresenham.cpython-38.pyc
+byte-compiling /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy/pcl2_serialization.py to pcl2_serialization.cpython-38.pyc
+byte-compiling /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy/lidar_occupancy.py to lidar_occupancy.cpython-38.pyc
+byte-compiling /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy/true_bresenham.py to true_bresenham.cpython-38.pyc
+running install_data
+creating /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/share/ament_index
+creating /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/share/ament_index/resource_index
+creating /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/share/ament_index/resource_index/packages
+copying resource/lidar_occupancy -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/share/ament_index/resource_index/packages
+copying package.xml -> /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/share/lidar_occupancy
+running install_egg_info
+Copying ../build/lidar_occupancy/lidar_occupancy.egg-info to /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/python3.8/site-packages/lidar_occupancy-0.0.0-py3.8.egg-info
+running install_scripts
+Installing lidar_occupancy script to /home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/install/lidar_occupancy/lib/lidar_occupancy
+writing list of installed files to '/home/mcav/abbasamo_ws/minidrone_ws/src/minidrone/build/lidar_occupancy/install.log'
