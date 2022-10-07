@@ -70,7 +70,7 @@ if __name__ == "__main__":
         print("cuda:", next(model.parameters()).is_cuda)
         
         # Read image and do preprocessing
-        img = cv2.imread('lane_image.jpeg')
+        img = cv2.imread('Lane-detection-test-image.png')
         img = letterbox(img, 640, stride=32)[0]
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB
         img = np.ascontiguousarray(img)
@@ -80,13 +80,13 @@ if __name__ == "__main__":
         
         # Run the model and get lane lines
         t0 = time.time()
-        for _ in range(100):
+        for _ in range(1):
             _, _, lane_lines = model(img)
         t1 = time.time()
         print('Average inference time:', (t1-t0)/100)  # Over 100 images (or, the same image 100 times)
 
         # Process lane lines into numpy array (360x640)
-        lane_lines = torch.round(lane_lines[:, :, 12:372,:]).squeeze(1).int().squeeze().cpu().numpy()
+        lane_lines = torch.round(lane_lines[:, :, 12:372,:]).squeeze(1).squeeze().cpu().numpy()
 
         # Show lane lines
         plt.imshow(lane_lines)

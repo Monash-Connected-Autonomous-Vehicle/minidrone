@@ -24,7 +24,9 @@ setup(
         'console_scripts': [
             'sense_node = md_lane_detection.sense_node:main',
             'follow_node = md_lane_detection.follow_node:main',
-            'warp_perspective_node = md_lane_detection.warp_perspective_node:main'
+            'warp_perspective_node = md_lane_detection.warp_perspective_node:main',
+            'lane_detection_yolo_node = md_lane_detection.lane_detector_yolo_node:main'
+
         ],
     },
 )
