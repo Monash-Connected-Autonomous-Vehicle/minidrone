@@ -1,4 +1,0 @@
-source;share/robot_localisation_pkg/local_setup.bash
-source;share/robot_localisation_pkg/local_setup.dsv
-source;share/robot_localisation_pkg/local_setup.sh
-source;share/robot_localisation_pkg/local_setup.zsh

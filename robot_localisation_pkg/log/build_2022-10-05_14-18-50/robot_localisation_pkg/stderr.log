@@ -1,6 +1,0 @@
-CMake Error at cmake_install.cmake:41 (file):
-  file INSTALL cannot find
-  "/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/DIRECTORY":
-  No such file or directory.
-
-

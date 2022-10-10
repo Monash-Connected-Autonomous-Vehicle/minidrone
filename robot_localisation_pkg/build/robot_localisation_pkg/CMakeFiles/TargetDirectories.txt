@@ -1,9 +1,0 @@
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/install/strip.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/install/local.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/install.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/list_install_components.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/rebuild_cache.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/edit_cache.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/test.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/robot_localisation_pkg_uninstall.dir
-/home/mcav/robot_localisation_ws/minidrone/robot_localisation_pkg/build/robot_localisation_pkg/CMakeFiles/uninstall.dir
