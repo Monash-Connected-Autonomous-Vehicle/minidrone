@@ -37,13 +37,14 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        Node( 
-            package='tf2_ros',
-            node_executable='static_transform_publisher',
-            node_name='static_transform1',
-            arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '1.0', 'map', 'odom'],
-    	    parameters=[{'use_sim_time': use_sim_time}]
-        ),
+        # Static transform no longer required
+        # Node( 
+        #     package='tf2_ros',
+        #     node_executable='static_transform_publisher',
+        #     node_name='static_transform1',
+        #     arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '1.0', 'map', 'odom'],
+    	#     parameters=[{'use_sim_time': use_sim_time}]
+        # ),
 
         Node(
             package='robot_localization',
@@ -79,6 +80,7 @@ def generate_launch_description():
             ],
             remappings=[("odometry/filtered", "odometry/filtered_map"),("/gps/fix", "/gps"),("/imu", "/imu/data")], 
         )
+        
     ])
 
 # sources:
