@@ -1,0 +1,3 @@
+http://docs.ros.org/en/melodic/api/robot_localization/html/preparing_sensor_data.html
+* to be confirmed if IMU if using ENU or NED
+ - https://answers.ros.org/question/275139/robot_localization-imu-coordinate-frame/

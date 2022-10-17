@@ -1,0 +1,44 @@
+[0.026s] Invoking command in '/home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg -- -j8 -l8
+[0.065s] -- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.100s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.427s] -- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[0.537s] -- Added test 'copyright' to check source files copyright and LICENSE
+[0.566s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.566s] -- Configured cppcheck include dirs: 
+[0.566s] -- Configured cppcheck exclude dirs and/or files: 
+[0.594s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[0.594s] -- Configured cpplint exclude dirs and/or files: 
+[0.597s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.604s] -- Added test 'lint_cmake' to check CMake code style
+[0.609s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[0.638s] -- Added test 'uncrustify' to check C / C++ code style
+[0.638s] -- Configured uncrustify additional arguments: 
+[0.642s] -- Added test 'xmllint' to check XML markup files
+[0.653s] -- Configuring done
+[0.662s] -- Generating done
+[0.663s] -- Build files have been written to: /home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg
+[0.696s] Invoked command in '/home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg -- -j8 -l8
+[0.742s] Invoking command in '/home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg
+[0.759s] -- Install configuration: ""
+[0.759s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/launch
+[0.760s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/launch/robot_localisation_launch.py
+[0.760s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/config
+[0.760s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/config/ekf_gps.yaml
+[0.760s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/config/ekf_odom.yaml
+[0.760s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/config/ekf_pos.yaml
+[0.760s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/ament_index/resource_index/package_run_dependencies/robot_localisation_pkg
+[0.760s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/ament_index/resource_index/parent_prefix_path/robot_localisation_pkg
+[0.761s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/environment/ament_prefix_path.sh
+[0.761s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/environment/ament_prefix_path.dsv
+[0.761s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/environment/path.sh
+[0.761s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/environment/path.dsv
+[0.761s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/local_setup.bash
+[0.761s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/local_setup.sh
+[0.761s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/local_setup.zsh
+[0.761s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/local_setup.dsv
+[0.761s] -- Installing: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/package.dsv
+[0.761s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/ament_index/resource_index/packages/robot_localisation_pkg
+[0.762s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/cmake/robot_localisation_pkgConfig.cmake
+[0.762s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/cmake/robot_localisation_pkgConfig-version.cmake
+[0.762s] -- Up-to-date: /home/mcav/robot_localisation_ws/minidrone/install/robot_localisation_pkg/share/robot_localisation_pkg/package.xml
+[0.764s] Invoked command in '/home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/mcav/robot_localisation_ws/minidrone/build/robot_localisation_pkg
