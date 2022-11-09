@@ -85,3 +85,19 @@ def generate_launch_description():
 #https://navigation.ros.org/setup_guides/index.html#
 # https://answers.ros.org/question/374976/ros2-launch-gazebolaunchpy-from-my-own-launch-file/
 # https://github.com/ros2/rclcpp/issues/940
+
+
+# START
+# x: 1.379847526550293e-05
+#       y: -0.0003164033405482769
+#       z: 0.0
+
+# # MOVE IN POSITIVE X
+# x: -1.0165120549499989
+# y: -4.949262981070206
+# z: 0.0
+
+# # MOVE IN POSITIVE Y (with a little x)
+#  x: 7.039857481606305
+#       y: -4.549564794637263
+#       z: 0.0

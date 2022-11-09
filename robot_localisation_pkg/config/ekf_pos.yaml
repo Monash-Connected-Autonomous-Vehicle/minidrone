@@ -9,7 +9,7 @@
 # Publish: map->odom
 ekf_positioning_filter_node:
     ros__parameters:
-      frequency: 50.0
+      frequency: 5.0
       sensor_timeout: 0.2
       two_d_mode: true
       publish_tf: true
@@ -53,7 +53,7 @@ ekf_positioning_filter_node:
                     false, false, false,
                     false, false, false,
                     true, true, true]
-
+      
       odom0_differential: false
       imu0_differential: false 
       print_diagnostics: true

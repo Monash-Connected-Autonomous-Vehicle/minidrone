@@ -6,7 +6,7 @@
 # Publish: odom->base_link
 ekf_odometry_filter_node:
     ros__parameters:
-      frequency: 50.0
+      frequency: 10.0
       sensor_timeout: 0.2
       two_d_mode: true
       publish_tf: true
@@ -43,6 +43,7 @@ ekf_odometry_filter_node:
     # configured as per http://docs.ros.org/en/melodic/api/robot_localization/html/preparing_sensor_data.html
 
       imu0: imu/data
+      
       # imu0_config: [false, false, false,
       #               true, true, true,
       #               false, false, false,
@@ -66,8 +67,8 @@ ekf_odometry_filter_node:
 
       imu0_remove_gravitational_acceleration: false
       print_diagnostics: true
-      # debug: false
-      # debug_out_file: debug_ekf_localisation.txt
+      debug: false
+      debug_out_file: debug_ekf_localisation.txt
       process_noise_covariance: [0.05, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                            0.0,    0.05, 0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
                            0.0,    0.0,    0.06, 0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
