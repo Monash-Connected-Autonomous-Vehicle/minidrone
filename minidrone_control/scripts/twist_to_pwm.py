@@ -9,9 +9,15 @@ class TwistPWMNode(Node):
     def __init__(self):
         super().__init__('twist_pwm_node')
         self.subscription = self.create_subscription(Twist, 'cmd_vel', self.twist_callback, 10)
+        self.declare_parameter('width', 1.0)
+        self.declare_parameter('length', 1.0)
+        self.declare_parameter('steering_ratio', 2.0)
+
 
     def twist_callback(self, msg):
         lin, ang = msg.linear.x, msg.angular.z
+
+        # TODO For each lin, ang: calculate pinion rotation and output
 
 
 
