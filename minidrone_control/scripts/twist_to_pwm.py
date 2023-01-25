@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 
 from geometry_msgs.msg import Twist
+from minidrone_control.control_tools import Ackermann, RackAndPinion
 
 
 class TwistPWMNode(Node):
@@ -10,7 +11,8 @@ class TwistPWMNode(Node):
         self.subscription = self.create_subscription(Twist, 'cmd_vel', self.twist_callback, 10)
 
     def twist_callback(self, msg):
-        pass
+        lin, ang = msg.linear.x, msg.angular.z
+
 
 
 def main(args=None):
