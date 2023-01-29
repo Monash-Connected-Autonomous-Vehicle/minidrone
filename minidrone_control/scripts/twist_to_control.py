@@ -5,7 +5,7 @@ from geometry_msgs.msg import Twist
 from minidrone_control.control_tools import Ackermann, RackAndPinion
 
 
-class TwistToControlnode(Node):
+class TwistToControlNode(Node):
     '''
     TODO
     '''
@@ -52,7 +52,7 @@ class TwistToControlnode(Node):
 def main(args=None):
     # Start
     rclpy.init(args=args)
-    twist_to_control_node = TwistToControlnode()
+    twist_to_control_node = TwistToControlNode()
     rclpy.spin(twist_to_control_node)
     
     # Stop
