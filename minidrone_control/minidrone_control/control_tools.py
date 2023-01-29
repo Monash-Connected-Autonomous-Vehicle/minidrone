@@ -34,7 +34,7 @@ class RackAndPinion:
     """
     def __init__(self, w: float, l: float, wheel_r: float,
                  link_lengths: Tuple[float, float, float, float],
-                 rack_axle_dist: float):
+                 rack_axle_dist: float, pinion_r: float):
         """
         """
         # Specified quantities
@@ -42,6 +42,7 @@ class RackAndPinion:
         self.wheel_r = wheel_r
         self.links = link_lengths  # Lengths of each of the 4 links, where link 0 is the rack
         self.h = rack_axle_dist  # x distance between the rack and the would-be front axle
+        self.pinion_r = pinion_r
 
         # Derived quantities
         self.b0 = (w - self.links[0]/2)/2 - self.links[3]  # Width of linkage formed by links 1 and 2
