@@ -6,6 +6,7 @@ from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 from minidrone_control.control_tools import Ackermann, RackAndPinion
 
+# TODO: make launch file that runs dynamixed_sdk_examples read_write_node
 
 class TwistToControlNode(Node):
     '''
