@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
+from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 from minidrone_control.control_tools import Ackermann, RackAndPinion
 
@@ -24,8 +25,11 @@ class TwistToControlNode(Node):
         self.add_on_set_parameters_callback(self._build_control_tools)
 
         # ROS2 publishers/subscribers
+        self.motor_pub = self.create_publisher(Float32, 'motor_control')
+        self.pinion_pub = self.create_publisher(Float32, 'pinion_control')
         self.sub = self.create_subscription(Twist, 'cmd_vel', self.twist_callback, 30)
 
+        # Other important objects
         self.ackermann, self.rack_and_pinion = self._build_control_tools()
                                    
     def _build_control_tools(self):
@@ -42,13 +46,18 @@ class TwistToControlNode(Node):
 
     def twist_callback(self, msg):
         lin, ang = msg.linear.x, msg.angular.z
-        spin, ack_steer = self.ackermann.lin_ang_to_steer_spin(lin, ang)
+        motor_msg, pinion_msg = Float32(), Float32()
 
+        if ang == 0: motor_msg.data, pinion_msg.data = self.ackermann.wheel_r*lin, 0.0
+        elif lin == 0: motor_msg.data, pinion_msg.data = 0.0, 0.0
+        else:
+            motor_msg.data, th1, th2 = self.ackermann.lin_ang_to_steer_spin(lin, ang)
+            pinion_msg.data = self.rack_and_pinion.steer_to_disp(th1 if ang > 0 else th2)
 
-        # TODO For each lin, ang: calculate pinion rotation and output
+        self.motor_pub.publish(motor_msg)
+        self.pinion_pub.publish(pinion_msg)
 
-
-
+        
 def main(args=None):
     # Start
     rclpy.init(args=args)

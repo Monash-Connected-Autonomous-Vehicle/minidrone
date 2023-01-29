@@ -62,14 +62,15 @@ class RackAndPinion:
                                              (2*self.links[2] * math.sqrt(d2)))
         return th - self.th_0
 
-    def steer_to_disp(self, steer: float) -> float:  # TODO: rename steer
+    def steer_to_pinion_ang(self, steer: float) -> float:  # TODO: rename steer
         """
         Calculate rack displacement (from +/-y axis) given wheel steering angle
         (in the +/-y direction)
         """
         dth = self.th_0 - steer
         l2x, l2y = self.links[2]*math.cos(dth), self.links[2]*math.sin(dth)
-        return self.b0 - l2x - math.sqrt(self.links[2]**2 - (self.h - l2y)**2)
+        rack_disp = self.b0 - l2x - math.sqrt(self.links[2]**2 - (self.h - l2y)**2)
+        return rack_disp/self.pinion_r
 
     def wheel_axis_intercept(self, steer: Tuple(float, float)) -> Tuple(float, float):
         """
