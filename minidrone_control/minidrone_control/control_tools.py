@@ -1,5 +1,5 @@
 import math
-from typing import Tuple, float
+from typing import Tuple
 
 
 class Ackermann:
@@ -13,7 +13,7 @@ class Ackermann:
         self.arm_wheel_angle = math.atan(self.w2*l)
         self.steering_ratio = steering_ratio
 
-    def steer_to_wheel_turn(self, steer) -> Tuple(float, float):
+    def steer_to_wheel_turn(self, steer) -> Tuple[float, float]:
         """
         Convert steering wheel angle to wheel angles
         """
@@ -21,7 +21,7 @@ class Ackermann:
         return math.atan(self.l*t1/(self.l + 0.5*self.w*t1)), \
                math.atan(self.l*t1/(self.l - 0.5*self.w*t1))
 
-    def lin_ang_to_steer_spin(self, lin: float, ang: float) -> Tuple(float, float, float):
+    def lin_ang_to_steer_spin(self, lin: float, ang: float) -> Tuple[float, float, float]:
         spin = self.wheel_r*lin  # Driven wheel rotational speed
         R = lin/ang  # Turning radius
         th1, th2 = math.atan(self.l/(R-self.w2)), math.atan(self.l/(R+self.w2))  # Left and right wheel turning angles
@@ -69,10 +69,11 @@ class RackAndPinion:
         """
         dth = self.th_0 - steer
         l2x, l2y = self.links[2]*math.cos(dth), self.links[2]*math.sin(dth)
+        print(l2x, l2y)
         rack_disp = self.b0 - l2x - math.sqrt(self.links[2]**2 - (self.h - l2y)**2)
         return rack_disp/self.pinion_r
 
-    def wheel_axis_intercept(self, steer: Tuple(float, float)) -> Tuple(float, float):
+    def wheel_axis_intercept(self, steer: Tuple[float, float]) -> Tuple[float, float]:
         """
         Calculate point at which the axis of rotation of both front wheels meet given 2 steering angles.
         Origin taken as center of rear axle
