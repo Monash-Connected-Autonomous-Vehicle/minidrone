@@ -45,11 +45,12 @@ class RackAndPinion:
         self.pinion_r = pinion_r
 
         # Derived quantities
-        self.b0 = (w - self.links[0]/2)/2 - self.links[3]  # Width of linkage formed by links 1 and 2
-        d2 = self.h**2 + self.b0**2
-        # Angle between link 2 and y axis with no rack displacement
-        self.th_0 = math.atan(self.h/self.b0) - math.acos((self.links[2]**2 + d2 - self.links[1]**2)/ \
-                                                          (2*self.links[2] * math.sqrt(d2)))
+        self.l12x = (w - self.links[0])/2 - self.links[3]  # Width of linkage formed by links 1 and 2
+        l12_2 = math.sqrt(self.h**2+ self.l12x**2)
+        th12 = math.atan(self.h/self.l12x)
+        th1 = th12 - math.acos((self.links[1]**2 + l12_2 - self.links[2])/(2*self.links[1]*math.sqrt(l12_2)))
+        # Angle between link 2 and axle at rest
+        self.th0 = math.atan((self.h - self.links[1]*math.sin(th1))/(self.l12x - self.links[1]*math.cos(th1)))
 
     def disp_to_steer(self, rack_disp: float) -> float:
         """
@@ -60,17 +61,17 @@ class RackAndPinion:
         d2 = self.h**2 + b**2
         th = math.atan(self.h/b) - math.acos((self.links[2]**2 + d2 - self.links[1]**2)/ \
                                              (2*self.links[2] * math.sqrt(d2)))
-        return th - self.th_0
+        return th - self.th0
 
     def steer_to_pinion_ang(self, steer: float) -> float:  # TODO: rename steer
         """
         Calculate rack displacement (from +/-y axis) given wheel steering angle
         (in the +/-y direction)
         """
-        dth = self.th_0 - steer
+        dth = self.th0 - steer
         l2x, l2y = self.links[2]*math.cos(dth), self.links[2]*math.sin(dth)
-        print(l2x, l2y)
-        rack_disp = self.b0 - l2x - math.sqrt(self.links[2]**2 - (self.h - l2y)**2)
+        l1x = math.sqrt(self.links[1]**2 - (self.h - l2y)**2)
+        rack_disp = self.l12x - l1x - l2x
         return rack_disp/self.pinion_r
 
     def wheel_axis_intercept(self, steer: Tuple[float, float]) -> Tuple[float, float]:
