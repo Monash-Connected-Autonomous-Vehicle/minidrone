@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
+import math
+
 import rclpy
 from rclpy.node import Node
 
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
-#from dynamixel_sdk_custom_interfaces.msg import SetPosition
+from dynamixel_sdk_custom_interfaces.msg import SetPosition
 from minidrone_control.control_tools import Ackermann, RackAndPinion
 
 
-# TODO: make launch file that runs dynamixed_sdk_examples read_write_node
+# TODO: make launch file that runs dynamixel_sdk_examples read_write_node
 
 class TwistToControlNode(Node):
     '''
@@ -25,12 +27,13 @@ class TwistToControlNode(Node):
         self.declare_parameter('rack_displacement', 0.2)  # Distance between the front axle and the steering rack (m)
         self.declare_parameter('link_lengths', [0.4, 0.15, 0.12, 0.1])  # Lengths of each of the 4 links in the (half) steering mechanism, ordered from rack outwards (m)
         self.declare_parameter('pinion_radius', 0.01)  # Radius of the pinion (m)
+        self.declare_parameter('servo_increment', 4096) # Increments per revolution
 
         self.add_on_set_parameters_callback(self._build_control_tools)
 
         # ROS2 publishers/subscribers
         self.motor_pub = self.create_publisher(Float32, 'motor_control', 30)
-        self.pinion_pub = self.create_publisher(Float32, 'pinion_control', 30)
+        self.pinion_pub = self.create_publisher(SetPosition, 'set_position', 30)
         self.sub = self.create_subscription(Twist, 'cmd_vel', self.twist_callback, 30)
 
         # Non ROS2 functionality
@@ -51,14 +54,18 @@ class TwistToControlNode(Node):
 
     def twist_callback(self, msg):
         lin, ang = msg.linear.x, msg.angular.z
-        motor_msg, pinion_msg = Float32(), Float32()
+        motor_msg, pinion_msg = Float32(), SetPosition()
+        pinion_msg.id = 1
+        pinion_msg.position = self.get_parameter('servo_increment').value//2  # Middle position if half way through servo rotation
 
-        if ang == 0: motor_msg.data, pinion_msg.data = self.ackermann.wheel_r*lin, 0.0
-        elif lin == 0: motor_msg.data, pinion_msg.data = 0.0, 0.0
+        if ang == 0: motor_msg.data = self.ackermann.wheel_r*lin
+        elif lin == 0: motor_msg.data = 0.0
         else:
             motor_msg.data, th1, th2 = self.ackermann.lin_ang_to_steer_spin(lin, ang)
-            pinion_msg.data = self.rack_and_pinion.steer_to_pinion_ang(th1 if ang > 0 else th2)
+            servo_inc = self.get_parameter('servo_increment').value/math.pi
+            pinion_msg.position += int(servo_inc*self.rack_and_pinion.steer_to_pinion_ang(th1 if ang > 0 else th2))
 
+        self.get_logger().debug('out %d' % (pinion_msg.position))
         self.motor_pub.publish(motor_msg)
         self.pinion_pub.publish(pinion_msg)
 

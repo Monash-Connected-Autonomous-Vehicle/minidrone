@@ -25,6 +25,7 @@ class Ackermann:
         spin = self.wheel_r*lin  # Driven wheel rotational speed
         R = lin/ang  # Turning radius
         th1, th2 = math.atan(self.l/(R-self.w2)), math.atan(self.l/(R+self.w2))  # Left and right wheel turning angles
+        print('th12', th1, th2)
         return spin, th1, th2
 
 
@@ -69,7 +70,9 @@ class RackAndPinion:
         (in the +/-y direction)
         """
         dth = self.th0 - steer
+        print('th', dth, self.th0)
         l2x, l2y = self.links[2]*math.cos(dth), self.links[2]*math.sin(dth)
+        print('l2', l2x, l2y)
         l1x = math.sqrt(self.links[1]**2 - (self.h - l2y)**2)
         rack_disp = self.l12x - l1x - l2x
         return rack_disp/self.pinion_r

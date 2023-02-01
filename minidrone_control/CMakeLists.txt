@@ -11,6 +11,8 @@ find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 
+find_package(dynamixel_sdk_custom_interfaces REQUIRED)
+
 # Install Python modules
 ament_python_install_package(${PROJECT_NAME})
 # Install Python executables
