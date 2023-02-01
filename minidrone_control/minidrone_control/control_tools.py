@@ -46,9 +46,9 @@ class RackAndPinion:
 
         # Derived quantities
         self.l12x = (w - self.links[0])/2 - self.links[3]  # Width of linkage formed by links 1 and 2
-        l12_2 = math.sqrt(self.h**2+ self.l12x**2)
+        l12_2 = self.h**2 + self.l12x**2
         th12 = math.atan(self.h/self.l12x)
-        th1 = th12 - math.acos((self.links[1]**2 + l12_2 - self.links[2])/(2*self.links[1]*math.sqrt(l12_2)))
+        th1 = th12 - math.acos((self.links[1]**2 + l12_2 - self.links[2]**2)/(2*self.links[1]*math.sqrt(l12_2)))
         # Angle between link 2 and axle at rest
         self.th0 = math.atan((self.h - self.links[1]*math.sin(th1))/(self.l12x - self.links[1]*math.cos(th1)))
 

@@ -4,7 +4,9 @@ from rclpy.node import Node
 
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
+#from dynamixel_sdk_custom_interfaces.msg import SetPosition
 from minidrone_control.control_tools import Ackermann, RackAndPinion
+
 
 # TODO: make launch file that runs dynamixed_sdk_examples read_write_node
 
@@ -16,12 +18,12 @@ class TwistToControlNode(Node):
         super().__init__('twist_to_control_node')
 
         # ROS2 Parameters
-        self.declare_parameter('width', 1.0)  # Width of wheelbase measured from centers of two wheels (m)
-        self.declare_parameter('length', 1.0)  # Distance between front and rear axles (m)
+        self.declare_parameter('width', 0.9)  # Width of wheelbase measured from centers of two wheels (m)
+        self.declare_parameter('length', 1.2)  # Distance between front and rear axles (m)
         self.declare_parameter('steering_ratio', 2.0)  # Ratio between input angle and ideal ackermann steer angle
         self.declare_parameter('wheel_radius', 0.2)  # Radius of the wheels (m)
         self.declare_parameter('rack_displacement', 0.2)  # Distance between the front axle and the steering rack (m)
-        self.declare_parameter('link_lengths', [0.6, 0.3, 0.2, 0.0])  # Lengths of each of the 4 links in the (half) steering mechanism, ordered from rack outwards (m)
+        self.declare_parameter('link_lengths', [0.4, 0.15, 0.12, 0.1])  # Lengths of each of the 4 links in the (half) steering mechanism, ordered from rack outwards (m)
         self.declare_parameter('pinion_radius', 0.01)  # Radius of the pinion (m)
 
         self.add_on_set_parameters_callback(self._build_control_tools)
