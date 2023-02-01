@@ -40,17 +40,21 @@ class TwistToControlNode(Node):
         self._build_control_tools()
                                    
     def _build_control_tools(self):
-        self.ackermann = Ackermann(self.get_parameter('width').value,
-                                   self.get_parameter('length').value,
-                                   self.get_parameter('wheel_radius').value,
-                                   self.get_parameter('steering_ratio').value)
-        
-        self.rack_and_pinion = RackAndPinion(self.get_parameter('width').value,
-                                             self.get_parameter('length').value,
-                                             self.get_parameter('wheel_radius').value,
-                                             self.get_parameter('link_lengths').value,
-                                             self.get_parameter('rack_displacement').value,
-                                             self.get_parameter('pinion_radius').value)
+        try:
+            self.ackermann = Ackermann(self.get_parameter('width').value,
+                                    self.get_parameter('length').value,
+                                    self.get_parameter('wheel_radius').value,
+                                    self.get_parameter('steering_ratio').value)
+            
+            self.rack_and_pinion = RackAndPinion(self.get_parameter('width').value,
+                                                self.get_parameter('length').value,
+                                                self.get_parameter('wheel_radius').value,
+                                                self.get_parameter('link_lengths').value,
+                                                self.get_parameter('rack_displacement').value,
+                                                self.get_parameter('pinion_radius').value)
+        except ValueError:
+            self.get_logger().error('Invalid steering mechanism geometry specification')
+
 
     def twist_callback(self, msg):
         lin, ang = msg.linear.x, msg.angular.z
@@ -63,7 +67,10 @@ class TwistToControlNode(Node):
         else:
             motor_msg.data, th1, th2 = self.ackermann.lin_ang_to_steer_spin(lin, ang)
             servo_inc = self.get_parameter('servo_increment').value/math.pi
-            pinion_msg.position += int(servo_inc*self.rack_and_pinion.steer_to_pinion_ang(th1 if ang > 0 else th2))
+            try:
+                pinion_msg.position += int(servo_inc*self.rack_and_pinion.steer_to_pinion_ang(th1 if ang > 0 else th2))
+            except ValueError:
+                self.get_logger().warn('Steering geometry math error!')
 
         self.get_logger().debug('out %d' % (pinion_msg.position))
         self.motor_pub.publish(motor_msg)
