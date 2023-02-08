@@ -25,7 +25,9 @@ setup(
             'sense_node = md_lane_detection.sense_node:main',
             'follow_node = md_lane_detection.follow_node:main',
             'warp_perspective_node = md_lane_detection.warp_perspective_node:main',
-            'lane_detection_yolo_node = md_lane_detection.lane_detector_yolo_node:main'
+            'lane_detection_yolo_node = md_lane_detection.lane_detector_yolo_node:main',
+            'transformation_node = md_lane_detection.transformation_node:main',
+            'camera_cut_node = md_lane_detection.camera_cut_node:main'
 
         ],
     },

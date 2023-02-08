@@ -18,6 +18,9 @@ import numpy as np
 import cv2
 import torch
 from matplotlib import pyplot as plt
+import matplotlib.pylab as pl
+from matplotlib.colors import ListedColormap
+
 
 def letterbox(img, new_shape=(640, 640), color=(114, 114, 114), auto=True, scaleFill=False, scaleup=True, stride=32):
     """
@@ -70,13 +73,15 @@ if __name__ == "__main__":
         print("cuda:", next(model.parameters()).is_cuda)
         
         # Read image and do preprocessing
-        img = cv2.imread('Lane-detection-test-image.png')
-        img = letterbox(img, 640, stride=32)[0]
-        img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB
+        img_raw = cv2.imread('Lane-detection-test-image.png')
+        img_box = letterbox(img_raw, 640, stride=32)[0]
+        img = img_box[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB
         img = np.ascontiguousarray(img)
         img = torch.from_numpy(img).to(device)/255.0
         if img.ndimension() == 3:
             img = img.unsqueeze(0)
+            
+        print(type(img), img.shape)
         
         # Run the model and get lane lines
         t0 = time.time()
@@ -86,8 +91,26 @@ if __name__ == "__main__":
         print('Average inference time:', (t1-t0)/100)  # Over 100 images (or, the same image 100 times)
 
         # Process lane lines into numpy array (360x640)
-        lane_lines = torch.round(lane_lines[:, :, 12:372,:]).squeeze(1).squeeze().cpu().numpy()
+        print(lane_lines.shape)
+        lane_lines = torch.round(lane_lines).squeeze(1).squeeze().cpu().numpy()
+        # change the number in dsize to adjust the image overlay
+        lane_lines = cv2.resize(lane_lines, dsize=(640, 480), interpolation=cv2.INTER_CUBIC)
+        print(type(lane_lines), lane_lines.shape)
+        print(img_box.shape)
+        
+        # Colormap
+        cmap = pl.cm.Reds
+        my_cmap = cmap(np.arange(cmap.N))
+
+        # Set alpha
+        my_cmap[:,-1] = np.linspace(0, 1, cmap.N)
+
+        # Create new colormap
+        my_cmap = ListedColormap(my_cmap)
 
         # Show lane lines
-        plt.imshow(lane_lines)
+        plt.imshow(img_box)
+        plt.imshow(lane_lines, alpha=0.5, cmap=my_cmap)
+#         plt.imshow(lane_lines)
+        plt.savefig('img_4_output.jpg')
         plt.show()

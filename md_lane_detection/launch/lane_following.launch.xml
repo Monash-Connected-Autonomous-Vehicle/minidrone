@@ -1,4 +1,5 @@
 <launch>
   <node pkg="md_lane_detection" exec="follow_node" output="screen" />
   <node pkg="md_lane_detection" exec="sense_node" output="screen" />
+  <node pkg="md_lane_detection" exec="camera_cut_node" output="screen" />
 </launch>

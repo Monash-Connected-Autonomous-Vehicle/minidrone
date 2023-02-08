@@ -13,3 +13,7 @@ imitation_learning/models/*.pt
 
 # include the logo file
 *settings.json
+
+test_images
+
+yolopv2_example/yolopv2.pt
