@@ -1,7 +1,8 @@
-FROM dustynv/ros:foxy-pytorch-l4t-r34.1.0
+FROM dustynv/ros:humble-pytorch-l4t-r34.1.0
 
 # Dev tools
 # Try to keep ROS-related dependencies out of here and inside package.xml to be installed with rosdep instead
+RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 42D5A192B819C5DA
 RUN apt-get -y update && apt-get install -y \
     x11-apps \
     python3-pip \
@@ -27,16 +28,16 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 # Install ROS 1 bridge
 # setup sources.list
-RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros1-latest.list
+# RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros1-latest.list
 # setup keys
-ENV ROS1_DISTRO noetic
-ENV ROS2_DISTRO foxy
+#ENV ROS1_DISTRO noetic
+ENV ROS2_DISTRO humble
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 # install ros 1 packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ros-noetic-ros-comm=1.15.14-1* \
-    ros-foxy-ros1-bridge=0.9.6-1* \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#    ros-noetic-ros-comm=1.15.14-1* \
+#    ros-humble-ros1-bridge=0.9.6-1* \
+#    && rm -rf /var/lib/apt/lists/*
 
 # Prepare to build the project
 ENV HOMEDIR=/home/${USERNAME}
