@@ -24,6 +24,6 @@ Can start the ros 1 bridge by going to tmux window 2. (See [Tmux Instructions](.
 ros2 launch minidrone_gazebo grassy_circuit.launch.py 
 ```
 
-# Note for YOLOPv2
+### Note for YOLOPv2
 The training model zip file is larger than 100MB therefore is unable to be put in git repo.
 Go to [YOLOPv2: Better, Faster, Stronger for Panoptic driving Perception](https://github.com/CAIC-AD/YOLOPv2) and for full detail and download the [model](https://github.com/CAIC-AD/YOLOPv2/releases/download/V0.0.1/yolopv2.pt).
