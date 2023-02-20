@@ -1,36 +1,53 @@
 import numpy as np
 
-from math import sin, cos, pi, abs
+import math
+from math import pi, abs
 
-def sample_trajectory(angle: float, grid_width: float, min_step: float, step_dist: float):
-    """
-    Sample equidistant points along a circular trajectory tangent to x axis.
-    Trajectory intersects inscribed circle of square grid at specified point.
+class AngularTrajectory:
+    def __init__(self, angle: float, grid_width: float) -> None:
+        """
+        Circular trajectory tangent to x axis intersecting inscribed circle of square grid at specified point.
 
-    Paramters
-    ---------
-    angle: Angle between x axis and line segment from origin to point of inscribed circle intersection
-    grid_width: side length of square gird
-    min_step: minimum distance along trajectory for points to be sampled from
-    step_dist: distance between subsequent sampled points
-    """
+        Parameters
+        ----------
+        angle: Angle between x axis and line segment from origin to point of inscribed circle intersection
+        grid_width: side length of square gird
+        """
+        self.angle = angle
+        self.grid_width = grid_width
 
-    if angle == 0:  # Special case for straight trajectory
-        x = np.arange(min_step, grid_width/2, step_dist)
-        return np.stack(x, np.zeros(len(x))).T
+        if angle == 0:
+            self.r = math.inf
+            self.parametric = lambda t: (t, 0)
+            self.cartesian = None
 
-    else:  # Sample points along circular trajectory
-        sample_points = []
-        r = grid_width/(2*sin(angle))
+        else:
+            self.r = grid_width/(2*math.sin(angle))
+            self.parametric = lambda t: (self.r*math.sin(t/self.r), self.r*(1-math.cos(t/self.r)))
+            self.cartesian = lambda x: math.sqrt(x*(2*self.r-x))
 
-        step = min_step
-        ang = step/r
-        x, y = r*sin(ang), r*(1-cos(ang))
+    def sample(self, min_step: float, step_dist: float):
+        """
+        Sample equidistant points along trajectory
 
-        while abs(x) < grid_width/2 and abs(y) < grid_width/2 and abs(ang) < pi/2:
-            sample_points.append((x, y))
-            step += step_dist
-            ang = step/r
-            y = r*sin(ang), r*(1-cos(ang))
-        
-        return np.array(sample_points)
+        Parameters
+        ---------
+        min_step: minimum distance along trajectory for points to be sampled from
+        step_dist: distance between subsequent sampled points
+        """
+
+        if self.angle == 0:  # Special case for straight trajectory
+            x = np.arange(min_step, self.grid_width/2, step_dist)
+            return np.stack(x, np.zeros(len(x))).T
+
+        else:  # Sample points along circular trajectory
+            sample_points = []
+            step = min_step
+            x, y = self.parametric(step)
+
+            while abs(x) < self.grid_width/2 and abs(y) < self.grid_width/2 and abs(step/self.r) < pi/2:
+                sample_points.append((x, y))
+                step += step_dist
+                x, y = self.parametric(step)
+            
+            return np.array(sample_points)
