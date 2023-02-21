@@ -10,21 +10,22 @@ from unguided_planning.trajectory_tools import sample_trajectory
 
 class WaypointNode(Node):
     """
-    TODO
+    Node that generates local waypoints in response to updates in detected lanes an lidar occupancy
     ...
 
     Parameters
     ----------
-    add_out : int
-        Integer added to the input when published to output topic
 
     Topics
     ------
-    example_input : L{std_msgs.Int8}
-        Subscribed integer input
+    lidar_occupancy : L{nav_msgs.OccupancyGrid}
+        Subscribed occupancy grid of obstacles detected via lidar
 
-    example_output : L{std_msgs.Int8}
-        Published output upon recieving input, equal to example_input + add_out
+    lane_occupancy : L{nav_msgs.OccupancyGrid}
+        Subscribed occupancy grid of lanes detected by camera and CV system
+        
+    waypoints : L{mcav_msg.WaypointArray}
+        Published local waypoints generated upon update in lidar or lane occupancy 
 
     """
     def __init__(self):
