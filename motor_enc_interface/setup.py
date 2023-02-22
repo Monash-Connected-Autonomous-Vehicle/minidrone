@@ -14,12 +14,14 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='mcav',
-    maintainer_email='zhouminhua51@gmail.com',
-    description='TODO: Package description',
+    maintainer_email='s.a.baaset.moslih@gmail.com',
+    description='Provides an interface for controlling mindrone motors and reading data from them',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'encoder_reader = motor_enc_interface.encoder_reader:main'
+            'speed_to_serial = motor_enc_interface.espeed_to_serial:main'
         ],
     },
 )

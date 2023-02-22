@@ -3,9 +3,15 @@
 <package format="3">
   <name>motor_enc_interface</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="zhouminhua51@gmail.com">mcav</maintainer>
+  <description>Provides an interface for controlling mindrone motors and reading data from them</description>
+  <maintainer email="s.a.baaset.moslih@gmail.com">mcav</maintainer>
   <license>TODO: License declaration</license>
+    
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>RPi</exec_depend>
+
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

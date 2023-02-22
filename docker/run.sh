@@ -10,7 +10,7 @@ attach_to_container()
     docker start $CONTAINER_NAME
 
     # Attach a terminal into the container
-    exec docker exec -it $CONTAINER_NAME bash -c /home/mcav/mcav_ws/src/minidrone/docker/tmux-start.sh
+    exec docker exec -it $CONTAINER_NAME bash -c /home/mcav/mcav_ws/minidrone/docker/tmux-start.sh
 }
 
 run_with_gpu()
