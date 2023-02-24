@@ -64,7 +64,7 @@ class EncoderReader(Node):
               
         finally:
             print("cleaning up")
-	    GPIO.cleanup()
+        GPIO.cleanup()
 
 
 def main(args=None):

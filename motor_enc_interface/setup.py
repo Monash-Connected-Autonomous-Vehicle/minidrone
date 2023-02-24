@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'encoder_reader = motor_enc_interface.encoder_reader:main'
+            'encoder_reader = motor_enc_interface.encoder_reader:main',
             'speed_to_serial = motor_enc_interface.espeed_to_serial:main'
         ],
     },
