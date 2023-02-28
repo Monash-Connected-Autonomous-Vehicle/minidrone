@@ -10,7 +10,7 @@ attach_to_container()
     docker start $CONTAINER_NAME
 
     # Attach a terminal into the container
-    exec docker exec -it $CONTAINER_NAME bash -c /home/mcav/mcav_ws/minidrone/docker/tmux-start.sh
+    exec docker exec -it $CONTAINER_NAME bash -c /home/mcav/motor_enc_ws/src/minidrone/docker/tmux-start.sh
 }
 
 run_with_gpu()
@@ -20,6 +20,12 @@ run_with_gpu()
         -v "/dev:/dev:rw" \
         -v "$(pwd):/home/mcav/mcav_ws/src/minidrone:rw" \
         -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+        --device=/dev/gpiochi0 \
+        --device=/dev/gpiochi1 \
+        --device=/dev/gpiochi2 \
+        --device=/dev/gpiochi3 \
+        --device=/dev/gpiochi4 \
+
         --net=host \
         --name $CONTAINER_NAME \
         --entrypoint /ros_entrypoint.sh \
@@ -35,6 +41,12 @@ run_without_gpu()
         -v "/dev:/dev:rw" \
         -v "$(pwd):/home/mcav/mcav_ws/src/minidrone:rw" \
         -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+        --device=/dev/gpiochi0 \
+        --device=/dev/gpiochi1 \
+        --device=/dev/gpiochi2 \
+        --device=/dev/gpiochi3 \
+        --device=/dev/gpiochi4 \
+
         --net=host \
         --name $CONTAINER_NAME \
         --entrypoint /ros_entrypoint.sh \
