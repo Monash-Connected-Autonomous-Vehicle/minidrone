@@ -32,6 +32,7 @@ class WaypointNode(Node):
         super().__init__('waypoint_node')
 
         # ROS2 Parameters
+        self.declare_parameter('sample_grid_width', 10, 'Occupancy grid pixel distance between sampled points')
 
         # Important ROS objects
         self.lidar_sub = self.create_subscription(OccupancyGrid, 'lidar_occupancy', self.lidar_callback, 10)
@@ -57,12 +58,13 @@ class WaypointNode(Node):
 
 
     def lane_callback(self, msg):
-        self.lane_grid = np.array(msg.data, dtype=bool).reshape((msg.info.width, msg.info.height))
-        self._update_grid()
+        self.lane_grid = np.array(msg.data, dtype=int).reshape((msg.info.width, msg.info.height))
+        
+        # Sample grid points
+        # 
 
-    def _evaluate_trajectory(self, pts):
-        # TODO: obtain mean/stdv square difference between closest left and right lane point to sample point
-        thin_lanes = cv2.erode(self.lane_grid, self.erode_kernel, iterations=1)
+    def _evaluate_trajectory(self, traj):
+        pass
 
     
 
