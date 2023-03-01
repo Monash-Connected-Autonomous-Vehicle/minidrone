@@ -18,7 +18,7 @@ class EncoderReader(Node):
         # GPIO setup
         MOTOR_ONE_PINS = [12, 16]  # For reference BOARD pins [12, 16] == BCM pins [18, 16]
         MOTOR_TWO_PINS = []  # TODO add after encoder 1 works as intended
-        DEG_PER_INC = 0.18  # 360/2000 -> number of degrees per rotary encoder increment TODO we're using a new encoder now -> versaplanetary
+        self.DEG_PER_INC = 0.18  # 360/2000 -> number of degrees per rotary encoder increment TODO we're using a new encoder now -> versaplanetary
         
         GPIO.setmode(GPIO.BOARD)  # refer to pins with BOARD scheme
         GPIO.setup(MOTOR_ONE_PINS, GPIO.IN)  # set pins as INPUT
@@ -33,10 +33,10 @@ class EncoderReader(Node):
     def publish_encoder_data(self):
         # TODO can try to calculate speed here
         # new position - old position/ timer period
-        self.ang_speed = (self.direction_counter - self.prev_dir_counter)/self.timer_period
+        self.ang_speed = (self.dir_counter - self.prev_dir_counter)/self.timer_period
         
         msg = String()
-        msg.data = "dir: " + str(direction_counter) + ", position: " + str(angular_pos * DEG_PER_INC)
+        msg.data = "dir: " + str(self.dir_counter) + ", position: " + str(self.angular_pos * self.DEG_PER_INC)
         self.publisher_.publish(msg)
         self.get_logger().info('Publishing: "%s"' % msg.data)
         
@@ -58,7 +58,7 @@ class EncoderReader(Node):
                     else:
                         self.dir_counter -= 1
                     
-                    self.angular_pos = abs(direction_counter) % 2000
+                    self.angular_pos = abs(self.dir_counter) % 2000
                 
                 self.prev_pin_1 = pin_1
               
