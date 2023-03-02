@@ -6,8 +6,11 @@ from scipy.ndimage.measurements import label
 class OccSpace:
     def __init__(self, grid) -> None:
         '''
-        TODO:
-        grid: numpy array, assume -1 is lane, 0 is unknown, 1 is driveable
+        Initialize OccSpace object based on occupancy grid
+
+        Parameters
+        ----------
+        grid: occupancy grid numpy array, where -1 is lane, 0 is unknown, 1 is driveable
         '''
         self.grid = grid
     
@@ -46,11 +49,9 @@ class OccSpace:
         return self.edge_array
     
     def segment(self):
-        '''
-        Returns a connected components labeling of drivable areas
-        '''
+        # Returns a connected components labeling of drivable areas
         return label(np.any(self.edge_array, axis=2))
-
+    
 
 
 if __name__ == '__main__':
