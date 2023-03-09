@@ -1,9 +1,12 @@
 from matplotlib import pyplot as plt
+from math import pi
+
 import numpy as np
 import math
-from math import pi, abs
+from typing import Callable
+
 from scipy.signal import convolve2d
-from scipy.ndimage.measurements import label
+from scipy.ndimage import label
 
 class OccSpace:
     def __init__(self, grid) -> None:
@@ -19,6 +22,7 @@ class OccSpace:
     def generate_mesh_grid(self, resolution) -> None:
         # Sample mesh grid with number of points horizontally equal to resolution
         # Array of edge statuses for each edge, indexed by vertex coordinates and vertical/horizontal
+        self.sample_res = resolution
         self.edge_array = np.zeros((resolution, resolution, 2), dtype=bool)
         sample_x = np.linspace(0, self.grid.shape[0]-1e-5, resolution)  # Vertex coordinates of sampled mesh
         sample_y = np.linspace(0, self.grid.shape[1]-1e-5, resolution)
@@ -51,9 +55,26 @@ class OccSpace:
         return self.edge_array
     
     def segment(self):
-        # Returns a connected components labeling of drivable areas
-        return label(np.any(self.edge_array, axis=2))
+        '''Returns a connected components labeling of drivable edge occupied areas'''
+        self.mesh_areas = np.sum((self.edge_array[:-1, :-1, 0], self.edge_array[:-1, :-1, 1],
+                                  self.edge_array[1:, 1:, 0], self.edge_array[1:, 1:, 1]), axis=0) > 1
+        return label(self.mesh_areas)[0]
     
+    def trajectory_squares(self, parametric: Callable, inverse_x: Callable, inverse_y: Callable):
+        '''
+        Determine all sample grid squares that a parametric tajectory, defined with coordinates in mesh_areas
+        '''
+        t = 0
+        x, y = parametric(t)
+        intersected = [(int(x), int(y))]
+        # iterate through pixels until grid is exited
+        while x < self.sample_res and y < self.sample_res:
+            
+            x, y = parametric(t)
+
+            
+            
+
 
 class AngularTrajectory:
     def __init__(self, angle: float, grid_width: float) -> None:
@@ -119,12 +140,12 @@ if __name__ == '__main__':
     edges = space.generate_mesh_grid(20)
 
     fig, ax = plt.subplots(3, 2)
-    ax[0,0].imshow(space.segment()[0])
+    ax[0,0].imshow(space.segment())
     ax[1,0].imshow(edges[:, :, 0])
     ax[2,0].imshow(edges[:, :, 1])
 
     eroded = space.erode_mesh()
     ax[1,1].imshow(eroded[:, :, 0])
     ax[2,1].imshow(eroded[:, :, 1])
-    ax[0,1].imshow(space.segment()[0])
+    ax[0,1].imshow(space.segment())
     plt.show()
