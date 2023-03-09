@@ -6,7 +6,7 @@ from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
 #from mcav_msgs.msg import WaypointArray
 
-from unguided_planning.trajectory_tools import sample_trajectory
+from unguided_planning.space_tools import OccSpace, AngularTrajectory
 
 class WaypointNode(Node):
     """

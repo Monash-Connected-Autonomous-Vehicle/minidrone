@@ -1,5 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
+import math
+from math import pi, abs
 from scipy.signal import convolve2d
 from scipy.ndimage.measurements import label
 
@@ -18,7 +20,7 @@ class OccSpace:
         # Sample mesh grid with number of points horizontally equal to resolution
         # Array of edge statuses for each edge, indexed by vertex coordinates and vertical/horizontal
         self.edge_array = np.zeros((resolution, resolution, 2), dtype=bool)
-        sample_x = np.linspace(0, self.grid.shape[0]-1e-5, resolution)
+        sample_x = np.linspace(0, self.grid.shape[0]-1e-5, resolution)  # Vertex coordinates of sampled mesh
         sample_y = np.linspace(0, self.grid.shape[1]-1e-5, resolution)
         
         # Iterate through sampled vertices, and record the occupancy of each edge
@@ -26,13 +28,13 @@ class OccSpace:
             for j in range(resolution):
                 if i < resolution-1:
                     # Record occupancy of horizontal edge
-                    xx, y = sample_x[i:i+2].astype(int), sample_y[j].astype(int)
+                    xx, y = sample_x[i:i+2].astype(int), sample_y[j].astype(int)  # x span, y coordinate (in raw grid coords)
                     self.edge_array[i, j, 1] = np.all(self.grid[xx, y] == 1) and not \
                                                np.any(self.grid[xx[0]:xx[1], j] == -1)
 
                 if j < resolution-1:
                     # Record occupancy of vertical edge
-                    x, yy = sample_y[i].astype(int), sample_y[j:j+2].astype(int)
+                    x, yy = sample_y[i].astype(int), sample_y[j:j+2].astype(int)  # x coordinate, y span (in raw grid coords)
                     self.edge_array[i, j, 0] = np.all(self.grid[x, yy] == 1) and not \
                                                np.any(self.grid[i, yy[0]:yy[1]] == -1)
         return self.edge_array
@@ -51,6 +53,56 @@ class OccSpace:
     def segment(self):
         # Returns a connected components labeling of drivable areas
         return label(np.any(self.edge_array, axis=2))
+    
+
+class AngularTrajectory:
+    def __init__(self, angle: float, grid_width: float) -> None:
+        """
+        Circular trajectory tangent to x axis intersecting inscribed circle of square grid at specified point.
+
+        Parameters
+        ----------
+        angle: Angle between x axis and line segment from origin to point of inscribed circle intersection
+        grid_width: side length of square gird
+        """
+        self.angle = angle
+        self.grid_width = grid_width
+
+        if angle == 0:
+            self.r = math.inf
+            self.parametric = lambda t: (t, 0)
+            self.cartesian = None
+
+        else:
+            self.r = grid_width/(2*math.sin(angle))
+            self.parametric = lambda t: (self.r*math.sin(t/self.r), self.r*(1-math.cos(t/self.r)))
+            self.cartesian = lambda x: math.sqrt(x*(2*self.r-x))
+
+    def sample(self, min_step: float, step_dist: float):
+        """
+        Sample equidistant points along trajectory
+
+        Parameters
+        ---------
+        min_step: minimum distance along trajectory for points to be sampled from
+        step_dist: distance between subsequent sampled points
+        """
+
+        if self.angle == 0:  # Special case for straight trajectory
+            x = np.arange(min_step, self.grid_width/2, step_dist)
+            return np.stack(x, np.zeros(len(x))).T
+
+        else:  # Sample points along circular trajectory
+            sample_points = []
+            step = min_step
+            x, y = self.parametric(step)
+
+            while abs(x) < self.grid_width/2 and abs(y) < self.grid_width/2 and abs(step/self.r) < pi/2:
+                sample_points.append((x, y))
+                step += step_dist
+                x, y = self.parametric(step)
+            
+            return np.array(sample_points)
     
 
 
