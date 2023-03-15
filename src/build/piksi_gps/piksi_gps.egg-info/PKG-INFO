@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: piksi-gps
+Version: 0.0.0
+Summary: Read GPS data from Piksi via a serial connection using the sbp python library.
+Home-page: UNKNOWN
+Maintainer: mcav
+Maintainer-email: monashcav@gmail.com
+License: Apache 2.0
+Platform: UNKNOWN
+
+UNKNOWN
+

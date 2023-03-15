@@ -1,0 +1,26 @@
+[0.496s] Invoking command in '/home/mcav/GPS_ws/src/piksi_gps': PYTHONPATH=/home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/prefix_override:/home/mcav/GPS_ws/src/piksi_gps/install/piksi_gps/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/piksi_gps build --build-base /home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/build install --record /home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/install.log --single-version-externally-managed
+[0.692s] running egg_info
+[0.692s] writing build/piksi_gps/piksi_gps.egg-info/PKG-INFO
+[0.692s] writing dependency_links to build/piksi_gps/piksi_gps.egg-info/dependency_links.txt
+[0.693s] writing entry points to build/piksi_gps/piksi_gps.egg-info/entry_points.txt
+[0.693s] writing requirements to build/piksi_gps/piksi_gps.egg-info/requires.txt
+[0.693s] writing top-level names to build/piksi_gps/piksi_gps.egg-info/top_level.txt
+[0.694s] reading manifest file 'build/piksi_gps/piksi_gps.egg-info/SOURCES.txt'
+[0.695s] writing manifest file 'build/piksi_gps/piksi_gps.egg-info/SOURCES.txt'
+[0.695s] running build
+[0.695s] running build_py
+[0.695s] copying piksi_gps/piksi_gps_pub.py -> /home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/build/lib/piksi_gps
+[0.695s] running install
+[0.695s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[0.695s]   warnings.warn(
+[0.696s] running install_lib
+[0.696s] copying /home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/build/lib/piksi_gps/piksi_gps_pub.py -> /home/mcav/GPS_ws/src/piksi_gps/install/piksi_gps/lib/python3.10/site-packages/piksi_gps
+[0.697s] byte-compiling /home/mcav/GPS_ws/src/piksi_gps/install/piksi_gps/lib/python3.10/site-packages/piksi_gps/piksi_gps_pub.py to piksi_gps_pub.cpython-310.pyc
+[0.697s] running install_data
+[0.697s] running install_egg_info
+[0.699s] removing '/home/mcav/GPS_ws/src/piksi_gps/install/piksi_gps/lib/python3.10/site-packages/piksi_gps-0.0.0-py3.10.egg-info' (and everything under it)
+[0.699s] Copying build/piksi_gps/piksi_gps.egg-info to /home/mcav/GPS_ws/src/piksi_gps/install/piksi_gps/lib/python3.10/site-packages/piksi_gps-0.0.0-py3.10.egg-info
+[0.700s] running install_scripts
+[0.716s] Installing gps script to /home/mcav/GPS_ws/src/piksi_gps/install/piksi_gps/lib/piksi_gps
+[0.716s] writing list of installed files to '/home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/install.log'
+[0.736s] Invoked command in '/home/mcav/GPS_ws/src/piksi_gps' returned '0': PYTHONPATH=/home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/prefix_override:/home/mcav/GPS_ws/src/piksi_gps/install/piksi_gps/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base build/piksi_gps build --build-base /home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/build install --record /home/mcav/GPS_ws/src/piksi_gps/build/piksi_gps/install.log --single-version-externally-managed

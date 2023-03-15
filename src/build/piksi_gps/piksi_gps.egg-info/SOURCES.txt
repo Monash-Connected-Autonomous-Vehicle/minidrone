@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+../build/piksi_gps/piksi_gps.egg-info/PKG-INFO
+../build/piksi_gps/piksi_gps.egg-info/SOURCES.txt
+../build/piksi_gps/piksi_gps.egg-info/dependency_links.txt
+../build/piksi_gps/piksi_gps.egg-info/entry_points.txt
+../build/piksi_gps/piksi_gps.egg-info/requires.txt
+../build/piksi_gps/piksi_gps.egg-info/top_level.txt
+../build/piksi_gps/piksi_gps.egg-info/zip-safe
+piksi_gps/__init__.py
+piksi_gps/piksi_gps_pub.py
+resource/piksi_gps
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py
