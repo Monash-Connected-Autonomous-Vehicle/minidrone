@@ -2,8 +2,13 @@ from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
 from sbp.navigation import SBP_MSG_BASELINE_NED
 import argparse
+import time
 
 globalLat = 0
+
+def coolback(msg, *args, **kwargs):
+    print('hey', type(msg))
+
 def main():
     parser = argparse.ArgumentParser(
         description="Swift Navigation SBP Example.")
@@ -18,18 +23,21 @@ def main():
     driver = PySerialDriver(args.port[0], baud=115200)
     framer = Framer(driver.read, None, verbose=True)
     handlerObj = Handler(framer)
+    handlerObj.add_callback(coolback)
+    handlerObj.start()
+    time.sleep(20)
 
-    testObj = handlerObj.filter(0x020A)
+    #testObj = handlerObj.filter(0x020A)
    
     # item1 = next(testObj)
     # print("%.4f,%.4f" % (item[0].lat, item[0].lon))
            
-    with handlerObj as source:
+    """ with handlerObj as source:
         test = source.filter(0x020A)
         item = next(test)
         # len2 = len(test)
         print("%.4f,%.4f" % (item[0].lat, item[0].lon)
-            )
+            ) """
     
 
     #Open a connection to Piksi using the default baud rate (1Mbaud)
