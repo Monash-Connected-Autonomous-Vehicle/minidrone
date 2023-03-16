@@ -17,8 +17,8 @@ class GPSPublisher(Node):
     def __init__(self):
         super().__init__('gps')
         self.publisher_ = self.create_publisher(sensor_msgs.NavSatFix, '/gps/fix', 10)
-        timer_period = 2  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
+        #timer_period = 2  # seconds
+        #self.timer = self.create_timer(timer_period, self.timer_callback)
 
         # Serial Comms Parameters
         parser = argparse.ArgumentParser(
@@ -30,21 +30,22 @@ class GPSPublisher(Node):
             nargs=1,
             help="specify the serial port to use.")
         args = parser.parse_args()
-        self.driver = PySerialDriver(args.port[0], baud=115200)
+
+        self.driver = PySerialDriver(args.port[0], baud=115200)  # TODO: add baudrate as parameter
         self.framer = Framer(self.driver.read, None, verbose=True)
         self.handler = Handler(self.framer)
+        self.handler.add_callback(self.piksi_log_callback)
+        self.handler.start()
 
-    def timer_callback(self):
-        gpsmsg = sensor_msgs.NavSatFix()
+    def piksi_log_callback(self, signal, *args, **kwargs):
+        #gpsmsg = sensor_msgs.NavSatFix()
 
         # Publish position read from GPS
-        with self.handler as source:
-            filteredMsg = source.filter(0x020A)
-            item = next(filteredMsg)
-        gpsmsg.latitude = item[0].lat
-        gpsmsg.longitude = item[0].lon
-        self.publisher_.publish(gpsmsg)
-        # self.get_logger().info('"%s"' %  gpsmsg.latitude)
+        #gpsmsg.latitude = item[0].lat
+        #gpsmsg.longitude = item[0].lon
+        #self.publisher_.publish(gpsmsg)
+        #print('hey', type(msg))
+        self.get_logger().info(f'I heard: {type(signal)}')
 
 def main(args=None):
 

@@ -25,7 +25,7 @@ def main():
     handlerObj = Handler(framer)
     handlerObj.add_callback(coolback)
     handlerObj.start()
-    time.sleep(20)
+    time.sleep(3)
 
     #testObj = handlerObj.filter(0x020A)
    
