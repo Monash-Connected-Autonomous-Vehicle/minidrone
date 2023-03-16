@@ -1,3 +1,0 @@
-[console_scripts]
-gps = piksi_gps.piksi_gps_pub:main
-

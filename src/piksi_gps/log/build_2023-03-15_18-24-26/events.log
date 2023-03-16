@@ -1,6 +1,0 @@
-[0.000000] (-) TimerEvent: {}
-[0.000122] (piksi_gps) JobQueued: {'identifier': 'piksi_gps', 'dependencies': OrderedDict()}
-[0.000251] (piksi_gps) JobStarted: {'identifier': 'piksi_gps'}
-[0.099085] (-) TimerEvent: {}
-[0.101164] (piksi_gps) JobEnded: {'identifier': 'piksi_gps', 'rc': 0}
-[0.102000] (-) EventReactorShutdown: {}
