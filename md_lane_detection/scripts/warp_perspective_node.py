@@ -6,12 +6,23 @@ import cv2
 import numpy as np
 from cv_bridge import CvBridge
 
-class Sense(Node):
+class Warp_Perspective(Node):
+    """
+    The Warp Perspective Node that performs warp perspective on single images
+
+    Topics
+    --------
+    Input
+        Image/stereo_camera/stereo_camera/left/image_raw
+    
+    Output
+        Image/test_md_ld
+    """
 
     def __init__(self):
-        super().__init__('sense')
+        super().__init__('warp_perspective')
         '''
-        create a subscriber /custom_ns/depth_camera/image_raw
+        create a subscriber /stereo_camera/stereo_camera/left/image_raw
         '''
         self.subscription = self.create_subscription(
             Image,
@@ -51,9 +62,9 @@ class Sense(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    sense = Sense()
-    rclpy.spin(sense)
-    sense.destroy_node()
+    warp_perspective = Warp_Perspective()
+    rclpy.spin(warp_perspective)
+    warp_perspective.destroy_node()
     rclpy.shutdown()
 
 if __name__=="main":
