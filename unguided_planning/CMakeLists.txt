@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(unguided_planning)
 
-# Default to C99
-if(NOT CMAKE_C_STANDARD)
-  set(CMAKE_C_STANDARD 99)
-endif()
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -22,19 +18,12 @@ find_package(nav_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 
-
-add_executable(waypoint_gen src/waypoint_gen.cpp)
-target_include_directories(waypoint_gen PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  waypoint_gen
-  "ament_cmake_python"
-  "nav_msgs"
-)
+#add_executable()
+#ament_target_dependencies(rclcpp)
 
 # Install Python modules
 ament_python_install_package(${PROJECT_NAME})
+
 # Install Python executables
 install(PROGRAMS
   scripts/waypoint_gen.py
