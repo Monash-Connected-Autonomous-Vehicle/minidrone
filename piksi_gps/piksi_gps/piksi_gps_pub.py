@@ -1,4 +1,5 @@
 import rclpy
+import math
 from rclpy.node import Node
 from std_msgs.msg import Float64
 from sbp.client.drivers.pyserial_driver import PySerialDriver
@@ -21,12 +22,14 @@ class GPSPublisher(Node):
         #self.timer = self.create_timer(timer_period, self.timer_callback)
 
         # Serial Comms Parameters
+        usbPort = self.declare_parameter('serial path', '/dev/ttyUSB1')
         parser = argparse.ArgumentParser(
         description="Swift Navigation SBP Example.")
         parser.add_argument(
             "-p",
             "--port",
-            default=['/dev/ttyUSB0'],
+            default=[usbPort.value],
+            #default=['/dev/ttyUSB0'],
             nargs=1,
             help="specify the serial port to use.")
         args = parser.parse_args()
@@ -55,32 +58,50 @@ class GPSPublisher(Node):
 
 
         #Set to true to see all incoming types
-        spamMyConsoleForDebug = True
+        spamMyConsoleForDebug = False
         
 
-        if spamMyConsoleForDebug == True:
+        if spamMyConsoleForDebug ==True:
+            self.get_logger().info(f'Data below belongs too: {(type(signal))}')
             self.get_logger().info(f'I heard: {((signal))}')
+            print("\n")
         
-        
-        #testing data catching
-        try:
-            if str(type(signal)) == "<class 'sbp.navigation.MsgPosLLH'>":
-                print("gps Fix identified")
-                
-                print(f"Latitude: {signal.lat}")
-                print(f"Longitude: {signal.lon}")
+        if True:   #Spit out sesnor values?
 
+            #testing data catching, 
+            #checking type so we dont get spammed by repeat values every time a new datapoint arrives
+            
+            if True: #spam GPS updates?
+                try:
+                    if str(type(signal)) == "<class 'sbp.navigation.MsgPosLLH'>": #GPS
+                        print("gps Fix identified")
+                        
+                        print(f"Latitude: {signal.lat} °")
+                        print(f"Longitude: {signal.lon} °")
+                        print(f"Satilite #: {signal.n_sats} °")
+                except ValueError:
+                    print("bruh moment (GPS data)")
+            if True: #spam MPU updates?
+                try:
+                    if str(type(signal)) == "<class 'sbp.imu.MsgImuRaw'>": #Accelerometer / Gyro
+                        print(f"Accel X: {signal.acc_x}   Accel Y{signal.acc_y}     Accel Z{signal.acc_z}")
+                        print(f"Gyro  X: {signal.gyr_x}   Gyro  Y{signal.gyr_y}     Gyro  Z{signal.gyr_z}")
+                except ValueError:
+                    print("bruh moment (Mpu data)")
+            if True: #spam MAG updates?                
+                try:
+                    if str(type(signal)) == "<class 'sbp.mag.MsgMagRaw'>": #magnometer
+                        print(f"Mag X: {signal.mag_x}μT     Mag Y: {signal.mag_y}μT    Mag Z: {signal.mag_z}μT      Tow_f: {signal.tow_f}")
+                        #Get a heading from magnometer measures
+                        #NOT TESTED AS WORKING, needs to be tested and modified as needed
+                        if ((180/math.pi)*math.atan2(signal.mag_y,signal.mag_x)) < 0:
+                            heading = (360+(180/math.pi)*math.atan2(signal.mag_x,signal.mag_y))
+                        else:
+                            heading = ((180/math.pi)*math.atan2(signal.mag_x,signal.mag_y))
 
-
-                
-        except ValueError:
-            print("bruh moment")
-        
-
-
-
-
-
+                        print(heading)
+                except ValueError:
+                    print("bruh moment (Mag data)")
 
 
 
