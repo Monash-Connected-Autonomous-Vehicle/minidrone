@@ -34,10 +34,15 @@ class GPSPublisher(Node):
         self.driver = PySerialDriver(args.port[0], baud=115200)  # TODO: add baudrate as parameter
         self.framer = Framer(self.driver.read, None, verbose=True)
         self.handler = Handler(self.framer)
-        self.handler.add_callback(self.piksi_log_callback)
+        self.handler.add_callback(self.piksi_log_callback, )
         self.handler.start()
 
     def piksi_log_callback(self, signal, *args, **kwargs):
+        #Jai Notes
+        #MsgImuRaw -> IMU measurements (Gyro)
+        #MsgPosLLH -> lat lon
+        
+        
         #gpsmsg = sensor_msgs.NavSatFix()
 
         # Publish position read from GPS
@@ -45,7 +50,39 @@ class GPSPublisher(Node):
         #gpsmsg.longitude = item[0].lon
         #self.publisher_.publish(gpsmsg)
         #print('hey', type(msg))
-        self.get_logger().info(f'I heard: {type(signal)}')
+
+        #self.get_logger().info(f'lon test: {(signal.MsgPosLLH.lon)}')
+
+
+        #Set to true to see all incoming types
+        spamMyConsoleForDebug = True
+        
+
+        if spamMyConsoleForDebug == True:
+            self.get_logger().info(f'I heard: {((signal))}')
+        
+        
+        #testing data catching
+        try:
+            if str(type(signal)) == "<class 'sbp.navigation.MsgPosLLH'>":
+                print("gps Fix identified")
+                
+                print(f"Latitude: {signal.lat}")
+                print(f"Longitude: {signal.lon}")
+
+
+
+                
+        except ValueError:
+            print("bruh moment")
+        
+
+
+
+
+
+
+
 
 def main(args=None):
 
