@@ -84,8 +84,6 @@ class RRTC:
             nearby_node = self.steer(expansion_node,rnd_node,self.expand_dis) ## get node closer to rnd_node from expansion_node
 
             # add nearby_node to start_list if it is collision free 
-            """if self.is_collision_free(nearby_node):
-                self.start_node_list.append(nearby_node)"""
 
             if self.new_node_is_free(new_node= nearby_node, og_width= self.og_width, og_height= self.og_height, og_resolution=self.og_resolution, og_data= self.og_data,map_width= self.map_width,map_height=self.map_height):
                 if self.minor_path_is_collision_free(new_node= nearby_node,prev_node=expansion_node,og_height=self.og_height,og_width=self.og_width,og_data= self.og_data,map_width= self.map_width,map_height=self.map_height):
@@ -100,13 +98,10 @@ class RRTC:
 
             # add the node that connects the trees and generate the path
             if d < self.expand_dis:
-                #close_node = self.steer(expansion_node,nearby_node,self.expand_dis)
+                
                 if self.new_node_is_free(new_node= nearby_node, og_width= self.og_width, og_height= self.og_height, og_resolution=self.og_resolution, og_data= self.og_data,map_width= self.map_width,map_height=self.map_height):
                     if self.minor_path_is_collision_free(new_node= nearby_node,prev_node=expansion_node,og_height=self.og_height,og_width=self.og_width,og_data= self.og_data,map_width= self.map_width,map_height=self.map_height):
                         self.end_node_list.append(nearby_node)
-                    
-                #if self.is_collision_free(close_node):
-                    #self.end_node_list.append(close_node)
                     
                         return self.generate_final_course(len(self.start_node_list) - 1, len(self.end_node_list) - 1)
             
@@ -265,7 +260,6 @@ class RRTC:
     def minor_path_is_collision_free(self,new_node,prev_node,og_height,og_width,og_data,map_width,map_height):
 
         """
-        WORK IN PROGRESS
         
         determines if the straight line between two given points doesn't pass through any occupied squares
         """
@@ -284,19 +278,7 @@ class RRTC:
         step_size = map_width/og_width
 
         #To decide the starting square of the occupancy grid if the point is between two grid squares
-        """if on_left or on_bottom:
-            if delta_x >0 & delta_y<0:
-                if on_left:
-                    starting_grid[0] = starting_grid[0] + 1
-                if on_bottom:
-                    starting_grid[1] = starting_grid[1] - 1 
-            elif delta_x >0:
-                if on_left:
-                    starting_grid[0] = starting_grid[0] + 1
-
-            elif delta_y<0:
-                if on_bottom:
-                    starting_grid[1] = starting_grid[1] - 1 """
+       
 
         if on_left or on_bottom:
             if delta_x <0 and delta_y<0:
@@ -333,70 +315,26 @@ class RRTC:
                     origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
                     d = gradient * abs(0.5 + (delta_x/(2*abs(delta_x))) - (start.x - origin_node.x) * ratio)
 
-                    #d = gradient * (origin_node.x - start.x) *ratio
+                    
                 
                 else: #most likely case, if not the only possible one
                     origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
                     d = abs(0.5 - (delta_y/(2*abs(delta_y))) - (start.y-origin_node.y)*ratio) + gradient * abs(0.5 + (delta_x/(2*abs(delta_x))) - (start.x - origin_node.x) * ratio)
                     
-                    #d = ((start.y - origin_node.y) * ratio) + gradient * (origin_node.x - start.x) *ratio
+          
 
-                    #d = abs(0.5 - delta_y/(2*abs(delta_y)) - (start.y-origin_node.y)*ratio) + gradient * abs(0.5 - delta_x/(2*abs(delta_x)) - (origin_node.x - start.x) * ratio)
-
-                    """while last_added_grid != end_grid:
-                        last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)# an attempt to make the direction of movemnt related to the sign of delta x without having to use if statemnets
-                        np.append(grids_to_check,[last_added_grid],0)
-                        d = d + gradient
-                        if d >=1:
-                            d = d-1
-                            last_added_grid[1] = last_added_grid[1]+ delta_y/abs(delta_y)#an attempt to make the direction of movemnt related to the sign of delta x without having to use if statemnets"""
-                        
+                   
                 while last_added_grid != end_grid:
                     if d >=1:
                         d = d-1
-                        last_added_grid[1] = last_added_grid[1]+delta_y/abs(delta_y)#an attempt to make the direction of movemnt related to the sign of delta y without having to use if statemnets
+                        last_added_grid[1] = last_added_grid[1]+delta_y/abs(delta_y)
                         continue
-                    last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)# an attempt to make the direction of movemnt related to the sign of delta x without having to use if statemnets
+                    last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)
                     np.append(grids_to_check,[last_added_grid],0)
                     d = d + gradient
                 
                 
-                """elif on_left:
-                    origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
-                    d = gradient + ((start.y - origin_node.y) * ratio)
-                    while last_added_grid != end_grid:
-                        if d >=1:
-                            d = d-1
-                            last_added_grid[1] = last_added_grid[1]+delta_y/abs(delta_y)
-                        last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)
-                        np.append(grids_to_check,[last_added_grid],0)
-                        d = d + gradient
-                
-                elif on_bottom:
-                    origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
-                    d = gradient * (origin_node.x - start.x) *ratio #has to be less than 1
-                    while last_added_grid != end_grid:
-                        if d >=1:
-                            d = d-1
-                            last_added_grid[1] = last_added_grid[1]+delta_y/abs(delta_y)
-                        last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)
-                        np.append(grids_to_check,[last_added_grid],0)
-                        d = d + gradient
-                else:
-                    origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
-                    d = ((start.y - origin_node.y) * ratio) + gradient * (origin_node.x - start.x) *ratio
-                    # d = abs(0.5 - delta_y/2*abs(delta_y) - (start.y-origin_node.y)*ratio) + gradient * abs(0.5 - delta_x/2*abs(delta_x) - (origin_node.x - start.x) * ratio)
-                    # d = (abs(0.5 +0.5 - (0.8) ) + abs(0.5 +0.5 -(0.4)) *  0.375 = 0.2+0.225 = 0.425
-                    # 
-                    # d = abs(0.5 -0.5 - 0.8) + abs (0.5+0.5 - 0.4)**0.375 = 0.8+0.225= 1.025
-                    while last_added_grid != end_grid:
-                        if d >=1:
-                            d = d-1
-                            last_added_grid[1] = last_added_grid[1]+delta_y/abs(delta_y)
-                        last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)
-                        np.append(grids_to_check,[last_added_grid],0)
-                        d = d + gradient*/"""
-
+            
             elif delta_x >0 and delta_y <0:
                 delta_x = 5
 
@@ -412,13 +350,13 @@ class RRTC:
                     origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
                     d = gradient * abs(0.5 + (delta_y/(2*abs(delta_y))) - (start.y-origin_node.y)*ratio)
                     
-                    #d = gradient + ((start.y - origin_node.y) * ratio)
+                   
 
                 elif on_bottom: #starting node is on the vertical line between two og squares
                     origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
                     d = gradient + abs(0.5 - (delta_x/(2*abs(delta_x))) - (start.x - origin_node.x) * ratio)
 
-                    #d = gradient * (origin_node.x - start.x) *ratio
+                  
                 
                 else: #most likely case, if not the only possible one
                     origin_node = self.og_matrix_to_map_conversion(starting_grid,og_width=og_width,og_height=og_height,map_width=map_width,map_height=map_height)
@@ -427,9 +365,9 @@ class RRTC:
                 while last_added_grid != end_grid:
                     if d >=1:
                         d = d-1
-                        last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)#an attempt to make the direction of movemnt related to the sign of delta y without having to use if statemnets
+                        last_added_grid[0] = last_added_grid[0]+delta_x/abs(delta_x)
                         continue
-                    last_added_grid[1] = last_added_grid[1]+delta_y/abs(delta_y)# an attempt to make the direction of movemnt related to the sign of delta x without having to use if statemnets
+                    last_added_grid[1] = last_added_grid[1]+delta_y/abs(delta_y)
                     np.append(grids_to_check,[last_added_grid],0)
                     d = d + gradient
 
@@ -442,30 +380,7 @@ class RRTC:
         
         return True
 
-            #convert array of og squares to og indices
-            # check all the indices to make sure none are occupied
-            # return true or false         
-                    
-
-
-
-        #starting_grid[0] = starting_grid[0] + 1
-        #if end.y < start.y:
-        #starting_grid[1] = starting_grid[1] - 1
-        # 
-        #         
-
-    #First step: decide whether it is mostly vertical, mostly horizontal, or a 45er
-    #Case mostly vertical or mostly horizontal:
-        #get the gradient
-        #Case at a cross point between grids:
-            #make an array of grids coordinates, with first element being the starting grid 
-            # starting gird is determined by the direction of the movement [0-90) grid to the right of the point grid, [90-180) same grid as the point grid, 
-            # [180-270) grid bottom of the point grid, [270-360) grid bottom of and right of the point grid
-
-        
-        
-        return 0
+               
     def generate_final_course(self, start_mid_point, end_mid_point):
         """
         Reconstruct path from start to end node
