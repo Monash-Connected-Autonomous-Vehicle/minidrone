@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
@@ -45,7 +47,7 @@ def main(args=None):
     follow.destroy_node()
     rclpy.shutdown()
 
-if __name__=="main":
+if __name__=="__main__":
     main()
       
    

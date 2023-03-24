@@ -3,22 +3,23 @@
 <package format="3">
   <name>md_lane_detection</name>
   <version>0.0.0</version>
-  <description>lane detection</description>
-  <maintainer email="bgel0002@student.monash.edu">byron</maintainer>
-  <license>Apache License 2.0</license>
+  <description>Minidrne Lane Detection</description>
+  <maintainer email="zhouminhua51@gmail.com">mcav</maintainer>
+  <license>MIT License</license>
 
-  <depend>rclpy</depend>
-  <depend>sensor_msgs</depend>
-  <!-- Rosdep is broken for installing opencv at the minute -->
-  <!-- Tries to install python-opencv instead of python3-opencv -->
-  <!-- <exec_depend>python-opencv</exec_depend> -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <test_depend>ament_copyright</test_depend>
-  <test_depend>ament_flake8</test_depend>
-  <test_depend>ament_pep257</test_depend>
-  <test_depend>python3-pytest</test_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclpy~</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <test_depend>ament_cmake_pytest</test_depend>
 
   <export>
-    <build_type>ament_python</build_type>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>

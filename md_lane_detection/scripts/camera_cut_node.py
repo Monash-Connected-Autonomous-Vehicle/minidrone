@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from calendar import c
 import rclpy
 from rclpy.node import Node
@@ -61,6 +63,6 @@ def main(args=None):
     sense.destroy_node()
     rclpy.shutdown()
 
-if __name__=="main":
+if __name__== "__main__":
     main()
 

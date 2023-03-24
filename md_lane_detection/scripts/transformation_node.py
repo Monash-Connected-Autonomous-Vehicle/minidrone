@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import numpy as np
 import glob 
 import rclpy
@@ -70,7 +72,7 @@ def main(args=None):
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
         
     

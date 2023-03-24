@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from calendar import c
 import rclpy
 from rclpy.node import Node
@@ -16,6 +18,25 @@ from md_lane_detection import letterbox
 
 
 class Lane_Detector_Yolo(Node):
+    """
+    The lane detector yolo node takes the input from either the zed camera directly or from the output of camera cut node and apply yolo detection
+    The output should be able to demonstrate the original full pic together with the lanes being highlighted
+    Some hardware/software requirements include
+        Connect to Zed camera
+        If needed, make sure camera_cut_node can be run successfully
+        Make sure you are able to run yolo separately. Pre-trained Yolo model must be downloaded in advance otherwise it can't function well.
+        Due to Github limitations, the pre-trained yolo model can't be pushed to github
+
+    
+    Topics
+    ----------
+    Input (depend on which one to use)
+        /stereo_camera/stereo_camera/left/image_raw
+        OR
+        The output from camera_cut_node
+    Output
+        Image/test_md_ld
+    """
     def __init__(self):
         super().__init__('lane_detector_yolo')
 
@@ -91,5 +112,5 @@ def main(args=None):
     lane_detector_yolo.destroy_node()
     rclpy.shutdown()
 
-if __name__=="main":
+if __name__=="__main__":
     main()

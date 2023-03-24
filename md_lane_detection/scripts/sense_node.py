@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
@@ -17,13 +19,17 @@ class Sense(Node):
         '''
         create a subscriber /custom_ns/depth_camera/image_raw
         '''
+        self.get_logger().info('test')
         self.subscription = self.create_subscription(
-            Image,       
-        self.subscription)  # prevent unused variable warning
+            Image,
+            '/my_camera/image_raw',
+            self.lane_detect_callback,
+            10)
+        self.subscription  # prevent unused variable warning
         self.publisher_1 = self.create_publisher(Float32MultiArray, '/lane_lines', 10)
         self.publisher_ = self.create_publisher(Image, '/test_md_ld', 10)
         
-    
+        
     def make_points(self, image, line):
       #slope, intercept = line[0], line[1]
       slope, intercept = line
@@ -145,7 +151,7 @@ def main(args=None):
     sense.destroy_node()
     rclpy.shutdown()
 
-if __name__=="main":
+if __name__=="__main__":
     main()
 
 
