@@ -1,0 +1,4 @@
+[submodule "velodyne"]
+	path = velodyne
+	url = https://github.com/Monash-Connected-Autonomous-Vehicle/velodyne
+	branch = foxy-devel
