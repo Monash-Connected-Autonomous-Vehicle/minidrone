@@ -10,33 +10,42 @@ from unguided_planning.space_tools import OccSpace, AngularTrajectory
 
 class WaypointNode(Node):
     """
-    Node that generates local waypoints in response to updates in detected lanes an lidar occupancy
+    Node generating local waypoints in response to updates in detected lanes an lidar occupancy
+
+    TODO: Detailed description
+    
     ...
 
     Parameters
     ----------
+    sample_grid_res : int
+        Number of vertices along axis in downsampling grid mesh
 
-    Topics
-    ------
+    Subscribes
+    ----------
     lidar_occupancy : L{nav_msgs.OccupancyGrid}
-        Subscribed occupancy grid of obstacles detected via lidar
+        Occupancy grid of physical obstructions.
 
     lane_occupancy : L{nav_msgs.OccupancyGrid}
-        Subscribed occupancy grid of lanes detected by camera and CV system
+        Occupancy grid of detected lane lines.
         
+    Publishes
+    ---------
     waypoints : L{mcav_msg.WaypointArray}
-        Published local waypoints generated upon update in lidar or lane occupancy 
+        Local waypoint path, in agent frame.
 
     """
     def __init__(self):
         super().__init__('waypoint_node')
 
         # ROS2 Parameters
-        self.declare_parameter('sample_grid_width', 10, 'Occupancy grid pixel distance between sampled points')
+        self.declare_parameter('sample_grid_width', 10)
 
         # Important ROS objects
-        self.lidar_sub = self.create_subscription(OccupancyGrid, 'lidar_occupancy', self.lidar_callback, 10)
-        self.lane_sub = self.create_subscription(OccupancyGrid, 'lane_occupancy', self.lane_callback, 10)
+        self.lidar_sub = self.create_subscription(OccupancyGrid, 'lidar_occupancy',
+                                                  self.lidar_callback, 10)
+        self.lane_sub = self.create_subscription(OccupancyGrid, 'lane_occupancy',
+                                                 self.lane_callback, 10)
         #self.pub = self.create_publisher(WaypointArray, 'waypoints', 10)
 
         # Important objects
@@ -47,7 +56,7 @@ class WaypointNode(Node):
         self.erode_kernel = np.ones((5, 5), np.uint8)
 
     def _update_grid(self):
-        # Naive grid overlaying
+        '''Overlay recieved grids onto eachother'''
         self.grid = self.lane_grid if self.lidar_grid is None else \
                     self.lidar_grid if self.lane_grid is None else \
                     self.lidar_grid + self.lane_grid
@@ -64,10 +73,8 @@ class WaypointNode(Node):
         # 
 
     def _evaluate_trajectory(self, traj):
+        ''''''
         pass
-
-    
-
 
 
 def main(args=None):
