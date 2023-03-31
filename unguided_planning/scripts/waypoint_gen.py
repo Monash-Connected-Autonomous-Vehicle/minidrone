@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import cv2
 import rclpy
 import numpy as np
@@ -6,8 +8,10 @@ from rclpy.node import Node
 from nav_msgs.msg import OccupancyGrid
 #from mcav_msgs.msg import WaypointArray
 
+from mcav_rosdoc.node_doc import mcav_node_doc
 from unguided_planning.space_tools import OccSpace, AngularTrajectory
 
+@mcav_node_doc
 class WaypointNode(Node):
     """
     Node generating local waypoints in response to updates in detected lanes an lidar occupancy
