@@ -23,7 +23,7 @@ class WaypointNode(Node):
     Parameters
     ----------
     sample_grid_res : int
-        Number of vertices along axis in downsampling grid mesh
+        Number of vertices along axis in downsampling grid mesh.
 
     Subscribes
     ----------
@@ -43,7 +43,7 @@ class WaypointNode(Node):
         super().__init__('waypoint_node')
 
         # ROS2 Parameters
-        self.declare_parameter('sample_grid_width', 10)
+        self.declare_parameter('sample_grid_res', 10)
 
         # Important ROS objects
         self.lidar_sub = self.create_subscription(OccupancyGrid, 'lidar_occupancy',
