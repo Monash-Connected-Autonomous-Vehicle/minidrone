@@ -4,10 +4,33 @@ import re
 from collections import OrderedDict
 from rclpy.node import Node, ParameterDescriptor
 
-# TODO: Make regex legible and document
-SECTION_FORMAT = r'([A-Z][a-z]*)\s*\n\s*-+\s*\n\s*((?:.|\n)*?)\s*(?=[A-Z][a-z]*\s*\n\s*-|$)'
-PARAM_FORMAT = r'(?P<name>[A-Za-z0-9-_]*)\s*:\s*(?:[A-Za-z0-9]*)\s*\n\s*(?P<description>(?:.|\n)*?)\s*(?=(?:.[A-Za-z0-9-_]*\s*:)|$)'
-TOPIC_FORMAT = r'(?P<name>[A-Za-z0-9-_]*)\s*:\s*L\{(?P<package>[A-Za-z0-9-_]+).(?P<dtype>[A-Za-z0-9-_]+)\}\s*\n\s*(?P<description>(?:.|\n)*?)\s*(?=(?:.[A-Za-z0-9-_]*\s*:)|$)'
+SECTION_FORMAT = ''.join([
+    r'(?P<title>[A-Z][a-z]*)',      # Group containing section title
+    r'\s*\n\s*-+\s*\n\s*',          # Title dash (---) deliniation with leading/trailing whitespace
+    r'(?P<content>(?:.|\n)*?)\s*',  # Group containing all section content
+    r'(?=[A-Z][a-z]*\s*\n\s*-|$)'   # Check that match precedes next section title, or end of string
+    ])
+
+PARAM_FORMAT = ''.join([
+    r'(?P<name>[A-Za-z0-9-_]*)',         # Group containing param name
+    r'\s*:\s*',                          #
+    r'(?:[A-Za-z0-9]*)'                  # Group containing param datatype (unrecorded)
+    r'\s*\n\s*'                          #
+    r'(?P<description>(?:.|\n)*?)'       # Group containing param description
+    r'\s*(?=(?:.[A-Za-z0-9-_]*\s*:)|$)'  # Check that match precedes next param, or end of string
+    ])
+
+TOPIC_FORMAT = ''.join([
+    r'(?P<name>[A-Za-z0-9-_]*)',           # Group containing topic name
+    r'\s*:\s*'                             #
+    r'L\{',                                #
+        r'(?P<package>[A-Za-z0-9-_]+)'     # Group containing message package                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+        r'.'                               #
+        r'(?P<dtype>[A-Za-z0-9-_]+)'       # Group containing message type
+    r'\}',                                 #
+    r'\s*\n\s*',                           #
+    r'(?P<description>(?:.|\n)*?)'         # Group containing topic description
+    r'\s*(?=(?:.[A-Za-z0-9-_]*\s*:)|$)'])  # Check that match precedes next topic, or end of string
 
 
 def mcav_node_doc(node: Node):
@@ -25,7 +48,8 @@ def mcav_node_doc(node: Node):
         # Compile lists of subscribed/published topics
         topic_info = OrderedDict()
         for topic in re.finditer(TOPIC_FORMAT, self.sections['Subscribes']):
-            topic_info[topic['name']] = {field:topic[field] for field in topic if field != 'name'}
+            topic_dict = topic.groupdict()
+            topic_info[topic['name']] = {field:topic_dict[field] for field in topic_dict if field != 'name'}
             topic_info[topic['name']]['subscribed'] = True
 
 
