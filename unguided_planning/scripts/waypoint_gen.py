@@ -85,6 +85,7 @@ class WaypointNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     waypoint_node = WaypointNode()
+    print(type(waypoint_node))
     rclpy.spin(waypoint_node)
     waypoint_node.destroy_node()
     rclpy.shutdown()
