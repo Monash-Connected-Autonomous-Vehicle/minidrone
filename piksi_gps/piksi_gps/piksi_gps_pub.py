@@ -1,7 +1,10 @@
 import rclpy
 import math
 from rclpy.node import Node
-from std_msgs.msg import Float64
+from sensor_msgs.msg import NavSatFix
+from sensor_msgs.msg import MagneticField
+from sensor_msgs.msg import Imu
+from geometry_msgs.msg import Vector3, Quaternion
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
 from sbp.navigation import SBP_MSG_BASELINE_NED
@@ -17,12 +20,12 @@ class GPSPublisher(Node):
 
     def __init__(self):
         super().__init__('gps')
-        self.publisher_ = self.create_publisher(sensor_msgs.NavSatFix, '/gps/fix', 10)
+        self.publisher_ = self.create_publisher(sensor_msgs.NavSatFix, 'sensor_msgs/MagneticField/gps/fix', 10)
         #timer_period = 2  # seconds
         #self.timer = self.create_timer(timer_period, self.timer_callback)
 
         # Serial Comms Parameters
-        usbPort = self.declare_parameter('serial path', '/dev/ttyUSB1')
+        usbPort = self.declare_parameter('serial_path', '/dev/ttyUSB0')
         parser = argparse.ArgumentParser(
         description="Swift Navigation SBP Example.")
         parser.add_argument(
@@ -37,8 +40,12 @@ class GPSPublisher(Node):
         self.driver = PySerialDriver(args.port[0], baud=115200)  # TODO: add baudrate as parameter
         self.framer = Framer(self.driver.read, None, verbose=True)
         self.handler = Handler(self.framer)
-        self.handler.add_callback(self.piksi_log_callback, )
+        self.handler.add_callback(self.piksi_log_callback)
         self.handler.start()
+        self.publisher_GPS = self.create_publisher(NavSatFix, 'gps', 10)
+        self.publisher_MAG = self.create_publisher(MagneticField, 'mag', 10) 
+        self.publisher_MPU = self.create_publisher(Imu, 'mpu', 10) 
+
 
     def piksi_log_callback(self, signal, *args, **kwargs):
         #Jai Notes
@@ -73,12 +80,19 @@ class GPSPublisher(Node):
             
             if True: #spam GPS updates?
                 try:
-                    if str(type(signal)) == "<class 'sbp.navigation.MsgPosLLH'>": #GPS
+                    if str(type(signal)) == "<class 'sbp.navigation.MsgPosLLH'>": #GPSsensor_msgs/MagneticField.msg
                         print("gps Fix identified")
                         
-                        print(f"Latitude: {signal.lat} °")
-                        print(f"Longitude: {signal.lon} °")
-                        print(f"Satilite #: {signal.n_sats} °")
+                        print(f"Latitude: {signal.lat}°")
+                        print(f"Longitude: {signal.lon}°")
+                        print(f"Satilite #: {signal.n_sats}")
+                        gpsMsg=NavSatFix()
+                        gpsMsg.longitude = signal.lat
+                        gpsMsg.latitude = signal.lon
+                        self.publisher_GPS.publish(gpsMsg) #needs covariance, etc etc
+
+
+
                 except ValueError:
                     print("bruh moment (GPS data)")
             if True: #spam MPU updates?
@@ -86,6 +100,15 @@ class GPSPublisher(Node):
                     if str(type(signal)) == "<class 'sbp.imu.MsgImuRaw'>": #Accelerometer / Gyro
                         print(f"Accel X: {signal.acc_x}   Accel Y{signal.acc_y}     Accel Z{signal.acc_z}")
                         print(f"Gyro  X: {signal.gyr_x}   Gyro  Y{signal.gyr_y}     Gyro  Z{signal.gyr_z}")
+                        mpuMsg=Imu()
+
+               
+                        mpuMsg.orientation = Quaternion(x=float(signal.gyr_x), y=float(signal.gyr_y), z=float(signal.gyr_z))
+                        metres_per_sec2_per_g = 9.8 # since 1 g is equal to 9.8m/s^2
+                        mpuMsg.linear_acceleration = Vector3(x=signal.acc_x*metres_per_sec2_per_g, y=signal.acc_y*metres_per_sec2_per_g, z=signal.acc_z*metres_per_sec2_per_g)
+                        
+                        self.publisher_MPU.publish(mpuMsg) #needs covariance, etc etc
+
                 except ValueError:
                     print("bruh moment (Mpu data)")
             if True: #spam MAG updates?                
@@ -100,6 +123,9 @@ class GPSPublisher(Node):
                             heading = ((180/math.pi)*math.atan2(signal.mag_x,signal.mag_y))
 
                         print(heading)
+                        magMsg=MagneticField()
+                        magMsg.magnetic_field = Vector3(x=float(signal.mag_x), y=float(signal.mag_y), z=float(signal.mag_z))
+                        self.publisher_MAG.publish(magMsg)
                 except ValueError:
                     print("bruh moment (Mag data)")
 
