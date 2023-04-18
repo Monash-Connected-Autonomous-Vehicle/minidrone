@@ -1,0 +1,39 @@
+running egg_info
+creating ../build/rrt_planner/rrt_planner.egg-info
+writing ../build/rrt_planner/rrt_planner.egg-info/PKG-INFO
+writing dependency_links to ../build/rrt_planner/rrt_planner.egg-info/dependency_links.txt
+writing entry points to ../build/rrt_planner/rrt_planner.egg-info/entry_points.txt
+writing requirements to ../build/rrt_planner/rrt_planner.egg-info/requires.txt
+writing top-level names to ../build/rrt_planner/rrt_planner.egg-info/top_level.txt
+writing manifest file '../build/rrt_planner/rrt_planner.egg-info/SOURCES.txt'
+reading manifest file '../build/rrt_planner/rrt_planner.egg-info/SOURCES.txt'
+writing manifest file '../build/rrt_planner/rrt_planner.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/m076em/my_ws/src/minidrone/build/rrt_planner/build
+creating /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib
+creating /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner
+copying rrt_planner/path_creator_node.py -> /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner
+copying rrt_planner/Og_manager.py -> /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner
+copying rrt_planner/__init__.py -> /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner
+running install
+running install_lib
+creating /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner
+copying /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner/path_creator_node.py -> /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner
+copying /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner/Og_manager.py -> /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner
+copying /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner/__init__.py -> /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner
+byte-compiling /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner/path_creator_node.py to path_creator_node.cpython-38.pyc
+byte-compiling /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner/Og_manager.py to Og_manager.cpython-38.pyc
+byte-compiling /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner/__init__.py to __init__.cpython-38.pyc
+running install_data
+creating /home/m076em/my_ws/src/minidrone/install/rrt_planner/share/ament_index
+creating /home/m076em/my_ws/src/minidrone/install/rrt_planner/share/ament_index/resource_index
+creating /home/m076em/my_ws/src/minidrone/install/rrt_planner/share/ament_index/resource_index/packages
+copying resource/rrt_planner -> /home/m076em/my_ws/src/minidrone/install/rrt_planner/share/ament_index/resource_index/packages
+copying package.xml -> /home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner
+running install_egg_info
+Copying ../build/rrt_planner/rrt_planner.egg-info to /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner-0.0.0-py3.8.egg-info
+running install_scripts
+Installing og_manager script to /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/rrt_planner
+Installing path_creator script to /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/rrt_planner
+writing list of installed files to '/home/m076em/my_ws/src/minidrone/build/rrt_planner/install.log'

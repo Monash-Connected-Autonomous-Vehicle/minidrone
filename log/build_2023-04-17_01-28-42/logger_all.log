@@ -1,0 +1,187 @@
+[0.260s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.260s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f81be5d0850>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=7, paths=None, symlink_install=True, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f81be5d0850>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f81be5d0dc0>)
+[0.301s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.301s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.301s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.301s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.301s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.301s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.301s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/m076em/my_ws/src/minidrone'
+[0.301s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.301s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.302s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.302s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.303s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.303s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.303s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.303s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.303s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.333s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['ignore', 'ignore_ament_install']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'ignore'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'ignore_ament_install'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['colcon_pkg']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'colcon_pkg'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['colcon_meta']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'colcon_meta'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['ros']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'ros'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['cmake', 'python']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'cmake'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'python'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extensions ['python_setup_py']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(docker) by extension 'python_setup_py'
+[0.337s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.337s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.337s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extensions ['ignore', 'ignore_ament_install']
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extension 'ignore'
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extension 'ignore_ament_install'
+[0.338s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extensions ['colcon_pkg']
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extension 'colcon_pkg'
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extensions ['colcon_meta']
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extension 'colcon_meta'
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extensions ['ros']
+[0.339s] Level 1:colcon.colcon_core.package_identification:_identify(minidrone_bringup) by extension 'ros'
+[0.376s] DEBUG:colcon.colcon_core.package_identification:Package 'minidrone_bringup' with type 'ros.ament_python' and name 'minidrone_bringup'
+[0.376s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extensions ['ignore', 'ignore_ament_install']
+[0.376s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extension 'ignore'
+[0.377s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extension 'ignore_ament_install'
+[0.377s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extensions ['colcon_pkg']
+[0.377s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extension 'colcon_pkg'
+[0.377s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extensions ['colcon_meta']
+[0.377s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extension 'colcon_meta'
+[0.377s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extensions ['ros']
+[0.377s] Level 1:colcon.colcon_core.package_identification:_identify(rrt_planner) by extension 'ros'
+[0.378s] DEBUG:colcon.colcon_core.package_identification:Package 'rrt_planner' with type 'ros.ament_python' and name 'rrt_planner'
+[0.378s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.381s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.381s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.381s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.381s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.424s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.424s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.429s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 2 installed packages in /home/m076em/my_ws/src/minidrone/install
+[0.430s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/m076em/my_ws/src/install
+[0.432s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 7 installed packages in /home/m076em/my_ws/install
+[0.435s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 319 installed packages in /opt/ros/foxy
+[0.439s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'cmake_args' from command line to 'None'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'cmake_target' from command line to 'None'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[0.642s] Level 5:colcon.colcon_core.verb:set package 'minidrone_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.642s] DEBUG:colcon.colcon_core.verb:Building package 'minidrone_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup', 'merge_install': False, 'path': '/home/m076em/my_ws/src/minidrone/minidrone_bringup', 'symlink_install': True, 'test_result_base': None}
+[0.673s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'cmake_args' from command line to 'None'
+[0.676s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'cmake_target' from command line to 'None'
+[0.687s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.687s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'cmake_clean_cache' from command line to 'False'
+[0.687s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'cmake_clean_first' from command line to 'False'
+[0.687s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'cmake_force_configure' from command line to 'False'
+[0.687s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'ament_cmake_args' from command line to 'None'
+[0.687s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'catkin_cmake_args' from command line to 'None'
+[0.687s] Level 5:colcon.colcon_core.verb:set package 'rrt_planner' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.688s] DEBUG:colcon.colcon_core.verb:Building package 'rrt_planner' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/m076em/my_ws/src/minidrone/build/rrt_planner', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/m076em/my_ws/src/minidrone/install/rrt_planner', 'merge_install': False, 'path': '/home/m076em/my_ws/src/minidrone/rrt_planner', 'symlink_install': True, 'test_result_base': None}
+[0.689s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.696s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.696s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/m076em/my_ws/src/minidrone/minidrone_bringup' with build type 'ament_python'
+[0.696s] Level 1:colcon.colcon_core.shell:create_environment_hook('minidrone_bringup', 'ament_prefix_path')
+[0.717s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.719s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/hook/ament_prefix_path.ps1'
+[0.728s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/hook/ament_prefix_path.dsv'
+[0.730s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/hook/ament_prefix_path.sh'
+[0.735s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.735s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.744s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/m076em/my_ws/src/minidrone/rrt_planner' with build type 'ament_python'
+[0.745s] Level 1:colcon.colcon_core.shell:create_environment_hook('rrt_planner', 'ament_prefix_path')
+[0.747s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/hook/ament_prefix_path.ps1'
+[0.748s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/hook/ament_prefix_path.dsv'
+[0.751s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/hook/ament_prefix_path.sh'
+[0.758s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.758s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.133s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/m076em/my_ws/src/minidrone/minidrone_bringup'
+[1.139s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.145s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.555s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/m076em/my_ws/src/minidrone/rrt_planner'
+[1.557s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.557s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.313s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/minidrone_bringup/prefix_override:/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/m076em/my_ws/src/minidrone/build/minidrone_bringup/build --no-deps install_data
+[2.341s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/m076em/my_ws/src/minidrone/build/rrt_planner': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/rrt_planner/prefix_override:/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/m076em/my_ws/src/minidrone/build/rrt_planner/build --no-deps install_data
+[2.992s] Level 1:colcon.colcon_core.shell:create_environment_hook('minidrone_bringup', 'pythonpath_develop')
+[2.995s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup/share/minidrone_bringup/hook/pythonpath_develop.ps1'
+[2.997s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup/share/minidrone_bringup/hook/pythonpath_develop.dsv'
+[3.006s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup' returned '0': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/minidrone_bringup/prefix_override:/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/m076em/my_ws/src/minidrone/build/minidrone_bringup/build --no-deps install_data
+[3.008s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup/share/minidrone_bringup/hook/pythonpath_develop.sh'
+[3.029s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup' for CMake module files
+[3.034s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup' for CMake config files
+[3.040s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib'
+[3.040s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/bin'
+[3.041s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib/pkgconfig/minidrone_bringup.pc'
+[3.041s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib/python3.8/site-packages'
+[3.041s] Level 1:colcon.colcon_core.shell:create_environment_hook('minidrone_bringup', 'pythonpath')
+[3.042s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/hook/pythonpath.ps1'
+[3.058s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/hook/pythonpath.dsv'
+[3.060s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/hook/pythonpath.sh'
+[3.064s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/bin'
+[3.064s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(minidrone_bringup)
+[3.066s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/package.ps1'
+[3.070s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/package.dsv'
+[3.071s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/package.sh'
+[3.073s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/package.bash'
+[3.074s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/minidrone_bringup/package.zsh'
+[3.075s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/share/colcon-core/packages/minidrone_bringup)
+[3.116s] Level 1:colcon.colcon_core.shell:create_environment_hook('rrt_planner', 'pythonpath_develop')
+[3.123s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/build/rrt_planner/share/rrt_planner/hook/pythonpath_develop.ps1'
+[3.128s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/m076em/my_ws/src/minidrone/build/rrt_planner' returned '0': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/rrt_planner/prefix_override:/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/m076em/my_ws/src/minidrone/build/rrt_planner/build --no-deps install_data
+[3.137s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/m076em/my_ws/src/minidrone/build/rrt_planner/share/rrt_planner/hook/pythonpath_develop.dsv'
+[3.140s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/build/rrt_planner/share/rrt_planner/hook/pythonpath_develop.sh'
+[3.144s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/rrt_planner' for CMake module files
+[3.145s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/rrt_planner' for CMake config files
+[3.145s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib'
+[3.145s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/rrt_planner/bin'
+[3.145s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/pkgconfig/rrt_planner.pc'
+[3.146s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages'
+[3.146s] Level 1:colcon.colcon_core.shell:create_environment_hook('rrt_planner', 'pythonpath')
+[3.147s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/hook/pythonpath.ps1'
+[3.148s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/hook/pythonpath.dsv'
+[3.149s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/hook/pythonpath.sh'
+[3.150s] Level 1:colcon.colcon_core.environment:checking '/home/m076em/my_ws/src/minidrone/install/rrt_planner/bin'
+[3.150s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(rrt_planner)
+[3.152s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/package.ps1'
+[3.153s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/package.dsv'
+[3.154s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/package.sh'
+[3.155s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/package.bash'
+[3.156s] INFO:colcon.colcon_core.shell:Creating package script '/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/rrt_planner/package.zsh'
+[3.157s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/m076em/my_ws/src/minidrone/install/rrt_planner/share/colcon-core/packages/rrt_planner)
+[3.158s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[3.159s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[3.159s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[3.159s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[3.168s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[3.168s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[3.168s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[3.207s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[3.209s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/m076em/my_ws/src/minidrone/install/local_setup.ps1'
+[3.215s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/m076em/my_ws/src/minidrone/install/_local_setup_util_ps1.py'
+[3.219s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/m076em/my_ws/src/minidrone/install/setup.ps1'
+[3.230s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/m076em/my_ws/src/minidrone/install/local_setup.sh'
+[3.237s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/m076em/my_ws/src/minidrone/install/_local_setup_util_sh.py'
+[3.245s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/m076em/my_ws/src/minidrone/install/setup.sh'
+[3.250s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/m076em/my_ws/src/minidrone/install/local_setup.bash'
+[3.251s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/m076em/my_ws/src/minidrone/install/setup.bash'
+[3.253s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/m076em/my_ws/src/minidrone/install/local_setup.zsh'
+[3.254s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/m076em/my_ws/src/minidrone/install/setup.zsh'

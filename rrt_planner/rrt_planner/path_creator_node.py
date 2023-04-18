@@ -1,10 +1,21 @@
 import rclpy
 from rclpy.node import Node
-from rrt_planner.utils.RRTC import RRTC
-#from utils.RRTC import RRTC
+from rrt_planner.utils.RRT import RRTC
+from matplotlib.ticker import MultipleLocator
+from rrt_planner.utils.og_example import OG_Example as OG
 from rrt_planner.utils.Polygon import Rectangle
+from math import hypot as hypot
+from nav_msgs.msg import Path
+from geometry_msgs.msg import Pose
+from geometry_msgs.msg import PoseStamped
+import cv2
+
+#from utils.og_example import OG_Example as OG
+#from utils.RRT import RRTC
 import matplotlib.pyplot as plt
 import numpy as np
+from nav_msgs.msg import OccupancyGrid
+
 
 class Creator(Node):
 
@@ -14,14 +25,16 @@ class Creator(Node):
         INPUTS
         '''
 
-        self.obstacle_coords = [(2,2),(9.5,9.5)]
-        self.goal = np.array([3.0, 4.0])
-        self.start = np.array([0, 0])
+        #self.obstacle_coords = [(2,2),(9.5,9.5)]
+        self.goal = np.array([9, 9])
+        self.start = np.array([5, 1])
         self.width = 10
         self.height = 10
-        self.expand_dis = 0.5 
+        self.expand_dis = 2 
         self.path_resolution = 0.2
-        self.iter = 500
+        self.iter = 100
+        self.rviz2_path = Path()
+        self.path_publisher = self.create_publisher(Path,'rviz2_path',1)
 
         '''
         Planning steps:
@@ -29,15 +42,32 @@ class Creator(Node):
             - instantiate RRT class with set params for planning
             - plan optimum path with a set number of max iterations 
         '''
+
+        #self.og_publisher = self.create_publisher(OccupancyGrid,'custom_occupancy_grid',1)
+        self.og = OG()
+        self.Occupancy_grid = self.og.Create_pre_defined_occupancy_grid()
+        
+        self.rrtc = RRTC(start=self.start, goal=self.goal, width=self.width, height=self.height, og_height= self.Occupancy_grid.info.height, og_width=self.Occupancy_grid.info.width,
+                        og_data= self.Occupancy_grid.data,expand_dis=self.expand_dis,path_resolution=self.path_resolution,Calling_node=self, og_resolution = self.Occupancy_grid.info.resolution)
+        
+        self.optimum_path = self.generate_path(self.iter, self.rrtc)
+
+        self.rviz2_path.header.frame_id = "rviz2_path"
+        self.rviz2_path.header.stamp =  self.get_clock().now().to_msg()
+        self.rviz2_path_visualize(optimum=self.optimum_path)
+        
+
+        
+        """
         self.obstacles = self.generate_obstacles(self.obstacle_coords) 
         self.rrtc = RRTC(start=self.start, goal=self.goal, width=self.width, height=self.height, obstacle_list=self.obstacles,expand_dis=self.expand_dis, path_resolution=self.path_resolution)
         self.optimum_path = self.generate_path(self.iter, self.rrtc)
-    
+        """
     # Generate obstacles with accepted datatype for RRTC 
     def generate_obstacles(self,obstacles):
 
         all_obstacles = []
-
+        
         for obstacle in obstacles:
             origin = np.array([obstacle[0],obstacle[1]])
             dim = 2 ## size of obstacles represented as squares
@@ -49,17 +79,21 @@ class Creator(Node):
     def generate_path(self,iter,RRT):
         paths = []
         costs = []
-
+        cost = 0
         for iter in range(iter):
             paths.append(RRT.planning())
             
         for path in paths:
             if path is not None:
-                cost = np.linalg.norm(path)
+                """cost = np.linalg.norm(path)
                 costs.append(float(cost))
                 print(cost,len(path))
-                cost = 0
-        
+                cost = 0"""
+                for index in range(len(path)-1):
+                    dx = path[index][0] - path[index+1][0]
+                    dy = path[index][1] - path[index+1][1]
+                    cost+= hypot(dx,dy)
+                costs.append(cost)
         min_value = min(costs)
         min_index = costs.index(min_value)
         optimum = paths[min_index]
@@ -72,13 +106,68 @@ class Creator(Node):
     
     # Plot occupancy grid with path
     def visualise_path(self,optimum):
-        plt.scatter(*zip(*optimum), label='Generated path')
-        plt.scatter(*zip(*self.obstacle_coords),s=100,alpha=0.5,label='Obstacles')
-        plt.scatter(self.start[0],self.start[1], s=100,alpha=0.7,label='Start')
-        plt.scatter(self.goal[0],self.goal[1], s=100,alpha=0.9,label='Goal')
+        
+        xcoords = []
+        ycoords = []
+        for node in optimum:
+            xcoords.append(node[0])
+            ycoords.append(node[1])
+        
+        fig = plt.figure(figsize=(8,6))
+        axes = plt.subplot(1, 1, 1)
+        axes.axis([-1 ,11 ,-1 ,11])
+        loc = MultipleLocator(1)
+        axes.xaxis.set_major_locator(loc)
+        axes.yaxis.set_major_locator(loc)
+
+        plt.scatter(xcoords,ycoords,s=25,alpha=0.7, label='Generated path')
+        plt.plot(xcoords,ycoords)
+        plt.scatter(self.start[0],self.start[1], s=25,alpha=0.7,label='Start')
+        plt.scatter(self.goal[0],self.goal[1], s=25,alpha=0.9,label='Goal')
         plt.legend()
+        plt.xlim([-1,11])
+        plt.ylim([-1,11])
+        plt.grid()
+
         plt.show()
+
+        
+
         return
+    def rviz2_path_visualize(self,optimum):
+        data = []
+        """
+        pose = PoseStamped()
+        pose.header.stamp = self.get_clock().now().to_msg()
+        pose.header.frame_id = "rviz2_pose"
+        pose.pose.position.z = 0.0
+        pose.pose.orientation.x = 0.0
+        pose.pose.orientation.y = 0.0
+        pose.pose.orientation.z = 0.0
+        """
+        for node in optimum:
+            pose = PoseStamped()
+            pose.header.stamp = self.get_clock().now().to_msg()
+            pose.header.frame_id = "rviz2_pose"
+            pose.pose.position.z = 0.0
+            pose.pose.orientation.x = 0.0
+            pose.pose.orientation.y = 0.0
+            pose.pose.orientation.z = 0.0
+            pose.pose.position.x = float(node[0])
+            pose.pose.position.y = float(node[1])
+
+            print(pose.pose.position.x,",",pose.pose.position.y)
+            
+            data.append(pose)
+
+        
+        
+        self.rviz2_path.poses = data
+        
+        self.path_publisher.publish(self.rviz2_path)
+
+        return
+            
 
 def main(args=None):
     rclpy.init(args=args)

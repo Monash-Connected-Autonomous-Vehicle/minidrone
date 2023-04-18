@@ -1,0 +1,4 @@
+[0.000000] (-) TimerEvent: {}
+[0.001749] (-) JobUnselected: {'identifier': 'minidrone_bringup'}
+[0.001804] (-) JobUnselected: {'identifier': 'rrt_planner'}
+[0.001839] (-) EventReactorShutdown: {}

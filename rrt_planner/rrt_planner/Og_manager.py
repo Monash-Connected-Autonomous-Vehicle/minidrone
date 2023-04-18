@@ -12,7 +12,7 @@ class OG_Manager(Node):
   def __init__(self):
         self = self
         
-        self.ocuupancy_grid = OccupancyGrid()
+        self.occupancy_grid = OccupancyGrid()
         super().__init__('og_publisher')
         self.og_publisher = self.create_publisher(OccupancyGrid,'custom_occupancy_grid',1)
         timer_period = 1
@@ -22,7 +22,7 @@ class OG_Manager(Node):
 
   def Create_random_og_data(self):
 
-    dataCount = self.ocuupancy_grid.info.width*self.ocuupancy_grid.info.height
+    dataCount = self.occupancy_grid.info.width*self.occupancy_grid.info.height
     dataCount = round(dataCount)
     ogData = np.zeros(dataCount)
     
@@ -31,8 +31,8 @@ class OG_Manager(Node):
 
     
     #self.ocuupancy_grid.data.clear
-    self.get_logger().info('data size: "%d"' % len(self.ocuupancy_grid.data))
-    if len(self.ocuupancy_grid.data) ==0:
+    self.get_logger().info('data size: "%d"' % len(self.occupancy_grid.data))
+    if len(self.occupancy_grid.data) ==0:
 
       for i in range(dataCount):
         self.get_logger().info('i = "%d"'%i)
@@ -51,36 +51,75 @@ class OG_Manager(Node):
       ogData = [int(a) for a in ogData]
     
     
-      self.ocuupancy_grid.data =ogData
+      self.occupancy_grid.data =ogData
 
-      self.get_logger().info('data size: "%d"' % len(self.ocuupancy_grid.data))
+      self.get_logger().info('data size: "%d"' % len(self.occupancy_grid.data))
   
-  def Create_pre_defined_occupancy_grid(self):
+  def Create_random_occupancy_grid(self):
 
     #self.occupancy_grid = OccupancyGrid()
     
-    self.ocuupancy_grid.header.stamp = self.get_clock().now().to_msg()
-    self.ocuupancy_grid.header.frame_id = "custom_occupancy_grid"
+    self.occupancy_grid.header.stamp = self.get_clock().now().to_msg()
+    self.occupancy_grid.header.frame_id = "custom_occupancy_grid"
 
-    self.ocuupancy_grid.info.resolution = 0.25
-    self.ocuupancy_grid.info.width = 40
-    self.ocuupancy_grid.info.height = 40
+    self.occupancy_grid.info.resolution = 0.25
+    self.occupancy_grid.info.width = 40
+    self.occupancy_grid.info.height = 40
 
-    self.ocuupancy_grid.info.origin.position.x = 5.0
-    self.ocuupancy_grid.info.origin.position.y = 5.0
-    self.ocuupancy_grid.info.origin.position.z = 0.0
+    self.occupancy_grid.info.origin.position.x = 5.0
+    self.occupancy_grid.info.origin.position.y = 5.0
+    self.occupancy_grid.info.origin.position.z = 0.0
     
-    self.ocuupancy_grid.info.origin.orientation.x = 0.0
-    self.ocuupancy_grid.info.origin.orientation.y = 0.0
-    self.ocuupancy_grid.info.origin.orientation.z = 0.0
-    self.ocuupancy_grid.info.origin.orientation.w = 0.0
+    self.occupancy_grid.info.origin.orientation.x = 0.0
+    self.occupancy_grid.info.origin.orientation.y = 0.0
+    self.occupancy_grid.info.origin.orientation.z = 0.0
+    self.occupancy_grid.info.origin.orientation.w = 0.0
 
     self.Create_random_og_data()
    
 
-    og = self.ocuupancy_grid
+    og = self.occupancy_grid
     self.og_publisher.publish(og)
     #self.get_logger().info('Publishing: "%s"' % self.ocuupancy_grid.data)
+
+  def Create_pre_defined_occupancy_grid(self):
+    
+    
+    self.occupancy_grid.header.stamp = self.get_clock().now().to_msg()
+    self.occupancy_grid.header.frame_id = "custom_occupancy_grid"
+
+    self.occupancy_grid.info.resolution = 1.0
+    self.occupancy_grid.info.width = 10
+    self.occupancy_grid.info.height = 10
+
+    self.occupancy_grid.info.origin.position.x = 5.0
+    self.occupancy_grid.info.origin.position.y = 5.0
+    self.occupancy_grid.info.origin.position.z = 0.0
+    
+    self.occupancy_grid.info.origin.orientation.x = 0.0
+    self.occupancy_grid.info.origin.orientation.y = 0.0
+    self.occupancy_grid.info.origin.orientation.z = 0.0
+    self.occupancy_grid.info.origin.orientation.w = 0.0
+
+    self.occupancy_grid.data = [
+                                  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                                100,100,100,100,  0,  0,100,100,100,100,
+                                100,100,100,  0,  0,  0,100,100,100,100,
+                                100,100,100,  0,  0,100,100,100,100,100,
+                                100,100,100,  0,  0,  0,100,100,100,100,
+                                100,100,100,100,  0,  0,100,100,100,100,
+                                100,100,100,100,  0,  0,  0,100,100,100,
+                                100,100,100,100,100,  0,  0,100,100,100,
+                                100,100,100,100,  0,  0,  0,100,100,100, 
+                                  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
+
+
+    l = len(self.occupancy_grid.data)
+    self.get_logger().info('data length = "%d"'%l)
+
+    og = self.occupancy_grid
+    self.og_publisher.publish(og)
+  
 
 
 def main(args=None):

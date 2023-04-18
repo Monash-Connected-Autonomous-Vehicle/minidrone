@@ -1,0 +1,16 @@
+[1.000s] Invoking command in '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/minidrone_bringup/prefix_override:/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/m076em/my_ws/src/minidrone/build/minidrone_bringup/build --no-deps install_data
+[1.305s] running develop
+[1.457s] running egg_info
+[1.457s] writing minidrone_bringup.egg-info/PKG-INFO
+[1.457s] writing dependency_links to minidrone_bringup.egg-info/dependency_links.txt
+[1.458s] writing entry points to minidrone_bringup.egg-info/entry_points.txt
+[1.458s] writing requirements to minidrone_bringup.egg-info/requires.txt
+[1.459s] writing top-level names to minidrone_bringup.egg-info/top_level.txt
+[1.520s] reading manifest file 'minidrone_bringup.egg-info/SOURCES.txt'
+[1.523s] writing manifest file 'minidrone_bringup.egg-info/SOURCES.txt'
+[1.557s] running build_ext
+[1.557s] Creating /home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib/python3.8/site-packages/minidrone-bringup.egg-link (link to .)
+[1.558s] 
+[1.558s] Installed /home/m076em/my_ws/src/minidrone/build/minidrone_bringup
+[1.558s] running install_data
+[1.592s] Invoked command in '/home/m076em/my_ws/src/minidrone/build/minidrone_bringup' returned '0': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/minidrone_bringup/prefix_override:/home/m076em/my_ws/src/minidrone/install/minidrone_bringup/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/m076em/my_ws/src/minidrone/build/minidrone_bringup/build --no-deps install_data

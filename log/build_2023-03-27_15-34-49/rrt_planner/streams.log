@@ -1,0 +1,25 @@
+[0.670s] Invoking command in '/home/m076em/my_ws/src/minidrone/rrt_planner': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/rrt_planner/prefix_override:/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/rrt_planner build --build-base /home/m076em/my_ws/src/minidrone/build/rrt_planner/build install --record /home/m076em/my_ws/src/minidrone/build/rrt_planner/install.log --single-version-externally-managed
+[0.917s] running egg_info
+[0.918s] writing ../build/rrt_planner/rrt_planner.egg-info/PKG-INFO
+[0.918s] writing dependency_links to ../build/rrt_planner/rrt_planner.egg-info/dependency_links.txt
+[0.918s] writing entry points to ../build/rrt_planner/rrt_planner.egg-info/entry_points.txt
+[0.919s] writing requirements to ../build/rrt_planner/rrt_planner.egg-info/requires.txt
+[0.919s] writing top-level names to ../build/rrt_planner/rrt_planner.egg-info/top_level.txt
+[0.953s] reading manifest file '../build/rrt_planner/rrt_planner.egg-info/SOURCES.txt'
+[0.953s] writing manifest file '../build/rrt_planner/rrt_planner.egg-info/SOURCES.txt'
+[0.953s] running build
+[0.954s] running build_py
+[0.954s] copying rrt_planner/path_creator_node.py -> /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner
+[0.955s] running install
+[0.972s] running install_lib
+[0.973s] copying /home/m076em/my_ws/src/minidrone/build/rrt_planner/build/lib/rrt_planner/path_creator_node.py -> /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner
+[0.973s] byte-compiling /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner/path_creator_node.py to path_creator_node.cpython-38.pyc
+[0.975s] running install_data
+[0.975s] running install_egg_info
+[0.977s] removing '/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner-0.0.0-py3.8.egg-info' (and everything under it)
+[0.978s] Copying ../build/rrt_planner/rrt_planner.egg-info to /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages/rrt_planner-0.0.0-py3.8.egg-info
+[0.979s] running install_scripts
+[0.992s] Installing og_manager script to /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/rrt_planner
+[0.992s] Installing path_creator script to /home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/rrt_planner
+[0.993s] writing list of installed files to '/home/m076em/my_ws/src/minidrone/build/rrt_planner/install.log'
+[1.016s] Invoked command in '/home/m076em/my_ws/src/minidrone/rrt_planner' returned '0': PYTHONPATH=/home/m076em/my_ws/src/minidrone/build/rrt_planner/prefix_override:/home/m076em/my_ws/src/minidrone/install/rrt_planner/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/rrt_planner build --build-base /home/m076em/my_ws/src/minidrone/build/rrt_planner/build install --record /home/m076em/my_ws/src/minidrone/build/rrt_planner/install.log --single-version-externally-managed
