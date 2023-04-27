@@ -20,7 +20,7 @@ import argparse
 
 class GPSPublisher(Node):
     """ A template node containing a publisher, subscriber, and a parameter. 
-		Calculates the sum of an input and some fixed integer
+		Calculates the sum of an input and some fixed integer.
 
     ...
 
