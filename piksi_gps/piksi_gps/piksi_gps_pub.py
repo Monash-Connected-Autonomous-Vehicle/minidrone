@@ -16,16 +16,13 @@ import argparse
 # Node Name: gps
 # Topic: /gps/fix
 
-
-
 class GPSPublisher(Node):
-    """ A template node containing a publisher, subscriber, and a parameter. 
-		Calculates the sum of an input and some fixed integer
-
+    """ 
+    A ROS node that publishes GPS, magnometer and accelerometer data
     ...
 
     Parameters
-    ----------
+    ----------      
     serial_path : String, defualt = '/dev/ttyUSB0'
         The path where the piksi is mounted (teletype / usb locations only).
     piksi_baud : int, defualt = 115200
@@ -39,6 +36,15 @@ class GPSPublisher(Node):
 
     modified_data : L{std_msgs.Int8}
         Data representing some other quantity
+        
+    Publishes
+    ---------
+    gps : L{sensor_msgs.msg.NavSatFix}
+        Coordinartes from GPS
+    mag : L{sensor_msgs.msg.MagneticField}
+        Magnetic Field values (directio)
+    mpu : L{sensor_msgs.msg.Imu}
+        Acceleration and gyroscope values
 
     """
     def __init__(self):
@@ -68,6 +74,17 @@ class GPSPublisher(Node):
 
 
     def piksi_log_callback(self, signal, *args, **kwargs):
+        '''
+        This function is called when the GPS sends data over the communition medium
+        It filters the incoming message into the required datapoints and publishes them to their respective ros topics
+        Arguements
+        ----------
+        signal: the incoming message object
+        args: non keyword arguements
+        kwargs: variable amount of arguements to be input, presented in the form of a dictonary
+        
+        
+        '''
         #Because we are reading raw serial inputs, we check for conversion errors 
         try:
             # If the signal contains gps values
