@@ -7,6 +7,7 @@ from typing import Callable
 
 from scipy.signal import convolve2d
 from scipy.ndimage import label
+from scipy.optimize import minimize
 
 class OccSpace:
     def __init__(self, grid) -> None:
@@ -125,6 +126,109 @@ class AngularTrajectory:
             
             return np.array(sample_points)
     
+class FindAngle:
+    def __init__(self, grid):
+        self.grid = grid
+        self.grid_width = grid.shape[0]
+        self.half_grid = int(self.grid_width/2)
+        
+    def find_angle(self):
+
+        a0 = [0]
+        bounds = [(-90, 90)]
+
+        return minimize(self.check, a0, method = 'SLSQP', bounds = bounds)
+        """
+        if r >= l:
+            m = (r-l)//2
+
+            Done, dir = check(self.ang_range[m])
+
+            if Done:
+                return m
+            
+            elif dir:  
+                return find_angle(m+1,r)
+            else:
+                return find_angle(l,m-1)
+        else:
+            return "No root found"
+    """
+    def check(self,angle: float):
+        #Creating trajectory from the angle 
+        traj = AngularTrajectory(angle,self.grid_width)
+        
+        #Case of a 0 angle
+        if angle == 0:
+            left = np.sum(self.grid[:,0:self.half_grid]==2)
+            right = np.sum(self.grid[:,self.half_grid:self.grid_width-1]==2)
+
+            return abs(left - right)
+            """
+            if left > right:
+                return False, False
+            elif right > left:
+                return False, True 
+            else:
+                return True, True
+"""
+        #Find the radius
+        r = int(traj.r)
+
+        #Grid for storing if it is in the arc
+        circle = np.zeros((self.grid.shape))
+
+        #setting the initial conditions 
+        x_i = 0
+        y_i = r
+        d_par = 1-r
+        e = r-self.half_grid #value to check the error of the circle drawing
+
+        while (x_i < y_i) & ((x_i < self.grid_width)|(y_i < self.grid_width)):
+            #fill the in_circle grid with ones to show what is inside 
+            print(x_i)
+            print(y_i)
+ 
+            if angle < 0:
+                if x_i >= e:
+                    circle[y_i:,x_i-e], circle[self.grid_width-1-x_i,0:y_i-e] = 1,1
+                elif y_i <= self.grid_width -1:
+                    circle[self.grid_width-1-x_i,0:y_i-e] = 1
+            elif angle > 0:
+                if x_i >= e:
+                    circle[y_i:,self.grid_width -1 - (x_i-e)], circle[self.grid_width-1-x_i,self.half_grid - (y_i-e):] = 1,1
+                elif x_i <= self.grid_width -1:
+                    circle[self.grid_width -1 -x_i,self.half_grid - (y_i-e):] = 1
+            
+            #update the decision parameter and x_i and y_i
+            if d_par < 0:
+                d_par = d_par + 2*x_i + 3
+                x_i = x_i + 1
+            if d_par >= 0:
+                d_par = d_par + 2*(x_i-y_i) + 5
+                x_i = x_i + 1
+                y_i = y_i - 1
+        
+        #Checking how much lies within and how much lies out
+        in_circle = np.sum((circle == 1) & (self.grid==2))
+        out_circle = np.sum((circle == 0) & (self.grid==2))
+
+        return abs(in_circle - out_circle)
+        """
+        if in_circle > out_cicle:
+            if angle < 0:
+                return False, False
+            else:
+                return False, True
+        elif out_circle > in_circle:
+            if angle < 0:
+                return False, True
+            else: 
+                return False, False
+        else:
+            return True, True
+"""
+
 
 
 if __name__ == '__main__':
@@ -145,7 +249,15 @@ if __name__ == '__main__':
     ax[2,0].imshow(edges[:, :, 1])
 
     eroded = space.erode_mesh()
+    seg = space.segment()
     ax[1,1].imshow(eroded[:, :, 0])
     ax[2,1].imshow(eroded[:, :, 1])
     ax[0,1].imshow(space.segment())
-    plt.show()
+
+    angle = FindAngle(space.segment())
+
+    a = angle.find_angle()
+    print(a)
+    
+    
+    
