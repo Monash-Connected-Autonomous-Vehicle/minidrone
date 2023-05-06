@@ -30,10 +30,15 @@ Servo servoSteering;
 
 
 
+//struct {
+//  float QDES_temp; //4bytes
+//  char drive_mode[2]; //2bytes
+//  float wheel_speed[2]; //8bytes
+//} data_dump;
+
+
 struct {
-  float QDES_temp; //4bytes
-  char drive_mode[2]; //2bytes
-  float wheel_speed[2]; //8bytes
+  char wheel_speed[2]; //8bytes
 } data_dump;
 
 
@@ -92,26 +97,19 @@ float maxChangeInPWM(int current,int goal){
 //}
 
 void requestEvent() {
-  float test_qdes_temp = 45.7;
-  char test_drive_mode[2] = {'D', 'R'};
-  float test_wheel_speed[2] = {25.7, 12.4};
+  char test_wheel_speed[2] = {'D', 'R'};
   
-  data_dump.QDES_temp = test_qdes_temp;
-  strcpy(data_dump.drive_mode, test_drive_mode);
+//  data_dump.QDES_temp = test_qdes_temp;
+  strcpy(data_dump.wheel_speed, test_wheel_speed);
 
-  for (int i = 0; i < 2; i++) {
-    data_dump.wheel_speed[i] = test_wheel_speed[i];
-  }
+//  for (int i = 0; i < 2; i++) {
+//    data_dump.wheel_speed[i] = test_wheel_speed[i];
+//  }
 
-  int struct_len = sizeof(data_dump) + 1;
+  Serial.println((char * ) &data_dump);
+  Serial.println(sizeof(data_dump));
 
-  char * byte_array = new char[struct_len];
-
-  memcpy(byte_array, &data_dump, sizeof(data_dump));
-  
-  byte_array[struct_len - 1] = '\0';
-
-  Wire.write((byte * )&byte_array, sizeof(byte_array));
+  Wire.write((char *) &data_dump, 100);
 }
 
 
