@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package minidrone;
+
+message Minidrone {
+    message QDES {
+        message ComputeUnit {
+            optional float temp = 1;
+            optional float fan_speed = 2;
+        }
+
+        message BatteryUnit {
+            optional float temp = 1;
+            optional float fan_speed = 2;
+            optional float voltage = 3;
+        }
+    }
+
+    message DriveTrain {
+        message Servo {
+            optional float angle = 1;
+        }
+
+        message Wheels {
+            message Left {
+                optional float speed = 1;
+                optional char direction = 2;
+            }
+
+            message Right {
+                optional float speed = 1;
+                optional char direction = 2;
+            }
+        }
+    }
+
+    message TX2 {
+        optional float temp = 1;
+    }
+
+
+}
