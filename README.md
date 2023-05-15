@@ -23,12 +23,3 @@ Can start the ros 1 bridge by going to tmux window 2. (See [Tmux Instructions](.
 . ~/mcav_ws/install/setup.bash
 ros2 launch minidrone_gazebo grassy_circuit.launch.py 
 ```
-
-## i2c directory
-Running Arduino code:
-
-Windows:
-Make sure you put the libraries/proto folder inside your official Arduino libraries folder
-
-Linux:
-File structure configuration already set up as required.
