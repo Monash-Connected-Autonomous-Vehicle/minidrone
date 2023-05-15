@@ -16,6 +16,15 @@ void setup() {
   Wire.onRequest(requestEvent);
 
   Serial.println("Setup complete.");
+
+  minidrone_MinidroneMessage message = minidrone_MinidroneMessage_init_zero;
+  // message.QDES.ComputeUnit.temp = 25;
+
+  minidrone_MinidroneMessage_QDES_ComputeUnit computeUnitMsg = minidrone_MinidroneMessage_QDES_ComputeUnit_init_zero;
+  computeUnitMsg.temp = 25;
+
+  // Serial.println(message);
+
 }
 
 void requestEvent() {
@@ -24,19 +33,27 @@ void requestEvent() {
   bool status;
 
   //encode the message
-  MinidroneMessage message = MinidroneMessage_init_zero;
+  minidrone_MinidroneMessage message = minidrone_MinidroneMessage_init_zero;
 
   pb_ostream_t stream = pb_ostream_from_buffer(buffer, sizeof(buffer));
 
-  message.QDES.ComputeUnit.temp = 25;
+  // message.QDES.ComputeUnit.temp = 25;
+  // message.minidrone_MinidroneMessage_QDES.minidrone_MinidroneMessage_QDES_ComputeUnit.temp = 25;
+  // minidrone_MinidroneMessage_QDES qdes_message = message.minidrone_MinidroneMessage_QDES;
 
-  status = pb_encode(&stream, MinidroneMessage_fields, &message);
-  message_length = stream.bytes_written;
+  Serial.println(message.dummy_field);
 
-  if (!status) {
-    printf("Encoding failed: %s\n", PB_GET_ERROR(&stream));
-    return 1;
-  }
+  // status = pb_encode(&stream, MinidroneMessage_fields, &message);
+  // message_length = stream.bytes_written;
 
-  Wire.write((char *)&stream, buffer);
+  // if (!status) {
+  //   printf("Encoding failed: %s\n", PB_GET_ERROR(&stream));
+  //   return 1;
+  // }
+
+  // Wire.write((char *)&stream, buffer);
+}
+
+void loop() {
+
 }
