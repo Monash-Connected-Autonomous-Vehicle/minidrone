@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package minidrone;
+
+message Test {
+    int32 value = 1;
+}
+
+message MinidroneMessage {
+    Test test = 1;
+    // int32 value = 1;
+}
