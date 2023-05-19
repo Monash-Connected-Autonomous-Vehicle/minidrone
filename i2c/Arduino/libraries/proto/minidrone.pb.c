@@ -6,10 +6,31 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-PB_BIND(minidrone_Test, minidrone_Test, AUTO)
+PB_BIND(minidrone_TX2, minidrone_TX2, AUTO)
 
 
-PB_BIND(minidrone_MinidroneMessage, minidrone_MinidroneMessage, AUTO)
+PB_BIND(minidrone_ComputeUnit, minidrone_ComputeUnit, AUTO)
+
+
+PB_BIND(minidrone_BatteryUnit, minidrone_BatteryUnit, AUTO)
+
+
+PB_BIND(minidrone_QDES, minidrone_QDES, AUTO)
+
+
+PB_BIND(minidrone_Servo, minidrone_Servo, AUTO)
+
+
+PB_BIND(minidrone_LeftWheel, minidrone_LeftWheel, AUTO)
+
+
+PB_BIND(minidrone_RightWheel, minidrone_RightWheel, AUTO)
+
+
+PB_BIND(minidrone_Wheels, minidrone_Wheels, AUTO)
+
+
+PB_BIND(minidrone_DriveTrain, minidrone_DriveTrain, AUTO)
 
 
 
