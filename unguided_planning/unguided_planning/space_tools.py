@@ -9,18 +9,38 @@ from scipy.signal import convolve2d
 from scipy.ndimage import label
 from scipy.optimize import minimize_scalar
 
-class OccSpace:
-    def __init__(self, grid) -> None:
-        '''
-        Initialize OccSpace object based on occupancy grid
 
-        Parameters
-        ----------
-        grid: occupancy grid numpy array, where -1 is lane, 0 is unknown, 1 is driveable
-        '''
+class OccSpace:
+    """
+    Representation and associated operations for occupancy grids
+
+    Arguments
+    ---------
+    grid : np.ndarray, dtype=int
+        Array representation of occupancy grid, where -1 is occupied, 0 is unknown, 1 is unoccupied
+
+    """
+    def __init__(self, grid: np.ndarray) -> None:
         self.grid = grid
     
-    def generate_mesh_grid(self, resolution) -> None:
+    def generate_mesh_grid(self, resolution: int) -> np.ndarray:
+        """
+        Create a square mesh graph overlayed onto the occupancy grid, with a specified number of vertices along the coordinate axes.
+
+        Arguments
+        ---------
+        resolution : int
+            Number of vertices along a single edge of square mesh
+
+        Returns
+        -------
+        edge_array : np.ndarray, dtype=bool
+            Representation of vertical and horizontal edge ocupancies. Array is indexed by left or top constituent vertex along axes 0 and 1,
+            and vertical/horizontal status along axes 2 at index 0 and 1 respectively.
+            
+            An edge is considered occupied if both of the constituent vertices, or any point along the edge exist in occupied space. 
+
+        """
         # Sample mesh grid with number of points horizontally equal to resolution
         # Array of edge statuses for each edge, indexed by vertex coordinates and vertical/horizontal
         self.sample_res = resolution
@@ -45,9 +65,18 @@ class OccSpace:
         return self.edge_array
 
     def erode_mesh(self):
-        '''
-        removes edges that do not have any adjacent parallel neighbours
-        '''
+        """
+        Removes edges from edge_array that do not have any adjacent parallel neighbours from unoccupied status.
+
+        Returns
+        -------
+        edge_array : np.ndarray, dtype=bool
+            Representation of vertical and horizontal edge ocupancies. Array is indexed by left or top constituent vertex along axes 0 and 1,
+            and vertical/horizontal status along axes 2 at index 0 and 1 respectively.
+            
+            An edge is considered occupied if both of the constituent vertices, or any point along the edge exist in occupied space. 
+
+        """
         kernel = np.ones((1,3), dtype=int)
         for i, k in enumerate([kernel, kernel.T]):
             self.edge_array[:, :, i] *= convolve2d(self.edge_array[:, :, i], k, 
@@ -56,15 +85,15 @@ class OccSpace:
         return self.edge_array
     
     def segment(self):
-        '''Returns a connected components labeling of drivable edge occupied areas'''
+        """Returns a connected components labeling of drivable edge occupied areas"""
         self.mesh_areas = np.sum((self.edge_array[:-1, :-1, 0], self.edge_array[:-1, :-1, 1],
                                   self.edge_array[1:, 1:, 0], self.edge_array[1:, 1:, 1]), axis=0) > 1
         return label(self.mesh_areas)[0]
     
     def trajectory_squares(self, parametric: Callable, inverse_x: Callable, inverse_y: Callable):
-        '''
-        Determine all sample grid squares that a parametric tajectory, defined with coordinates in mesh_areas
-        '''
+        """
+        Determines all sample grid squares that a parametric tajectory, defined with coordinates in mesh_areas
+        """
         t = 0
         x, y = parametric(t)
         intersected = [(int(x), int(y))]
@@ -82,10 +111,12 @@ class AngularTrajectory:
         """
         Circular trajectory tangent to x axis intersecting inscribed circle of square grid at specified point.
 
-        Parameters
+        Arguments
         ----------
-        angle: Angle between x axis and line segment from origin to point of inscribed circle intersection
-        grid_width: side length of square gird
+        angle : float
+            Angle between x axis and line segment from origin to point of inscribed circle intersection
+        grid_width : float
+            Side length of square occupancy grid
         """
         self.angle = angle
         self.grid_width = grid_width
@@ -104,10 +135,12 @@ class AngularTrajectory:
         """
         Sample equidistant points along trajectory
 
-        Parameters
+        Arguments
         ---------
-        min_step: minimum distance along trajectory for points to be sampled from
-        step_dist: distance between subsequent sampled points
+        min_step : float
+            Minimum distance along trajectory for points to be sampled from
+        step_dist : float
+            distance between subsequent sampled points
         """
 
         if self.angle == 0:  # Special case for straight trajectory
