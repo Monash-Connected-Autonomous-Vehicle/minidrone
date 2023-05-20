@@ -17,7 +17,7 @@ message TX2 {
 
 message ComputeUnit {
     float temp = 1;
-    float fan_speed = 2;
+    int32 fan_speed = 2;
     TX2 tx2 = 3;
 }
 

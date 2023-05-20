@@ -10,12 +10,17 @@
 
 int i2cAddress = 0x50;
 bool sendOveri2c = true;
+int FAN_SPEED = 20;
+int * fanPtr = &FAN_SPEED;
+float TEMP = 30;
+float * tempPtr = &TEMP;
 
 void setup() {
   Serial.begin(115200);
 
   if (sendOveri2c) {
     Wire.begin(i2cAddress);
+    // Wire.begin();
 
     Serial.println("Sending over i2c...");
     Wire.onRequest(requestEvent);
@@ -113,8 +118,10 @@ void setup() {
 //   }
 // }
 
+
+
 void requestEvent() {
-  Serial.println("REQUEST EVENT");
+  Serial.println("\nREQUEST EVENT");
   uint8_t buffer[128];
   size_t message_length;
   bool status;
@@ -124,21 +131,27 @@ void requestEvent() {
   minidrone_QDES msg_QDES = minidrone_QDES_init_zero;
   minidrone_ComputeUnit msg_ComputeUnit = minidrone_ComputeUnit_init_zero;
 
-  minidrone_MinidroneMessage_QDES QDES = minidrone_MinidroneMessage_QDES_init_zero;
-  minidrone_MinidroneMessage_QDES_ComputeUnit computeUnit = minidrone_MinidroneMessage_QDES_ComputeUnit_init_zero;
+  msg_ComputeUnit.fan_speed = *(fanPtr);
+  msg_ComputeUnit.temp = *tempPtr;
+
+  msg_QDES.has_computeUnit = true;
+  msg_QDES.computeUnit = msg_ComputeUnit;
+
+  // minidrone_MinidroneMessage_QDES QDES = minidrone_MinidroneMessage_QDES_init_zero;
+  // minidrone_MinidroneMessage_QDES_ComputeUnit computeUnit = minidrone_MinidroneMessage_QDES_ComputeUnit_init_zero;
   // message.has_test = true;
   // testmessage.value = 69;
   // message.test = testmessage;
   // message.has_QDES = true;
-  computeUnit.temp = 20;
-  computeUnit.fan_speed = 30;
-  QDES.computeunit = computeUnit;
-  message. = QDES;
-  // m
+  // computeUnit.temp = 20;
+  // computeUnit.fan_speed = 30;
+  // QDES.computeunit = computeUnit;
+  // message. = QDES;
 
   pb_ostream_t stream = pb_ostream_from_buffer(buffer, sizeof(buffer));
-  status = pb_encode(&stream, minidrone_MinidroneMessage_fields, &message);
-
+  // status = pb_encode(&stream, minidrone_MinidroneMessage_fields, &message);
+  status = pb_encode(&stream, minidrone_QDES_fields, &msg_QDES);
+  
   if (!status) {
     Serial.println("Failed to encode");
     return;
@@ -154,11 +167,44 @@ void requestEvent() {
     Serial.print(print_buffer);
   }
 
+  int msg_len = stream.bytes_written;
+
   //send the message over i2c
+  // Wire.write((char *) &buffer, stream.bytes_written);
+  // Wire.beginTransmission(i2cAddress);
   Wire.write((char *) &buffer, stream.bytes_written);
+  // if (Wire.endTransmission(true) != 0) {
+  //   Serial.println("WIRE ERROR");
+  // }
+
+
+    //DECODING
+  minidrone_QDES message = minidrone_QDES_init_zero;
+  // minidrone_ComputeUnit message = minidrone_ComputeUnit_init_zero;
+
+  pb_istream_t stream2 = pb_istream_from_buffer(buffer, msg_len);
+  // pb_istream_t stream = 
+
+  status = pb_decode(&stream2, minidrone_QDES_fields, &message);
+
+  if (!status) {
+    Serial.println("Decoding failed");
+    Serial.println(PB_GET_ERROR(&stream2));
+    return 1;
+  }
+
+  Serial.println("\nDECODING: Message: ");
+  Serial.println(message.computeUnit.fan_speed);
+  Serial.println(message.computeUnit.temp);
+  // Serial.println(message.computeUnit.temp);
 
 }
 
 void loop() {
-
+  
+  FAN_SPEED += 1;
+  TEMP += 0.5;
+  // Serial.print("FAN SPEED: ");
+  // Serial.println(FAN_SPEED);
+  delay(500);
 }
