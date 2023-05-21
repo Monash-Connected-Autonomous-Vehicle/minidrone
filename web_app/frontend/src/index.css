@@ -13,7 +13,7 @@ code {
 }
 
 
-html,
+/* html,
 body,
 #root {
   margin: 0;
@@ -31,7 +31,7 @@ body,
 
 body {
   background: #202020;
-}
+} */
 
 .flask-data {
   position: absolute;
