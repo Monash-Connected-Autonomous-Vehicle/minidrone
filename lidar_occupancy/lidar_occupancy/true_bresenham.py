@@ -1,11 +1,20 @@
-def true_bresenham(p1, p2):
-    """
+def true_bresenham(p1: tuple[int], p2: tuple[int]) -> list[tuple[int]]:
+    """ Approximates the integer coordinates of a line connecting two points
+
     Takes 2 points with integer coordinates and outputs a list of integer coordinates approximating the line between
     them using bresenham's algorithm involving integer only arithmetic. Utilises the cartesian coordinate system.
 
-    :param p1: integer coordinate as a tuple (x, y)
-    :param p2: integer coordinate as a tuple (x, y)
-    :return: list of integer coordinates as tuples [(x1, y1), ..., (xn, yn)]
+    Parameters
+    ----------
+    p1: tuple of int
+        cartesian coordinates pair 1
+    p2: tuple of int
+        cartesian coordinates pair 2
+
+    Returns
+    -------
+    list of tuples of int
+        list of integer coordinates approximating the line between p1 and p2
     """
     # determine the left most point and the right most point
     if p1[0] <= p2[0]:

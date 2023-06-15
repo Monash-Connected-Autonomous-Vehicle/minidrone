@@ -107,15 +107,14 @@ class LidarOccupancyNode(Node):
         # Publish grid
         self.occ_pub.publish(occ)
 
-
-    def point_filter(self, p):  # TODO docstrings
+    def point_filter(self, p: tuple[int]) -> bool:  # TODO docstrings
         """
         Returns true for points worth considering i.e. ignores points that are the drone itself
         and ignores points below ground or above drone
 
         :param p: point where p[0], p[1], p[2] = x, y, z
         """
-        # TODO is a static method atm, slice values derived from linorobot xacros + tf info
+        # TODO is a static method atm, slice values derived from lino-robot macros + tf info
         x_slice, y_slice, z_slice = 0.55, 0.62, 0.52
 
         # if within the area occupied by minidrone, ignore point
@@ -127,7 +126,7 @@ class LidarOccupancyNode(Node):
         return False
 
 
-def polar_coord(x, y):
+def polar_coord(x: int, y: int) -> tuple[int]:
     """
     Converts a cartesian coordinate (x, y) into polar coordinates (r, theta)
     Parameters
