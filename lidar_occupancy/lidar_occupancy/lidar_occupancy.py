@@ -108,7 +108,7 @@ class LidarOccupancyNode(Node):
         self.occ_pub.publish(occ)
 
 
-    def point_filter(self, p):
+    def point_filter(self, p):  # TODO docstrings
         """
         Returns true for points worth considering i.e. ignores points that are the drone itself
         and ignores points below ground or above drone
