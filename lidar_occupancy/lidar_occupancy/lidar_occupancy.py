@@ -107,14 +107,23 @@ class LidarOccupancyNode(Node):
         # Publish grid
         self.occ_pub.publish(occ)
 
-    def point_filter(self, p: tuple[int]) -> bool:  # TODO docstrings
-        """
-        Returns true for points worth considering i.e. ignores points that are the drone itself
+    def point_filter(self, p: tuple[int]) -> bool:
+        """ Filters a point if it should be kept or not
+
+        Returns true for points worth considering e.g. ignores points that are part of the drone itself
         and ignores points below ground or above drone
 
-        :param p: point where p[0], p[1], p[2] = x, y, z
+        Parameters
+        ----------
+        p : tuple of int
+            3-dimensional cartesian point
+
+        Returns
+        -------
+        bool
+            indication of if point should be kept or not
         """
-        # TODO is a static method atm, slice values derived from lino-robot macros + tf info
+        # TODO is a static method atm, slice values derived from lino-robot macros + transform info
         x_slice, y_slice, z_slice = 0.55, 0.62, 0.52
 
         # if within the area occupied by minidrone, ignore point
@@ -127,15 +136,23 @@ class LidarOccupancyNode(Node):
 
 
 def polar_coord(x: int, y: int) -> tuple[int]:
-    """
-    Converts a cartesian coordinate (x, y) into polar coordinates (r, theta)
+    """ Converts a pair of cartesian coordinates into polar coordinate form
+
+    Takes a pair of coordinates x and y, and converts them into the form (r, theta)
+    as polar coordinates
+
     Parameters
     ----------
-    x: x coordinate of point on cartesian plane
-    y: y coordinate of point on cartesian plane
+    x : int
+        cartesian x-coordinate of point
+    y : int
+        cartesian y-coordinate of point
 
-    Returns a tuple (r, theta) representing polar coordinate equivalent of (x, y)
+    Returns
     -------
+    tuple of int
+        polar coordinate equivalent of input coordinates
+
     """
     r = sqrt(x ** 2 + y ** 2)
 

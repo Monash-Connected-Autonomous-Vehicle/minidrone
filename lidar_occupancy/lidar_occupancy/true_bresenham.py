@@ -6,9 +6,9 @@ def true_bresenham(p1: tuple[int], p2: tuple[int]) -> list[tuple[int]]:
 
     Parameters
     ----------
-    p1: tuple of int
+    p1 : tuple of int
         cartesian coordinates pair 1
-    p2: tuple of int
+    p2 : tuple of int
         cartesian coordinates pair 2
 
     Returns
