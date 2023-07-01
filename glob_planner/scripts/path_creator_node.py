@@ -12,11 +12,10 @@ from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
 import cv2
 
-#from utils.og_example import OG_Example as OG
-#from utils.RRT import RRTC
 import matplotlib.pyplot as plt
 import numpy as np
 from nav_msgs.msg import OccupancyGrid
+from datetime import datetime
 
 
 class Creator(Node):
@@ -47,12 +46,32 @@ class Creator(Node):
             - plan optimum path with a set number of max iterations 
         '''
 
-        #self.og_publisher = self.create_publisher(OccupancyGrid,'custom_occupancy_grid',1)
+        #Import the occupancy grid
         self.og = OG()
         self.Occupancy_grid = self.og.Create_pre_defined_occupancy_grid()
         
-        self.rrtc = RRTC(start=self.start, goal=self.goal, width=self.width, height=self.height, og_height= self.Occupancy_grid.info.height, og_width=self.Occupancy_grid.info.width,
-                        og_data= self.Occupancy_grid.data,expand_dis=self.expand_dis,path_resolution=self.path_resolution,Calling_node=self, og_resolution = self.Occupancy_grid.info.resolution)
+        #Import necessary parameters from said occupancy grid
+        og_height =  self.Occupancy_grid.info.height
+        og_width = self.Occupancy_grid.info.width
+        og_res = self.Occupancy_grid.info.resolution
+        og_data= self.Occupancy_grid.data
+
+        #Dilate the occupancy grid data
+        start = datetime.now()
+
+        og_data_mat = np.zeros((og_height,og_width))
+        for i in range(og_height):
+            og_data_mat[i] = og_data[i*og_height:(i+1)*og_height]
+        dim = 5
+        kernel = np.ones((dim,dim),np.uint8)
+        new_og_data = cv2.dilate(og_data_mat,kernel,iterations = 1)
+        end = datetime.now()
+        print('conversion time:',(end-start).microseconds,' us')
+
+
+
+        self.rrtc = RRTC(start=self.start, goal=self.goal, width=self.width, height=self.height, og_height= og_height, og_width=og_width,
+                        og_data= new_og_data,expand_dis=self.expand_dis,path_resolution=self.path_resolution,Calling_node=self, og_resolution=og_res)
         
         self.optimum_path = self.generate_path(self.iter, self.rrtc)
 
@@ -67,24 +86,14 @@ class Creator(Node):
         self.rrtc = RRTC(start=self.start, goal=self.goal, width=self.width, height=self.height, obstacle_list=self.obstacles,expand_dis=self.expand_dis, path_resolution=self.path_resolution)
         self.optimum_path = self.generate_path(self.iter, self.rrtc)
         """
-    # Generate obstacles with accepted datatype for RRTC 
-    def generate_obstacles(self,obstacles):
-
-        all_obstacles = []
-        
-        for obstacle in obstacles:
-            origin = np.array([obstacle[0],obstacle[1]])
-            dim = 2 ## size of obstacles represented as squares
-            all_obstacles.append(Rectangle(origin,dim,dim))
-
-        return all_obstacles
     
     # Use L2 Norm to find best path 
-    def generate_path(self,iter,RRT):
+    def generate_path(self,iters,RRT):
         paths = []
         costs = []
         cost = 0
-        for iter in range(iter):
+        startTime = datetime.now()
+        for iter in range(iters):
             paths.append(RRT.planning())
             
         for path in paths:
@@ -101,6 +110,8 @@ class Creator(Node):
         min_value = min(costs)
         min_index = costs.index(min_value)
         optimum = paths[min_index]
+        endTime = datetime.now()
+        print('path planning time',(endTime-startTime).microseconds,' us')
 
         try:
             self.visualise_path(optimum)

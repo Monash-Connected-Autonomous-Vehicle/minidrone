@@ -159,9 +159,9 @@ class OG_Example(Node):
    
     
     
-    #self.occupancy_grid.data =og_data
+    self.occupancy_grid.data =og_data
 
-    
+    '''
     data = og_data
     og_data = np.zeros((og_height,og_width))
     
@@ -173,7 +173,7 @@ class OG_Example(Node):
     for i in range(og_height):
       og_data[i] = data[i*og_height:(i+1)*og_height]
 
-    dim = 5
+    dim = 1
     kernel = np.ones((dim,dim),np.uint8)
     dilation = cv2.dilate(og_data,kernel,iterations = 1)
 
@@ -198,7 +198,7 @@ class OG_Example(Node):
     #end = datetime.now()
 
     #print('conversion time:',(end-start).microseconds,' us')
-    print (sum(og_data))
+    print (sum(og_data))'''
     og = self.occupancy_grid
     self.og_publisher.publish(og)
 
