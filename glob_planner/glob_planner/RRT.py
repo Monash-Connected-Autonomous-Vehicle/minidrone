@@ -4,23 +4,66 @@ from math import ceil, floor
 import rclpy
 from rclpy.node import Node
 
-##  WORK IN PROGRESS ##
 
-# This is a modified version of the file RRTC where we are passing through our occupancy grid data instead of obstacle coordinates
-
-#assumptions:
-#og and map are both sqaures
-#map has a width of 10 units
-#the robot has no dimensions (a point)
-
-class RRTC:##############################################
+class RRTC:
     """
-    Class for RRT planning
+    A class that defines an instance of RRT path planning between two given global points
+
+
+    Parameters
+        ----------
+        x : float
+            the x coordinate of the node
+        start : node
+            the node that represnts the global starting point of the to-be-planned path
+        end : node
+            the node that represnts the global end point of the to-be-planned path
+        map_width : float
+            the width of the given occupancy grid in some arbirtrary units, that are the same as the units used for the start and end coordinates
+        map_height : float
+            the height of the given occupancy grid in some arbirtrary units, that are the same as the units used for the start and end coordinates
+        og_width : int
+            the number of squares the represent the width of the occupancy grid
+        og_height: int
+            the number of squares the represent the height of the occupancy grid
+        og_resolution : float
+            the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
+        og_data : array (matrix og_height rows x og_width columns)
+            the data of the occupancy grid, which used to determine the occupancy state (occupied or not occupied) of all the occupancy grid squares, a value of zero represent 
+            a non-occupied square, the square is considered occupied for any other value
+        expand_dis : float
+            maximum distance between two subsequent nodes in the path (a node and its parent)
+        path_resolution :  float
+
+        self.expand_dis = expand_dis
+        self.path_resolution = path_resolution
+        self.max_nodes = max_points
+        self.start_node_list = [] # Tree from start
+        self.end_node_list = [] # Tree from end
+        self.Calling_Node = Calling_node
+
     """
 
     class Node:
         """
-        RRT Node
+        RRT Node, which essentially corresponds to a potential point in our final path
+
+        Parameters
+        ----------
+        x : float
+            the x coordinate of the node
+
+        y : float
+            the y coordinate of the node
+
+        path_x: array of floats
+            the x coordinates of the path that leads to the parent node, empty if parent is None
+
+        path_y: array of floats
+            the y coordinates of the path that leads to the parent node, empty if parent is None
+        parent: Node or None
+            The node closest to this node (self), none if there is no other node
+
         """
         def __init__(self, x, y):
             self.x = x
@@ -40,8 +83,6 @@ class RRTC:##############################################
                  expand_dis=1.0, 
                  path_resolution=0.5, 
                  max_points=150,
-                 rob_width = 1.0, 
-                 rob_height = 1.0,
                  Calling_node= None):
         """
         Setting Parameter
@@ -51,8 +92,6 @@ class RRTC:##############################################
         og_height, og_width, og_resolution, og_data: height, width, resolution and data of the occupancy grid
         expand_dis: min distance between random node and closest node in rrt to it
         path_resolion: step size to considered when looking for node to expand
-        rob_width: the width of our robot 
-        rob_height: the height of our robot
         
         """
         self.start = self.Node(start[0], start[1])
@@ -66,8 +105,6 @@ class RRTC:##############################################
         self.og_data = og_data
         self.og_width = og_width
         self.og_height = og_height
-        self.rob_width = rob_width
-        self.rob_height = rob_height
         self.start_node_list = [] # Tree from start
         self.end_node_list = [] # Tree from end
         self.Calling_Node = Calling_node
@@ -143,7 +180,7 @@ class RRTC:##############################################
             The node we are steering to
 
         extend_length : float
-            the maximum exapnd distance between two nodes in our path
+            the maximum exapnd distance between two subsequent nodes in our path
 
         Returns
         -------
@@ -163,7 +200,10 @@ class RRTC:##############################################
         if extend_length > d:
             extend_length = d
 
-        # How many intermediate positions are considered between from_node and to_node
+        
+        new_node.x += extend_length * cos_theta
+        new_node.y += extend_length * sin_theta
+        '''# How many intermediate positions are considered between from_node and to_node
         n_expand = math.floor(extend_length / self.path_resolution)
 
         # Compute all intermediate positions
@@ -176,7 +216,7 @@ class RRTC:##############################################
         d, _ = self.calc_distance_and_angle(new_node, to_node)
         if d <= self.path_resolution:
             new_node.path_x.append(to_node.x)
-            new_node.path_y.append(to_node.y)
+            new_node.path_y.append(to_node.y)'''
 
         new_node.parent = from_node
 
@@ -335,9 +375,9 @@ class RRTC:##############################################
             #print('starting grid is: (',starting_grid[0],',',starting_grid[1],')')  
             while last_added_grid != end_grid:
                 counter=counter+1
-                if counter >20:
+                #if counter >20:
                     #print('loop terminating')
-                    break
+                    #break
                 if d >=1:
                     d = d-1
                     last_added_grid[0] = int(last_added_grid[0]+delta_y/abs(delta_y))
@@ -385,9 +425,9 @@ class RRTC:##############################################
             #print('starting grid is: (',starting_grid[0],',',starting_grid[1],')')      
             while last_added_grid != end_grid:
                 counter=counter+1
-                if counter >20:
+                #if counter >20:
                     #print('loop terminating')
-                    break
+                    #break
                 if d >=1:
                     d = d-1
                     last_added_grid[1] = int(last_added_grid[1]+delta_x/abs(delta_x))
@@ -451,6 +491,9 @@ class RRTC:##############################################
         return math.hypot(dx, dy)
 
     def get_random_node(self):
+        
+        #x = 10*self.expand_dis*np.random.random_sample()
+        #y = 10*self.expand_dis*np.random.random_sample()
         x = self.map_width * np.random.random_sample()
         y = self.map_height * np.random.random_sample()
         rnd = self.Node(x, y)

@@ -55,14 +55,14 @@ class Creator(Node):
         og_width = self.Occupancy_grid.info.width
         og_res = self.Occupancy_grid.info.resolution
         og_data= self.Occupancy_grid.data
-
+        self.path_resolution = og_res/2
         #Dilate the occupancy grid data
         start = datetime.now()
 
         og_data_mat = np.zeros((og_height,og_width))
         for i in range(og_height):
             og_data_mat[i] = og_data[i*og_height:(i+1)*og_height]
-        dim = 5
+        dim = 3
         kernel = np.ones((dim,dim),np.uint8)
         new_og_data = cv2.dilate(og_data_mat,kernel,iterations = 1)
         end = datetime.now()
@@ -75,9 +75,9 @@ class Creator(Node):
         
         self.optimum_path = self.generate_path(self.iter, self.rrtc)
 
-        self.rviz2_path.header.frame_id = "rviz2_path"
-        self.rviz2_path.header.stamp =  self.get_clock().now().to_msg()
-        self.rviz2_path_visualize(optimum=self.optimum_path)
+        #self.rviz2_path.header.frame_id = "rviz2_path"
+        #self.rviz2_path.header.stamp =  self.get_clock().now().to_msg()
+        #self.rviz2_path_visualize(optimum=self.optimum_path)
         
 
         
@@ -112,12 +112,13 @@ class Creator(Node):
         optimum = paths[min_index]
         endTime = datetime.now()
         print('path planning time',(endTime-startTime).microseconds,' us')
+        print('path distance = ',min_value)
 
-        try:
-            self.visualise_path(optimum)
-            return paths[min_index]
-        except:
-            print("Path could not be planned!")
+        #try:
+        self.visualise_path(optimum)
+        return paths[min_index]
+        #except:
+            #print("Path could not be planned!")
     
     # Plot occupancy grid with path
     def visualise_path(self,optimum):
