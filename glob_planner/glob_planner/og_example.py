@@ -16,7 +16,7 @@ class OG_Example(Node):
         
         self.occupancy_grid = OccupancyGrid()
         super().__init__('og_example')
-        self.og_publisher = self.create_publisher(OccupancyGrid,'custom_occupancy_grid',1)
+        self.og_publisher = self.create_publisher(OccupancyGrid,'very_custom_occupancy_grid',1)
         timer_period = 1
         self.timer = self.create_timer(timer_period,self.Create_pre_defined_occupancy_grid)
         
@@ -120,7 +120,7 @@ class OG_Example(Node):
                                   0,  0,  0,  0,  0,  0,  0,  0,  0,  0]"""
 
 
-    path = r'/home/m076em/rubbish/loop3.png'
+    path = r'/home/omar/images/loop3.png'
     image = cv2.imread(path)
     print(len(image[0]))
     l = len(self.occupancy_grid.data)

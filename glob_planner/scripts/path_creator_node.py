@@ -71,7 +71,7 @@ class Creator(Node):
 
 
         self.rrtc = RRTC(start=self.start, goal=self.goal, width=self.width, height=self.height, og_height= og_height, og_width=og_width,
-                        og_data= new_og_data,expand_dis=self.expand_dis,path_resolution=self.path_resolution,Calling_node=self, og_resolution=og_res)
+                        og_data= new_og_data,expand_dis=self.expand_dis,og_resolution=og_res)
         
         self.optimum_path = self.generate_path(self.iter, self.rrtc)
 

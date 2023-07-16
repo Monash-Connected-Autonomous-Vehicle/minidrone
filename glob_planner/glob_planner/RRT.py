@@ -12,8 +12,6 @@ class RRTC:
 
     Parameters
         ----------
-        x : float
-            the x coordinate of the node
         start : node
             the node that represnts the global starting point of the to-be-planned path
         end : node
@@ -23,24 +21,22 @@ class RRTC:
         map_height : float
             the height of the given occupancy grid in some arbirtrary units, that are the same as the units used for the start and end coordinates
         og_width : int
-            the number of squares the represent the width of the occupancy grid
+            the number of cells the represent the width of the occupancy grid
         og_height: int
-            the number of squares the represent the height of the occupancy grid
+            the number of cells the represent the height of the occupancy grid
         og_resolution : float
             the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
         og_data : array (matrix og_height rows x og_width columns)
-            the data of the occupancy grid, which used to determine the occupancy state (occupied or not occupied) of all the occupancy grid squares, a value of zero represent 
-            a non-occupied square, the square is considered occupied for any other value
+            the data of the occupancy grid, which used to determine the occupancy state (occupied or not occupied) of all the occupancy grid cells, a value of zero represent 
+            a non-occupied cell, the cell is considered occupied for any other value
         expand_dis : float
             maximum distance between two subsequent nodes in the path (a node and its parent)
-        path_resolution :  float
+	max_nodes : int
+		maximum number of created nodes before the algorithm gives up
+	
+        start_node_list : array of node
+   		The array of all nodes that have been generated in the process of finding the collision-free path
 
-        self.expand_dis = expand_dis
-        self.path_resolution = path_resolution
-        self.max_nodes = max_points
-        self.start_node_list = [] # Tree from start
-        self.end_node_list = [] # Tree from end
-        self.Calling_Node = Calling_node
 
     """
 
@@ -81,40 +77,50 @@ class RRTC:
                  og_resolution = 1,
                  og_data = [],
                  expand_dis=1.0, 
-                 path_resolution=0.5, 
-                 max_points=150,
-                 Calling_node= None):
-        """
-        Setting Parameter
-        start:Start Position [x,y]
-        goal:Goal Position [x,y]
-        width, height: of the map the occuapncy grid will be fitted to
-        og_height, og_width, og_resolution, og_data: height, width, resolution and data of the occupancy grid
-        expand_dis: min distance between random node and closest node in rrt to it
-        path_resolion: step size to considered when looking for node to expand
-        
-        """
+                 max_points=150):
+       
         self.start = self.Node(start[0], start[1])
         self.end = self.Node(goal[0], goal[1])
         self.map_width = width
         self.map_height = height
         self.og_resolution = og_resolution
         self.expand_dis = expand_dis
-        self.path_resolution = path_resolution
         self.max_nodes = max_points
         self.og_data = og_data
         self.og_width = og_width
         self.og_height = og_height
         self.start_node_list = [] # Tree from start
-        self.end_node_list = [] # Tree from end
-        self.Calling_Node = Calling_node
         
     def planning(self):
         """
-        rrt path planning
+        The main function of the algorithm, responsible for geenrating random point, checking collisions, and terminating when the destination has been reached, or the maximum
+        number of nodes has been reached, whichever happens first
+        
+        Parameters
+        ----------
+        end_node : node
+            the node that represnts the global end point of the to-be-planned path
+
+        rnd_node : node
+        	a node that has a randomly generated coordinates that are within the coordinates of the occupancy grid
+        
+        expansion_node : node
+        	the node within our start_node_list that is closest to rnd_node
+        	
+        expansion_ind : int
+        	the index of expansion_node in start_node_list
+        	
+        nearby_node : node
+        	a node that is in the direction of rnd_node from expansion_node, and has a maximum distance of expand_dis from expansion_node, it also correponds to the last node added to
+        	start_node_list
+        	
+        Returns
+        -------
+        path : array of nodes
+            the array of nodes that make up the collision free path from the start point to the end point
+        	
         """
-        point_counter = 0
-        path_counter = 0
+        
         self.start_node_list = [self.start]
         end_node = self.end
         while len(self.start_node_list) <= self.max_nodes:
@@ -125,30 +131,9 @@ class RRTC:
             nearby_node = self.steer(expansion_node,rnd_node,self.expand_dis) ## get node closer to rnd_node from expansion_node
             # add nearby_node to start_list if it is collision free 
 
-            if self.new_node_is_free(new_node= nearby_node, og_width= self.og_width, og_resolution=self.og_resolution, og_data= self.og_data):
-                if self.minor_path_is_collision_free(new_node= nearby_node,prev_node=expansion_node,og_resolution=self.og_resolution,og_width=self.og_width,og_data= self.og_data):
+            if self.new_node_is_free(new_node= nearby_node, og_resolution=self.og_resolution, og_data= self.og_data):
+                if self.minor_path_is_collision_free(new_node= nearby_node,prev_node=expansion_node,og_resolution=self.og_resolution,og_data= self.og_data):
                     self.start_node_list.append(nearby_node)
-                    #point_counter =0
-                    #path_counter=0
-                    
-                '''else:
-                    path_counter+=1
-                    if(path_counter ==100):
-                        print('100 paths failed')
-                        p=1/0
-                        
-                            
-                    
-                    continue
-            else:
-
-                point_counter+=1
-                if(point_counter ==100):
-                    print('100 points failed')
-                    p=1/0
-                    
-                        
-                continue'''
 
             nearby_node = self.start_node_list[-1]
            
@@ -158,12 +143,11 @@ class RRTC:
             # add the node that connects the trees and generate the path
             if d < self.expand_dis:
                 end_node = self.steer(nearby_node,end_node,self.expand_dis)
-                if self.minor_path_is_collision_free(new_node= nearby_node,prev_node=end_node,og_resolution=self.og_resolution,og_width=self.og_width,og_data= self.og_data):
+                if self.minor_path_is_collision_free(new_node= nearby_node,prev_node=end_node,og_resolution=self.og_resolution,og_data= self.og_data):
                     
-                    #print("destination reached")
                     self.start_node_list.append(end_node)
                 
-                    return self.generate_final_course(len(self.start_node_list) - 1, len(self.end_node_list) - 1)
+                    return self.generate_final_course()
         
     def steer(self, from_node, to_node, extend_length=float("inf")):
         """
@@ -189,7 +173,6 @@ class RRTC:
 
         """
 
-        #print("steering from: (",round(from_node.x,3),",",round(from_node.y,3),") to: (",round(to_node.x,3),",",round(to_node.y,3),")")
         new_node = self.Node(from_node.x, from_node.y)
         d, theta = self.calc_distance_and_angle(new_node, to_node)
         cos_theta, sin_theta = np.cos(theta), np.sin(theta)
@@ -225,31 +208,53 @@ class RRTC:
    
   
 
-    def new_node_is_free(self,new_node,og_width,og_resolution,og_data):
+    def new_node_is_free(self,new_node,og_resolution,og_data):
         """
-        Determines if a given node lies in the free square on our occupancy grid
+        Determines if a given node lies in a not occupied cell in our occupancy grid
+        
+        Parameters
+        ----------
+        new_node : Node
+            The node we are checking
+  
+        og_resolution : float
+            the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
+            
+        og_data : array (matrix og_height rows x og_width columns)
+            the data of the occupancy grid, which used to determine the occupancy state (occupied or not occupied) of all the occupancy grid cells, a value of zero represent 
+            a non-occupied cell, the cell is considered occupied for any other value 
+
+        Returns
+        -------
+	Boolean
+            whether or not the node is not occupied, true for not occupied, false for occupied
         """
 
         og_index = self.map_to_og_matrix_conversion(point=new_node,og_resolution=og_resolution)
        
         if og_data[og_index[0]][og_index[1]] ==0:
-            
-            #print('UNOCCUPIED POINT FOUND:',round(new_node.x,3),round(new_node.y,3))
-            #print()
-           
-            
             return True
         else:
-            
-            #print('OCCUPIED POINT FOUND:',round(new_node.x,3),round(new_node.y,3))
-            #print()
             return False 
 
 
     def map_to_og_matrix_conversion(self,point,og_resolution):
         """
-        Returns the index of the square of the occuapncy grid a given point lies on in a matrix form in row-major form,
-        so that it is easier to compare with [x,y] coordinates
+        Returns the index of the cell of the occuapncy grid a given node lies on in a matrix form in row-major form
+        
+        Parameters
+        ----------
+        point : Node
+            The node that we finding the corresponding occupancy grid coordinates of
+  
+        og_resolution : float
+            the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
+
+        Returns
+        -------
+	og_index : array of int
+            the corresponding matrix index of the occupancy grid cell we are trying to find, in row major form
+        
         """
         position = np.array([point.x,point.y])
         ratio = 1/og_resolution
@@ -262,7 +267,21 @@ class RRTC:
 
     def og_matrix_to_map_conversion(self,og_grid,og_resolution):
         """
-        returns the most bottom-left point in an occuapncy grid square, given its index in row-major form
+        finds the most bottom-left point in an occuapncy grid cell (origin point), given its index in row-major form
+        
+        Parameters
+        ----------
+        og_grid : array of int
+            the matrix index (in row major form) of the occupancy grid cell we trying to find the origin point of
+  
+        og_resolution : float
+            the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
+
+        Returns
+        -------
+	Node
+            The node that has the coordinates of the origin point of the given occupancy grid cell
+            
         """
 
         ratio = 1/og_resolution
@@ -270,9 +289,23 @@ class RRTC:
         y = (og_grid[0])/ratio
         return self.Node(x,y)
 
-    def point_is_on_left_parameter_of_grid_square(self,point,og_resolution):
+    def point_is_on_left_parameter_of_grid_cell(self,point,og_resolution):
         """
-        determines if a point lies perfectly on the vertical line between two occupancy gird squares
+        determines if a node lies perfectly on the vertical line between two occupancy gird cells
+        
+        Parameters
+        ----------
+        point : Node
+            The node that we are checking
+  
+        og_resolution : float
+            the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
+
+        Returns
+        -------
+	Boolean
+            returns true if the node lies perfectly between two cells, and returns false otherwise
+            
         """
         position = np.array([point.x,point.y])
         
@@ -283,9 +316,23 @@ class RRTC:
         else:
             return False
 
-    def point_is_on_bottom_parameter_of_grid_square(self,point,og_resolution): ## this should be top not bottom
+    def point_is_on_bottom_parameter_of_grid_cell(self,point,og_resolution):
         """
-        determines if a point lies perfectly on the horizontal line between two occupancy gird squares
+        determines if a point lies perfectly on the horizontal line between two occupancy gird cells
+        
+        Parameters
+        ----------
+        point : Node
+            The node that we are checking
+  
+        og_resolution : float
+            the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
+
+        Returns
+        -------
+	Boolean
+            returns true if the node lies perfectly between two cells, and returns false otherwise
+            
         """
         position = np.array([point.x,point.y])
         
@@ -296,11 +343,31 @@ class RRTC:
         else:
             return False
 
-    def minor_path_is_collision_free(self,new_node,prev_node,og_resolution,og_width,og_data):
+    def minor_path_is_collision_free(self,new_node,prev_node,og_resolution,og_data):
 
         """
+        determines if the straight line between two given nodes doesn't pass through any occupied cells (is collision free)
         
-        determines if the straight line between two given points doesn't pass through any occupied squares
+        Parameters
+        ----------
+        new_node : Node
+            The node that we are navigating TO
+            
+        prev_node : Node
+            The node that we are navigating FROM
+  
+        og_resolution : float
+            the resolution of the given occupancy grid, which is the ratio between map_width (or map_height) and og_width (or og_height)
+            
+        og_data : array (matrix og_height rows x og_width columns)
+            the data of the occupancy grid, which used to determine the occupancy state (occupied or not occupied) of all the occupancy grid cells, a value of zero represent 
+            a non-occupied cell, the cell is considered occupied for any other value 
+
+        Returns
+        -------
+	Boolean
+            returns true if the path is collision free, false otherwise
+        
         """
 
         
@@ -312,21 +379,14 @@ class RRTC:
         ratio = 1/self.og_resolution
         starting_grid = self.map_to_og_matrix_conversion(point=start,og_resolution=og_resolution)
         end_grid = self.map_to_og_matrix_conversion(point=end,og_resolution=og_resolution)
-        on_left = self.point_is_on_left_parameter_of_grid_square (point= start,og_resolution=og_resolution)
-        on_bottom = self.point_is_on_bottom_parameter_of_grid_square(point= start,og_resolution=og_resolution)
+        on_left = self.point_is_on_left_parameter_of_grid_cell (point= start,og_resolution=og_resolution)
+        on_bottom = self.point_is_on_bottom_parameter_of_grid_cell(point= start,og_resolution=og_resolution)
         gradient = abs((end.y - start.y) / (end.x - start.x))
         delta_x = end.x - start.x
         delta_y = end.y-start.y
         
 
-        counter = 0
-
-        '''
-        print('checking path between points:')
-        print(round(start.x,3),round(start.y,3), 'and',round(end.x,3),round(end.y,3))
-        print('GRADIENT IS:', round(gradient,2))
-        '''
-        #To decide the starting square of the occupancy grid if the point is between two grid squares
+        #To decide the starting cell of the occupancy grid if the point is between two grid cells
         if on_left or on_bottom:
             if delta_x <0 and delta_y<0:
                 if on_left:
@@ -346,19 +406,18 @@ class RRTC:
         grids_to_check = [[last_added_grid[0],last_added_grid[1]]]
         
         if gradient<1: #path is horizontally dominant (the variable gradient is actually the absolute value of gradient and so is never negative)
-            #print('path is horizontally dominant')
 
             
-            if on_left and on_bottom: #starting node is at corner of an og square
+            if on_left and on_bottom: #starting node is at corner of an og cell
                 d = gradient
 
-            elif on_left: #starting node is on the vertical line between two og squares
+            elif on_left: #starting node is on the vertical line between two og cells
                 origin_node = self.og_matrix_to_map_conversion(starting_grid,og_resolution=og_resolution)
                 d = gradient + abs(0.5 - (delta_y/(2*abs(delta_y))) - (start.y-origin_node.y)*ratio)
                 
                 
 
-            elif on_bottom: #starting node is on the vertical line between two og squares
+            elif on_bottom: #starting node is on the vertical line between two og cells
                 origin_node = self.og_matrix_to_map_conversion(starting_grid,og_resolution=og_resolution)
                 d = gradient * abs(0.5 + (delta_x/(2*abs(delta_x))) - (start.x - origin_node.x) * ratio)
 
@@ -368,48 +427,31 @@ class RRTC:
                 origin_node = self.og_matrix_to_map_conversion(starting_grid,og_resolution=og_resolution)
                 d = abs(0.5 - (delta_y/(2*abs(delta_y))) - (start.y-origin_node.y)*ratio) + gradient * abs(0.5 + (delta_x/(2*abs(delta_x))) - (start.x - origin_node.x) * ratio)
                 
-        
-            
-            #print('tracing the path')
-            #print()
-            #print('starting grid is: (',starting_grid[0],',',starting_grid[1],')')  
+  
             while last_added_grid != end_grid:
-                counter=counter+1
-                #if counter >20:
-                    #print('loop terminating')
-                    #break
                 if d >=1:
                     d = d-1
                     last_added_grid[0] = int(last_added_grid[0]+delta_y/abs(delta_y))
                     grids_to_check.append([last_added_grid[0],last_added_grid[1]])
                     continue
                 last_added_grid[1] = int(last_added_grid[1]+delta_x/abs(delta_x))
-
-                #print('adding a grid in the HORIZONTAL DOMINANT direction: (',last_added_grid[0],',',last_added_grid[1],')') 
                 
                 grids_to_check.append([last_added_grid[0],last_added_grid[1]])
                 d = d + gradient
-            #print('FINAL GRID IS: (',last_added_grid[0],',',last_added_grid[1],')')     
-            #print('END GRID IS: (',end_grid[0],',',end_grid[1],')')   
-
-            
-            
-
 
         else: #path is vertically dominant
-            #print('path is vertically dominant')
             gradient = 1/gradient
 
-            if on_left and on_bottom: #starting node is at corner of an og square
+            if on_left and on_bottom: #starting node is at corner of an og cell
                 d = gradient
 
-            elif on_left: #starting node is on the vertical line between two og squares
+            elif on_left: #starting node is on the vertical line between two og cells
                 origin_node = self.og_matrix_to_map_conversion(starting_grid,og_resolution=og_resolution)
                 d = gradient * abs(0.5 + (delta_y/(2*abs(delta_y))) - (start.y-origin_node.y)*ratio)
                 
                 
 
-            elif on_bottom: #starting node is on the vertical line between two og squares
+            elif on_bottom: #starting node is on the vertical line between two og cells
                 origin_node = self.og_matrix_to_map_conversion(starting_grid,og_resolution=og_resolution)
                 d = gradient + abs(0.5 - (delta_x/(2*abs(delta_x))) - (start.x - origin_node.x) * ratio)
 
@@ -418,37 +460,19 @@ class RRTC:
             else: #most likely case, if not the only possible one
                 origin_node = self.og_matrix_to_map_conversion(starting_grid,og_resolution=og_resolution)
                 d = gradient * abs(0.5 + (delta_y/(2*abs(delta_y))) - (start.y-origin_node.y)*ratio) + abs(0.5 - (delta_x/(2*abs(delta_x))) - (start.x - origin_node.x) * ratio)
-
-
-            #print('tarcing the path')
-            #print()
-            #print('starting grid is: (',starting_grid[0],',',starting_grid[1],')')      
+    
             while last_added_grid != end_grid:
-                counter=counter+1
-                #if counter >20:
-                    #print('loop terminating')
-                    #break
                 if d >=1:
                     d = d-1
                     last_added_grid[1] = int(last_added_grid[1]+delta_x/abs(delta_x))
                     grids_to_check.append([last_added_grid[0],last_added_grid[1]]) 
                     continue
                 last_added_grid[0] = int(last_added_grid[0]+delta_y/abs(delta_y))
-                #print('adding a grid in the VERTICAL DOMINANT direction: (',last_added_grid[0],',',last_added_grid[1],')') 
+
                 
                 grids_to_check.append([last_added_grid[0],last_added_grid[1]])
                 d = d + gradient
-            #print('FINAL GRID IS: (',last_added_grid[0],',',last_added_grid[1],')')
-            #print('END GRID IS: (',end_grid[0],',',end_grid[1],')')   
-        
 
-        #print()
-        #print("grids to check are:")
-        #for grid in grids_to_check:
-            #print("(",grid[0],',',grid[1],')') 
-
-
-        #print("cheking the traced path:")
         for grid in grids_to_check:
             if og_data[grid[0]][grid][1] !=0:
                 return False
@@ -457,9 +481,14 @@ class RRTC:
             
 
                
-    def generate_final_course(self, start_mid_point, end_mid_point):
+    def generate_final_course(self):
         """
         Reconstruct path from start to end node
+        
+        Returns
+        -------
+	path : array of Node
+            returns the array of nodes that make up the collision free path from the start point to the end point
         """
         # First half
         node = self.start_node_list[-1]
@@ -470,7 +499,6 @@ class RRTC:
             '''if node.parent is None:
                 print("Node:","(",round(node.x,3),",",round(node.y,3),");","Has no parent")'''
         path.append([node.x, node.y])
-        #print("final path is:")
 
         '''for node in path:
             print("(",round(node[0],3),",",round(node[1],3),")")'''
@@ -486,42 +514,88 @@ class RRTC:
         return path
 
     def calc_dist_to_goal(self, x, y):
-        dx = x - self.end.x
-        dy = y - self.end.y
-        return math.hypot(dx, dy)
+    
+    	"""
+    	calculates the distance between given coordinates and the end point (goal)
+    	
+    	Parameters
+        ----------
+        x : float
+            the x coordinate
+            
+        y : float
+            the y coordinate
+
+        Returns
+        -------
+	distance : float
+            the distance between the given coordinates and the end point
+    	
+    	"""  
+    	dx = x - self.end.x
+    	dy = y - self.end.y
+    	return math.hypot(dx, dy)
 
     def get_random_node(self):
-        
-        #x = 10*self.expand_dis*np.random.random_sample()
-        #y = 10*self.expand_dis*np.random.random_sample()
-        x = self.map_width * np.random.random_sample()
-        y = self.map_height * np.random.random_sample()
-        rnd = self.Node(x, y)
-        return rnd
+    	"""
+    	gets a random node that is within our occupancy grid map
+
+        Returns
+        -------
+	rnd : Node
+
+    	"""
+    	x = self.map_width * np.random.random_sample()
+    	y = self.map_height * np.random.random_sample()
+    	rnd = self.Node(x, y)
+    	return rnd
 
     @staticmethod
-    def get_nearest_node_index(node_list, rnd_node):        
-        # Compute Euclidean disteance between rnd_node and all nodes in tree
-        # Return index of closest element
-        dlist = [(node.x - rnd_node.x) ** 2 + (node.y - rnd_node.y)** 2 for node in node_list]
-        minind = dlist.index(min(dlist))
-        return minind
+    def get_nearest_node_index(node_list, rnd_node):
+    	"""
+    	returns the index (in node_list) of the node closest to rnd_node, by computing the Euclidean distance between rnd_node and all nodes in node_list
+    	
+    	Parameters
+        ----------
+        node_list : array of Nodes
+            The array of all nodes that have been generated in the process of finding the collision-free path
+            
+        rnd_node : Node
+            a randomly generated node that we are finding the closest node to
+
+        Returns
+        -------
+	minind : int
+            the index of the node that has the minimum distance to rnd_node
+    	
+    	"""        
+    	dlist = [(node.x - rnd_node.x) ** 2 + (node.y - rnd_node.y)** 2 for node in node_list]
+    	minind = dlist.index(min(dlist))
+    	return minind
 
     @staticmethod
     def calc_distance_and_angle(from_node, to_node):
-        dx = to_node.x - from_node.x
-        dy = to_node.y - from_node.y
-        d = math.hypot(dx, dy)
-        theta = math.atan2(dy, dx)
-        return d, theta     
+    	"""
+    	calculates the distance and angle between two nodes
+    	
+    	Parameters
+    	----------
+    	from_node : Node
+    		The node we are measuring the angle from
+    	
+    	to_node : Node
+    	
+    	Returns
+    	-------
+    	d : float
+    		distance between the two given nodes
+    	
+    	theta : float
+    		The angle between the two given nodes (in radians), measured from from_node, between the line connecting both nodes and the horizontal axis
 
-
-
-
-
-
-
-
-
-#Modify generate path func
-# return a path array in the rrt function
+    	"""
+    	dx = to_node.x - from_node.x
+    	dy = to_node.y - from_node.y
+    	d = math.hypot(dx, dy)
+    	theta = math.atan2(dy, dx)
+    	return d, theta
