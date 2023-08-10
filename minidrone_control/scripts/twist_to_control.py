@@ -14,7 +14,41 @@ from minidrone_control.control_tools import Ackermann, RackAndPinion
 
 class TwistToControlNode(Node):
     '''
-    TODO
+    A class for converting a twist message (containing linear and angular velocity) into control messages published for both the drving motor, and the pinion (steering) motor
+    
+    Paramaters
+    ----------
+    
+    width : float
+    	Width of wheelbase measured from centers of two wheels (m)
+    length : float
+    	Distance between front and rear axles (m)
+    steering_ratio : float
+    	Ratio between input angle and ideal ackermann steer angle. TO BE IMPLEMENTED
+    wheel_radius : float
+    	Radius of the wheels (m)
+    rack_displacement : float
+    	Distance between the front axle and the steering rack (m)
+    link_length : Tuple[float,float,float,float]
+    	Lengths of each of the 4 links in the (half) steering mechanism, ordered from rack outwards (m)
+    pinion_radius : float
+    	Radius of the pinion (m)
+    servo_increment : int
+    	Increments per revolution for the steering servo motor
+    	
+    Subscribers
+    -----------
+    cmd_vel : L{geometry_msgs.Twist}
+    	the linear and angular velocity control signal
+    
+    Publishers
+    ----------
+    motor_control : L{std_msgs.Float32}
+    	the input for controlling the driving motor (angular velocity of motor shaft)
+    	
+    set_position : L{dynamixel_sdk_custom_interfaces.set_position}
+    	the input message for controling the servo responsible for steering
+    
     '''
     def __init__(self):
         super().__init__('twist_to_control_node')
@@ -57,6 +91,10 @@ class TwistToControlNode(Node):
 
 
     def twist_callback(self, msg):
+    '''
+    FUnction responsible for handling new Twist messages published to cmd_vel topic, and deriving steering and driving commands according to such messages
+    '''
+    
         lin, ang = msg.linear.x, msg.angular.z
         motor_msg, pinion_msg = Float32(), SetPosition()
         pinion_msg.id = 1
