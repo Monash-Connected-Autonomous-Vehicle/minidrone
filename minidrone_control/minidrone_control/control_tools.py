@@ -36,7 +36,7 @@ class Ackermann:
 
     def lin_ang_to_steer_spin(self, lin: float, ang: float) -> Tuple[float, float, float]:
 	"""
-	Converts the linear velocity and angular velocity (steering) commands to a spin (angular velocity) value for the driving motor, and angles th1 and th2 as Ackermann steering angles
+	Converts the linear velocity and angular velocity of the vehicle (steering) commands to a spin (angular velocity of wheels) value for the driving motor, and angles thi and tho as Ackermann steering angles
     
 	Parameters
 	----------
@@ -48,18 +48,18 @@ class Ackermann:
 	Returns
 	---------
 	spin : float
-		angular velocty calue for driving motor (not steering)
-	th1 : float
+		angular velocty value for driving motor (not steering)
+	thi : float
 		inner Achkermann steering angle
-	th2 : float
+	tho : float
 		outer Achkermann steering angle
 	
 	"""
-        spin = self.wheel_r*lin  # Driven wheel rotational speed. Uncertain about the calculation method
+        spin = self.wheel_r*lin  # Driven wheel rotational speed.
         R = lin/ang  # Turning radius
-        th1, th2 = math.atan(self.l/(R-self.w2)), math.atan(self.l/(R+self.w2))  # Left and right wheel turning angles
-        print('th12', th1, th2)
-        return spin, th1, th2
+        thi, tho = math.atan(self.l/(R-self.w2)), math.atan(self.l/(R+self.w2))  # Left and right wheel turning angles
+        print('Inner Ackermann:', thi,'Outer Ackermann:', tho)
+        return spin, thi, tho
 
 
 class RackAndPinion:
@@ -78,9 +78,13 @@ class RackAndPinion:
     	Lengths of each of the 4 links, where link 0 is the rack
     h : float
     	distance between the rack and the would-be front axle
+    beta : float
+    	the fixed angle between the link 3 and wheels, can be changed later to distance between the front the back axle and calculate manually, gotta get mechanical approval for that though
     pinion_r : float
     	radius of pinion
-    
+    	
+    Returns
+    --------
     l12x : float 
     	the lengths of link 1 and link 2 in the direction parallel to the front and rear axles (m)
     th1 :  float
@@ -92,7 +96,7 @@ class RackAndPinion:
     """
     def __init__(self, w: float, l: float, wheel_r: float,
                  link_lengths: Tuple[float, float, float, float],
-                 rack_axle_dist: float, pinion_r: float):
+                 rack_axle_dist: float, beta: float, pinion_r: float):
         """
         """
         # Specified quantities
@@ -100,10 +104,18 @@ class RackAndPinion:
         self.wheel_r = wheel_r
         self.links = link_lengths  # Lengths of each of the 4 links, where link 0 is the rack
         self.h = rack_axle_dist  # distance between the rack and the would-be front axle
+        self.beta = beta
         self.pinion_r = pinion_r
 
         # Derived quantities
+        
+        self.arm = links[2]
+        self.rod = links[1]
+        self.rack = links[0]
+        self.A = w/2 + rack/2
+        
         self.l12x = (w - self.links[0])/2 - self.links[3]  # Width of linkage formed by links 1 and 2 ##not sure about this
+        ## link 3 here is unecessary, and irrelevant to rack and pinion calculations
         l12_2 = self.h**2 + self.l12x**2
         th12 = math.atan(self.h/self.l12x)
         th1 = th12 - math.acos((self.links[1]**2 + l12_2 - self.links[2]**2)/(2*self.links[1]*math.sqrt(l12_2)))
@@ -112,17 +124,33 @@ class RackAndPinion:
 
     def disp_to_steer(self, rack_disp: float) -> float:
         """
-        Calculate wheel steering angle (from +/-y axis) given rack displacement
-        (in the +/-y direction)
-        
-        FUNCTION INCOMPLETE AND UNUSED
-        
+        Given the displacement of the rack, this function calculates the angle (in radians) from the the right wheel arm, and the negative y-axis, where positive is anti-clockwise, and negative is clockwise
+    
+	Parameters
+	----------
+	rack_disp : float
+	the displacement of the rack, given by the new position of the right rack-rod joint minus its original position
+	
+	Returns
+	--------
+	th : float
+	The angle (in radians) from the the right wheel arm, and the negative y-axis, where positive is anti-clockwise, and negative is clockwise
         """
+	''' David's code
         b = self.b0 - rack_disp
         d2 = self.h**2 + b**2
         th = math.atan(self.h/b) - math.acos((self.links[2]**2 + d2 - self.links[1]**2)/ \
                                              (2*self.links[2] * math.sqrt(d2)))
-        return th - self.th0
+        return th - self.th0'''
+        
+        pi = math.pi
+        a = self.arm
+        d = self.h
+        #k = self.rack
+        o = self.rod
+        l2 = pow(((self.A-rack_disp) * (self.A-rack_disp) + d*d),0.5)
+        th = pi/2 - atan(d/(self.A-rack_disp)) - acos((a*a + l2*l2 - o*o)/(2*a*l2))
+        return th
 
     def steer_to_pinion_ang(self, steer: float) -> float:  # TODO: rename steer
         """
@@ -133,20 +161,33 @@ class RackAndPinion:
         Parameters
         ----------
         steer : float
-        	the wheel steering angle
+        	The Aackermann angle(in radians), which is the average of both ackermann angles, might be changed to taking both ackermann angles and calculating average inside function
         
         Returns
         -------
         pinion_ang : float
-        	amount of ratation required for pinion (in radains probably)
+        	amount of rotation required for pinion (in radains)
         """
+        ''' david's code
         dth = self.th0 - steer
         print('th', dth, self.th0)
         l2x, l2y = self.links[2]*math.cos(dth), self.links[2]*math.sin(dth)
         print('l2', l2x, l2y)
         l1x = math.sqrt(self.links[1]**2 - (self.h - l2y)**2)
         rack_disp = self.l12x - l1x - l2x
-        return rack_disp/self.pinion_r
+        return rack_disp/self.pinion_r'''
+        
+        pi = math.pi
+        a = self.arm
+        d = self.h
+        o = self.rod
+        th = self.beta - steer - pi/2
+        
+        disp = -1 * a *sin(th)-self.A + pow((o*o - pow((d - a*cos(th)),2)),0.5)
+        return disp/self.pinion_r
+        
+        
+        
 
     def wheel_axis_intercept(self, steer: Tuple[float, float]) -> Tuple[float, float]:
         """
