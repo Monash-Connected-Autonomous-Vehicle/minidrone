@@ -35,15 +35,24 @@ void setup() {
   pinMode(pinA, INPUT_PULLUP); 
   pinMode(pinB, INPUT_PULLUP); 
   // execute ISR when rising on both pins
-  attachInterrupt(0, PinISR(pinA), RISING); 
-  attachInterrupt(1, PinISR(pinB), RISING); 
+  attachInterrupt(digitalPinToInterrupt(pinA), PinAISR, RISING); 
+  attachInterrupt(digitalPinToInterrupt(pinB), PinBISR, RISING); 
   
   Serial.begin(115200); 
 }
 
-void PinISR(pin){
+void PinAISR(){
+  PinISR(pinA);
+}
+
+void PinBISR(){
+  PinISR(pinB);
+}
+
+
+void PinISR(int pin){
   cli(); //stop interrupts happening before we read pin values
-  thisFlag = ( pin == pinA ) ? aFlag : bFlag;
+  volatile byte thisFlag = ( pin == pinA ) ? aFlag : bFlag;
 
   pinValues = PIND & 0xC; // read all eight pin values then strip away all but ISRPinA and ISRPinB's values
   if(pinValues == B00001100 && thisFlag) { //check that we have both pins at detent (HIGH) and that we are expecting detent on this pin's rising edge
