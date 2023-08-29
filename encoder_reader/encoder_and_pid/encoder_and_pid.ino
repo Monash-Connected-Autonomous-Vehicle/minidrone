@@ -8,10 +8,7 @@ double Kp = 20, Ki = 5, Kd = 1;
 // PID controller obj
 PID_v2 myPID(Kp, Ki, Kd, PID::Direct);
 
-
-int tyreCircumference = 798000; //Tyre tyreCircumference, micrometer per 360 ticks 
-int revolutionTicks = 1000; //ticks of the encoder for 1 revolution
-float distPerTick = float(tyreCircumference)/float(revolutionTicks);
+const int ticksPerRevolution = 1024; //ticks of the encoder for 1 revolution
 float prevTime = 0; //time in microseconds
 float prevVelocity = 0;
 
@@ -31,24 +28,26 @@ volatile byte pinValues = 0;
 void setup() {
   myPID.Start(
      0,    // input
-     0,    // current output
+     0,    // current outputPWM
      0.1   // setpoint
   ); 
   // set pin A & B as an input, pulled HIGH to the logic voltage (5V or 3.3V for most cases)
   pinMode(pinA, INPUT_PULLUP); 
   pinMode(pinB, INPUT_PULLUP); 
   // execute ISR when rising on both pins
-  attachInterrupt(0, ISRPinA, RISING); 
-  attachInterrupt(1, ISRPinB, RISING); 
+  attachInterrupt(0, PinISR(pinA), RISING); 
+  attachInterrupt(1, PinISR(pinB), RISING); 
   
   Serial.begin(115200); 
 }
 
-void ISRPinA(){
+void PinISR(pin){
   cli(); //stop interrupts happening before we read pin values
+  thisFlag = ( pin == pinA ) ? aFlag : bFlag;
+
   pinValues = PIND & 0xC; // read all eight pin values then strip away all but ISRPinA and ISRPinB's values
-  if(pinValues == B00001100 && aFlag) { //check that we have both pins at detent (HIGH) and that we are expecting detent on this pin's rising edge
-    encoderPos --; //decrement the encoder's position count
+  if(pinValues == B00001100 && thisFlag) { //check that we have both pins at detent (HIGH) and that we are expecting detent on this pin's rising edge
+    ( pin == pinA ) ? encoderPos-- : encoderPos++;    
     bFlag = 0; //reset flags for the next turn
     aFlag = 0; //reset flags for the next turn
   }
@@ -56,62 +55,24 @@ void ISRPinA(){
   sei(); //restart interrupts
 }
 
-void ISRPinB(){
-  cli(); //stop interrupts happening before we read pin values
-  pinValues = PIND & 0xC; //read all eight pin values then strip away all but ISRPinA and ISRPinB's values
-  if (pinValues == B00001100 && bFlag) { //check that we have both pins at detent (HIGH) and that we are expecting detent on this pin's rising edge
-    encoderPos ++; //increment the encoder's position count
-    bFlag = 0; //reset flags for the next turn
-    aFlag = 0; //reset flags for the next turn
-  }
-  else if (pinValues == B00001000) aFlag = 1; //signal that we're expecting ISRPinA to signal the transition to detent from free rotation
-  sei(); //restart interrupts
-}
-
 void loop(){
-  
-    //float velocity = 798.1/((micros()-prevTime));
-    //float acceleration = 1000000*(prevVelocity-velocity)/(micros()-prevTime);
-    
-if(prevEncPos != encoderPos) {
-    // pinValues time
-    long long int timeNow = micros();
-    
-    //Updating deltas
-    float delta_pos = ((encoderPos - prevEncPos)); // Ticks
-    float delta_time = (timeNow - prevTime) / pow(10, 6); // Seconds
-    // Revolutions per second
-    float revsec ( (delta_pos / delta_time) / 1024 ); 
+  if(prevEncPos != encoderPos) {
+      // single time for the whole iteration. 
+      long long int timeNow = micros();
+      
+      //Updating deltas
+      float delta_pos = ((encoderPos - prevEncPos)); // Ticks
+      float delta_time = (timeNow - prevTime) / pow(10, 6); // Seconds
+      float revPerSec =  ( (delta_pos / delta_time) / float(ticksPerRevolution)); 
 
-    // Saving Read values
-    prevTime = timeNow;
-    prevEncPos = encoderPos;
+      prevTime = timeNow;
+      prevEncPos = encoderPos;
 
-    //Printing output
-    Serial.print((float(encoderPos)/1024));
-    Serial.print("     "); 
-    Serial.print(revsec,9);
-    Serial.print("     "); 
+      Serial.print(revPerSec,9);
+      
 
-/*
-    Serial.print("     ");
-    Serial.print(encoderPos,9);
-     Serial.print("     ");
-    Serial.print(encoderPos%1024,9);
-    
-*/    
-    
-    
-    //prevVelocity = velocity;
-    
-
-  const int output = myPID.Run(revsec); 
-  
-  Serial.print(output);
-  Serial.println();
-  
-  }
-
-
-
+      int outputPWM = myPID.Run(revPerSec); 
+      Serial.print(outputPWM);
+      Serial.println();
+    }
 }
